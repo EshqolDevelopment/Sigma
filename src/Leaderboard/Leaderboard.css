@@ -1,0 +1,60 @@
+.leaderboard-content {
+    left: 15%;
+    width: 70%;
+    margin-top: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 100px;
+}
+
+.leaderboard-content > div:not(:first-child) {
+    height: 30px;
+    width: 550px;
+    max-width: 100%;
+    background: wheat;
+    margin-bottom: 15px;
+    margin-inline: auto;
+    border-radius: 10px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.leaderboard-content > div > div {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.leaderboard-content img {
+    height: 90%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.leaderboard-content > div:nth-child(odd):not(:first-child) {
+   background: snow;
+}
+
+.flag {
+    font-size: 30px;
+}
+
+.title-row {
+    height: 30px;
+    width: 550px;
+    max-width: 100%;
+    margin-inline: auto;
+    font-size: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 10px 8px;
+    font-weight: bold;
+    border-bottom: 3px solid white;
+    color: white;
+}

@@ -1,0 +1,54 @@
+.navigationBar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: var(--navigation-height);
+    background: #27282C;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.page {
+    height: 80%;
+    top: 10%;
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+    transition: 0.2s ease-in transform;
+}
+
+.page span {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgb(200, 200, 200);
+}
+
+.page:hover:not(.active) {
+    border-bottom: rgb(200, 200, 200) solid 3px;
+    transform: scale(1.02);
+}
+
+.active {
+    border-bottom: white solid 3px;
+}
+
+.active span {
+    color: white;
+}
+
+.profileImage {
+    height: 75%;
+    cursor: pointer;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 30px;
+}
+
+.navigationBar div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 30px;
+    gap: 30px;
+}

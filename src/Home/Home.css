@@ -1,0 +1,26 @@
+.home-content {
+    left: 15%;
+    width: 70%;
+    top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.google-play-button {
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    width: 150px;
+    height: auto;
+}
+
+.buttons-home-screen {
+    height: 50px;
+    max-width: 90%;
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-inline: auto;
+    gap: 150px;
+}
