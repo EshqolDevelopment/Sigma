@@ -3,7 +3,7 @@ import './Terminal.css';
 
 export default function Terminal() {
 
-    const array = ['hello', 'world', 'this', 'is', 'a', 'terminal'];
+    const array = ['hello', 'world', 'this is my word', 'terminal'];
 
 
     return (

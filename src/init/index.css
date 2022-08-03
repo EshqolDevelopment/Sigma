@@ -14,16 +14,13 @@ code {
 
 :root {
     --navigation-height: 60px;
+    --background: white;
 }
 
-.content {
-    padding-top: calc(var(--navigation-height) + 30px);
-    height: 100%;
-    min-height: calc(100vh - var(--navigation-height) - 30px);
-    width: 100%;
-    /*background: #353946;*/
-    background: #f6f9fc;
+button {
+    cursor: pointer;
 }
+
 
 .center-text {
     width: 100%;
@@ -39,7 +36,7 @@ code {
 }
 
 .sigma-button {
-    background: #32b7d1;
+    background: #3b3c3e;
     padding: 12px;
     border-radius: 10px;
     color: white;
@@ -47,17 +44,12 @@ code {
     cursor: pointer;
     transition: background-color 0.1s ease-in;
     font-size: 18px;
-    width: 150px;
+    width: 190px;
     display: flex;
     justify-content: center;
+    border: none;
 }
 
 .sigma-button:hover {
-    background-color: #30a2b7;
-}
-
-.home-title {
-    /*color: white;*/
-    text-align: center;
-    height: 50px;
+    background-color: #2b2c2e;
 }

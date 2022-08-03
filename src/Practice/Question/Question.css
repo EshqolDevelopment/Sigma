@@ -1,43 +1,258 @@
-.question-layout {
-    width: 90%;
-    height: 90%;
-    margin: 0 auto;
+
+
+.questionLayout {
+    margin-top: 100px;
+}
+
+.languagePicker {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.languagePicker img {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.languagePicker img[name^="kotlin"] {
+    width: 60px;
+    height: 60px;
+}
+
+.languagePicker img[name^="java"] {
+    margin-top: -1px;
+    margin-bottom: 5px;
+}
+
+.codeEditor {
+    width: 500px;
+    min-width: 400px;
+    height: 600px;
+}
+
+.container1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.container1 > div:first-child {
+    margin-left: auto;
+    padding-left: 20px;
+    margin-right: 35px;
+}
+
+.container1 > div:last-child {
+    margin-right: auto;
+    padding-right: 20px;
+    margin-left: 47px;
+}
+
+
+.questionInfo {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    max-width: 550px;
+}
+
+.questionJustInfo {
+    display: flex;
+    flex-direction: column;
     color: white;
 }
 
-.question-layout > div {
-    width: 49%;
-    height: 100%;
+
+.questionName {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid white;
+    text-align: center;
+    padding-bottom: 7px;
+}
+
+
+.actionsButtonsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-inline: 50px;
+    gap: 20px;
+}
+
+.actionsButtonsContainer button {
+    background: linear-gradient(90deg,#416ee1,#4169e1);
+    border: none;
+    border-radius: 16px;
+    color: #fff;
+    font-family: inherit;
+    font-size: 18px;
+    overflow: hidden;
+    padding: 0.7em 0.7em;
+    width: 130px;
+    font-weight: 600;
+}
+
+.exampleContainer {
+    margin-top: 30px;
+}
+
+.exampleContainer > div > span {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.exampleContainer > div > div {
+    background: #2a5273;
+    border-radius: 8px;
+    padding: 17px;
+    margin-bottom: 25px;
+    margin-top: 7px;
+}
+
+.letterSpacing {
+    letter-spacing: 1.5px;
+    white-space: pre-wrap;
+}
+
+
+.varName {
+    color: #fd971f;
+}
+
+
+.expandItemTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expandItemTitle img {
+    width: 23px;
+    height: 23px;
+    filter: invert(100%) sepia(0%) saturate(7496%) hue-rotate(327deg) brightness(107%) contrast(101%);
+    cursor: pointer;
+}
+
+.expandItemTitle span {
+    font-weight: bold;
+}
+
+.expandItem {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
 }
 
-.question-left > div {
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    font-size: 22px;
-    margin: 20px 0 10px;
-    font-weight: bold;
-    gap: 30px;
+.timeComplexityContainer {
+    margin-top: 15px;
+    animation: expand 3s ease;
 }
 
-.question-left img {
-    height: 100px;
-    width: auto;
+.arrow {
+    transition: transform 0.2s ease;
 }
 
-.question-left > h2 {
-    border-bottom: 3px solid white;
-    padding: 5px 10px;
+.arrowOpen {
+    transform: rotate(180deg);
 }
 
-.question-left > span {
-    padding: 5px 20px;
-    font-size: 18px;
+.languagePickerMobile {
+    display: none;
+}
+
+@keyframes expand {
+    0% {
+        opacity: 0;
+        max-height: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        max-height: 1000px;
+    }
+}
+
+
+
+@media (max-width: 960px) {
+    .container1 {
+        flex-direction: column;
+        align-items: center;
+        padding-inline: 10px;
+    }
+
+    .languagePicker {
+        display: none;
+    }
+
+    .questionJustInfo {
+        margin-top: -60px;
+    }
+
+    .questionInfo {
+        order: 2;
+    }
+
+    .codeEditor {
+        order: 3;
+    }
+
+    .actionsButtonsContainer {
+        order: 1;
+        margin-top: 60px;
+        margin-bottom: 30px;
+    }
+
+    .container1 > div:first-child {
+        margin-left: initial;
+        padding-left: initial;
+        margin-right: initial;
+    }
+
+    .container1 > div:last-child {
+        margin-right: initial;
+        padding-right: initial;
+        margin-left: initial;
+    }
+
+    .codeEditor {
+        width: 100%;
+        min-width: initial;
+        max-width: 600px;
+    }
+
+    .questionName {
+        margin-bottom: 20px;
+        border: 0;
+    }
+
+    .solutionBtn {
+        display: none;
+    }
+
+    .actionsButtonsContainer {
+        display: flex;
+        margin-left: 0;
+        margin-right: 0;
+        justify-content: space-between;
+    }
+
+    .sendBtn {
+        width: 150px !important;
+    }
+
+    .languagePickerMobile {
+        display: initial;
+        width: 145px;
+        border-radius: 10px;
+        padding-left: 15px;
+        outline: none;
+        border: none;
+    }
+
 }

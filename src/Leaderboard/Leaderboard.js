@@ -12,15 +12,19 @@ export default function Leaderboard() {
     const [data, setData] = useState([])
 
     useEffect(() => {
+        document.documentElement.style.setProperty("--background", "#282c34");
 
         const ref = doc(getFirestore(app), 'leaderboard/leaderboard')
         getDoc(ref).then(res => {
-
             const data = res.data()['leaderboard'].split('@')
             setData(data)
         })
 
     }, [])
+
+    function openProfile() {
+        console.log("aaa")
+    }
 
 
     return (
@@ -36,14 +40,14 @@ export default function Leaderboard() {
                 const [name, country, score, image] = item.split('.')
                 return (
                     <div key={index}>
-                        <div>
-                            <span>#{index + 1}</span>
+                        <div className={"leftSide"}>
+                            <span className={"num"}>#{index + 1}</span>
                             <span className={'flag'}>{countryCodeEmoji(country === '' ? 'us' : country)}</span>
-                            <img src={require(`../Photos/p${image === 'undefined' ? "guest" : image}.png`)} alt={name}/>
+                            <img className={"person"} src={require(`../Photos/p${image === 'undefined' ? "guest" : image}.png`)} alt={name} onClick={openProfile}/>
                         </div>
 
-                        <span>{name.replaceAll('_', '')}</span>
-                        <span>{score}</span>
+                        <span className={"itemName"}>{name.replaceAll('_', '')}</span>
+                        <span className={"itemScore"}>{score}</span>
                     </div>
                 )}
             )}
