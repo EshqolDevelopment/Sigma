@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import "./Home.css";
+import "./Home.scss";
 import {QuickPlayModal} from "./QuickPlayDialog";
 import {MultiPlayerModal} from "./MultiPlayerDialog";
 
@@ -43,7 +43,10 @@ export default function Home() {
 
             <img
                 src={'https://d3nn82uaxijpm6.cloudfront.net/assets/marketing/btn-google-play-1af0a2be816284e40414957321dc112dc8ed3e1f7de6d3d0b0dad8787ed58028.svg'}
-                alt={'Get it on Google Play'} className={'google-play-button'}/>
+                alt={'Get it on Google Play'}
+                className={'google-play-button'}
+            />
+
         </div>
     );
 }

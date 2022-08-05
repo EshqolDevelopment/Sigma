@@ -77,6 +77,68 @@ export default function Question(props) {
         }
     }, [data]);
 
+
+    const languages = {
+        "Python": '71',
+        "Java": '62',
+        "Ruby": '72',
+        "Rust": '73',
+        "Typescript": '74',
+        "C": '50',
+        "C#": '51',
+        "C++": '54',
+        "Haskell": '61',
+        "Go": '60',
+        "JavaScript": '63',
+        "PHP": '68',
+        "Kotlin": '78',
+        "Swift": '83',
+    }
+
+
+    async function run(code, id) {
+        console.log(code)
+        const response = await fetch("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&wait=true&fields=*", {
+            "headers": {
+                "content-type": "application/json",
+                "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+                "x-rapidapi-key": "36ba2e02femsh0c5035f7be67b4cp1f511cjsnc4fb84bc021e"
+            },
+            "params": {base64_encoded: 'true', wait: 'true', fields: '*'},
+            "body": `{"language_id":${id},"source_code": ${window.btoa(code)},"stdin":""}`,
+            "method": "POST",
+        });
+
+        const jsonGetSolution = await response.json();
+        console.log(jsonGetSolution);
+
+        let output;
+        if (jsonGetSolution.stdout) {
+            output  = window.atob(jsonGetSolution.stdout);
+        } else if (jsonGetSolution.stderr) {
+            output  = window.atob(jsonGetSolution.stderr);
+        } else {
+            output  = window.atob(jsonGetSolution.compile_output);
+        }
+        return output;
+    }
+
+
+    function submitQuestion() {
+
+        const storage = JSON.parse(sessionStorage['questions'])
+        const multi = false
+        const name = data.name
+        console.log(storage['input'])
+        const pyt = pythonCheck(code, name.replaceAll(" ", "_"), storage['input'], storage['output'], multi.toString())
+
+        run(pyt, languages.Python).then(output => {
+            console.log(output);
+        })
+
+    }
+
+
     return (
         <div className={"questionLayout"}>
 
@@ -97,7 +159,7 @@ export default function Question(props) {
 
                 <div className={"questionInfo"}>
                     <div className={"actionsButtonsContainer"}>
-                        <button className={"sendBtn"}>Send</button>
+                        <button className={"sendBtn"} onClick={submitQuestion}>Send</button>
                         <button className={"solutionBtn"}>Solution</button>
                         <select className={"languagePickerMobile"}>
                             <option value={"python"}>Python</option>
