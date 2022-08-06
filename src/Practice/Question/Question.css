@@ -17,6 +17,11 @@
     cursor: pointer;
 }
 
+.languagePicker img:not([name^="python"]) {
+    opacity: 0.3;
+    cursor: initial;
+}
+
 .languagePicker img[name^="kotlin"] {
     width: 60px;
     height: 60px;
@@ -164,6 +169,12 @@
     display: none;
 }
 
+.questionDescription {
+    color: white;
+    font-size: 18px;
+    margin-top: 0px;
+}
+
 @keyframes expand {
     0% {
         opacity: 0;
@@ -253,6 +264,10 @@
         padding-left: 15px;
         outline: none;
         border: none;
+    }
+
+    .questionDescription {
+        font-size: 17px;
     }
 
 }

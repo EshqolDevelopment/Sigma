@@ -1,31 +1,8 @@
 import React, {useEffect, useState} from "react";
 import "./Question.css";
 import Editor from "../../init/Editor";
-import arrowIcon from "../../Photos/arrow.svg";
-import { pythonCheck } from "../../init/checks";
-
-
-function ExpandItem(props) {
-    const [expanded, setExpanded] = useState(false);
-
-    function openDescription() {
-        setExpanded(!expanded);
-    }
-
-    return <div className={"expandItem"}>
-        <div className={"expandItemTitle"}>
-            <span>Optimal Space & Time Complexity</span>
-            <img src={arrowIcon} onClick={openDescription}
-                 className={["arrow", expanded ? "arrowOpen" : ""].join(" ")}/>
-        </div>
-
-        {expanded &&
-            <div className={"timeComplexityContainer"}>
-                <span>O(wh) time | O(wh) space - where w and h are the width and height of the input matrix</span>
-            </div>
-        }
-    </div>;
-}
+import {pythonCheck} from "../../init/checks";
+import {ExpandItem} from "./ExpandItem";
 
 export default function Question(props) {
 
@@ -149,7 +126,7 @@ export default function Question(props) {
 
             <div className={"container1"}>
                 <div className={"languagePicker"}>
-                    <img src={"https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png"}/>
+                    <img src={"https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png"} name={"python"}/>
                     <img src={"https://icon-library.com/images/javascript-icon-png/javascript-icon-png-23.jpg"}/>
                     <img src={"https://cdn-icons-png.flaticon.com/512/226/226777.png"} name={"java"}/>
                     <img
@@ -167,14 +144,14 @@ export default function Question(props) {
                         <button className={"solutionBtn"}>Solution</button>
                         <select className={"languagePickerMobile"}>
                             <option value={"python"}>Python</option>
-                            <option value={"javascript"}>JavaScript</option>
-                            <option value={"java"}>Java</option>
-                            <option value={"kotlin"}>Kotlin</option>
+                            <option disabled={true} value={"javascript"}>JavaScript</option>
+                            <option disabled={true} value={"java"}>Java</option>
+                            <option disabled={true} value={"kotlin"}>Kotlin</option>
                         </select>
                     </div>
                     <div className={"questionJustInfo"}>
                         <span className={"questionName"}>{data["name"]}</span>
-                        <span className={"description"}>{data["description"]}</span>
+                        <span className={"questionDescription"}>{data["description"]}</span>
                         <div className={"exampleContainer"}>
                             <div>
                                 <span>Sample Input</span>
