@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import "./Question.css";
 import Editor from "../../init/Editor";
 import arrowIcon from "../../Photos/arrow.svg";
+import { pythonCheck } from "../../init/checks";
+
 
 function ExpandItem(props) {
     const [expanded, setExpanded] = useState(false);
@@ -30,6 +32,7 @@ export default function Question(props) {
     const [data, setData] = useState({});
     const [timer, setTimer] = useState(0);
     const [code, setCode] = useState("");
+
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
@@ -60,6 +63,7 @@ export default function Question(props) {
 
     }, []);
 
+
     useEffect(() => {
         if (timer === 0) return;
 
@@ -70,6 +74,7 @@ export default function Question(props) {
         return () => clearInterval(clear);
 
     }, [timer]);
+
 
     useEffect(() => {
         if (data["code"]) {
@@ -97,7 +102,6 @@ export default function Question(props) {
 
 
     async function run(code, id) {
-        console.log(code)
         const response = await fetch("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&wait=true&fields=*", {
             "headers": {
                 "content-type": "application/json",
@@ -105,7 +109,7 @@ export default function Question(props) {
                 "x-rapidapi-key": "36ba2e02femsh0c5035f7be67b4cp1f511cjsnc4fb84bc021e"
             },
             "params": {base64_encoded: 'true', wait: 'true', fields: '*'},
-            "body": `{"language_id":${id},"source_code": ${window.btoa(code)},"stdin":""}`,
+            "body": `{"language_id":${id},"source_code":"${btoa(code)}","stdin":""}`,
             "method": "POST",
         });
 
