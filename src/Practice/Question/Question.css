@@ -10,6 +10,10 @@
     gap: 20px;
     align-items: center;
 }
+.languagePicker button {
+    background: rgb(0 0 0 /0);
+    border: 0;
+}
 
 .languagePicker img {
     width: 70px;
@@ -17,18 +21,18 @@
     cursor: pointer;
 }
 
-.languagePicker img:not([name^="python"]) {
-    opacity: 0.3;
-    cursor: initial;
-}
+/*.languagePicker img:not([name^="python"]) {*/
+/*    opacity: 0.3;*/
+/*    cursor: initial;*/
+/*}*/
 
-.languagePicker img[name^="kotlin"] {
+.languagePicker img[alt="kotlin"] {
     width: 60px;
     height: 60px;
 }
 
-.languagePicker img[name^="java"] {
-    margin-top: -1px;
+.languagePicker img[alt="java"] {
+    margin-top: -6px;
     margin-bottom: 5px;
 }
 
@@ -60,7 +64,7 @@
     display: flex;
     flex-direction: column;
     color: white;
-    max-width: 550px;
+    width: 550px;
 }
 
 .questionJustInfo {
@@ -206,6 +210,7 @@
     }
 
     .questionInfo {
+        width: min(100%, 550px);
         order: 2;
     }
 

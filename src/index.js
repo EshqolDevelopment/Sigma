@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import "./init/index.css";
 import Home from "./Home/Home";
 import NavigationBar from "./init/NavigationBar";
-import Question from "./Practice/Question/Question";
+import Question from "./Practice/Question/Question.tsx";
 import Leaderboard from "./Leaderboard/Leaderboard";
 import Compiler from "./Compiler/Compiler/Compiler";
 import Container from "./Practice/List/Container";

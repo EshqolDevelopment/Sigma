@@ -3,8 +3,9 @@ import "./Home.scss";
 import {QuickPlayModal} from "./QuickPlayDialog";
 import {MultiPlayerModal} from "./MultiPlayerDialog";
 
+
 export default function Home() {
-    const username = 'Yoav'
+    const username = "Nadav";
     const [showQuickPlayModal, setShowQuickPlayModal] = useState(false)
     const [showMultiplayerModal, setShowMultiplayerModal] = useState(false)
 

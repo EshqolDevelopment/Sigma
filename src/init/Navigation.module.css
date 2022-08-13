@@ -52,6 +52,19 @@
     gap: 30px;
 }
 
+.loginBtn {
+    height: 65%;
+    margin: auto 0;
+    width: 95px;
+    border-radius: 20px;
+    margin-right: 20px;
+    background: white;
+    border: none;
+    font-weight: bold;
+    font-size: 16px;
+
+}
+
 @media (max-width: 960px) {
     .navMenu a:nth-of-type(4) {
         display: none;
