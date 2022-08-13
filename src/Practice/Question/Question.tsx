@@ -12,7 +12,7 @@ const username = "Yoav";
 export default function Question() {
     const [question, setQuestion] = useState({
         description: "",
-        example: "",
+        example: {input: "", output: ""},
         level: "",
         params: {},
         return: "",
@@ -23,8 +23,8 @@ export default function Question() {
     const [funcName, setFuncName] = useState("");
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
-
     const db = getFirestore(app);
+
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
@@ -39,41 +39,90 @@ export default function Question() {
     }, []);
 
 
-    // params = {[paramName: string]: string}
-    const pythonDefaultCode = (funcName, params: { [paramName: string]: string }, returnType: string) => {
+    useEffect(() => {
+        if (timer === 0) return;
+
+        const clear = setInterval(() => {
+            setTimer(timer - 1);
+        }, 1000);
+
+        return () => clearInterval(clear);
+
+    }, [timer]);
+
+
+    const pythonDefaultCode = (funcName, params: string, returnType: string) => {
         let code = "def " + funcName + "(";
-        for (const paramName in params) {
-            code += `${paramName}: ${params[paramName]}, `;
+        for (let param of params) {
+            param = JSON.parse(param);
+            code += `${param[0]}: ${param[1]}, `;
         }
         code = code.slice(0, -2);
         code += `) -> ${returnType}:\n\t`;
         return code;
     };
 
-    const javascriptDefaultCode = (funcName, params: { [paramName: string]: string }) => {
+
+    const javascriptDefaultCode = (funcName, params: string) => {
         let code = "function " + funcName + "(";
-        for (const paramName in params) {
-            code += `${paramName}, `;
+        for (let param of params) {
+            param = JSON.parse(param);
+            code += `${param[0]}, `;
         }
         code = code.slice(0, -2);
         code += ") {\n\t\n}";
         return code;
     };
 
-    const kotlinDefaultCode = (funcName, params: { [paramName: string]: string }, returnType: string) => {
+
+    const kotlinDefaultCode = (funcName, params: string, returnType: string) => {
+        const pythonToKotlinType = {
+            "object": "Any",
+            "str": "String",
+            "int": "Int",
+            "float": "Double",
+            "bool": "Boolean",
+            "list": "List<Any>",
+            "list[str]": "List<String>",
+            "list[int]": "List<Int>",
+            "list[float]": "List<Double>",
+            "list[bool]": "List<Boolean>",
+            "list[object]": "List<Any>",
+            "dict": "Map<String, Any>",
+        }
+
+
         let code = "fun " + funcName + "(";
-        for (const paramName in params) {
-            code += `${paramName}: ${params[paramName]}, `;
+        for (let param of params) {
+            param = JSON.parse(param);
+            code += `${param[0]}: ${pythonToKotlinType[param[1]] || "Any"}, `;
         }
         code = code.slice(0, -2);
-        code += `): ${returnType} {\n\t\n}`;
+        code += `): ${pythonToKotlinType[returnType]  || "Any"} {\n\t\n}`;
         return code;
     };
 
-    const javaDefaultCode = (funcName, params: { [paramName: string]: string }, returnType: string) => {
-        let code = `static ${returnType} ${funcName}(`;
-        for (const paramName in params) {
-            code += `${params[paramName]} ${paramName}, `;
+
+    const javaDefaultCode = (funcName, params: string, returnType: string) => {
+        const pythonToJavaType = {
+            "object": "Object",
+            "str": "String",
+            "int": "int",
+            "float": "double",
+            "bool": "boolean",
+            "list": "Object[]",
+            "list[str]": "String[]",
+            "list[int]": "int[]",
+            "list[float]": "double[]",
+            "list[bool]": "boolean[]",
+            "list[object]": "Object[]",
+            "dict": "Map<String, Object>",
+        }
+
+        let code = `static ${pythonToJavaType[returnType] || "Object"} ${funcName}(`;
+        for (let param of params) {
+            param = JSON.parse(param);
+            code += `${pythonToJavaType[param[1]] || "Object"} ${param[0]}, `;
         }
         code = code.slice(0, -2);
         code += ") {\n\t\n}";
@@ -98,18 +147,6 @@ export default function Question() {
     function questionName() {
         return funcName ? funcName[0].toUpperCase() + funcName.slice(1).replaceAll("_", " ") : "";
     }
-
-
-    useEffect(() => {
-        if (timer === 0) return;
-
-        const clear = setInterval(() => {
-            setTimer(timer - 1);
-        }, 1000);
-
-        return () => clearInterval(clear);
-
-    }, [timer]);
 
 
     async function submitQuestion() {
@@ -139,7 +176,6 @@ export default function Question() {
 
     return (
         <div className={"questionLayout"}>
-
 
             <div className={"container1"}>
                 <div className={"languagePicker"}>
@@ -187,14 +223,12 @@ export default function Question() {
                             <div>
                                 <span>Sample Input</span>
                                 <div>
-                                    <span className={"varName"}>matrix</span>
-                                    <span className={"letterSpacing"}> = </span>
-                                    <span className={"letterSpacing"}>{"[1, 2, 3]"}</span>
+                                    <span className={"letterSpacing"}>{question.example.input || "Not available"}</span>
                                 </div>
                             </div>
                             <div>
                                 <span>Sample Output</span>
-                                <div className={"letterSpacing"}>{"[2, 4, 6]"}</div>
+                                <div className={"letterSpacing"}>{question.example.output || "Not available"}</div>
                             </div>
 
                             <div>
@@ -205,11 +239,7 @@ export default function Question() {
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
-
         </div>
     );
 }

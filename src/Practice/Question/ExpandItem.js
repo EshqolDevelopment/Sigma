@@ -17,7 +17,7 @@ export function ExpandItem(props) {
 
         {expanded &&
             <div className={"timeComplexityContainer"}>
-                <span>O(wh) time | O(wh) space - where w and h are the width and height of the input matrix</span>
+                <span>Not available</span>
             </div>
         }
     </div>;

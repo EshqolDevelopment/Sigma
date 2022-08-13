@@ -1,9 +1,9 @@
 
 export type QuestionData = {
     description: string;
-    example: string;
+    example: { input: string, output: string };
     level: string;
-    params: {[argName: string]: string};
+    params: string;
     return: string;
     subject: string;
     time: number;
