@@ -66,6 +66,7 @@ export default function NavigationBar(props) {
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
 
+                <span>Hello, {user !== null && user.displayName}</span>
                 <div>
                     <span>Home</span>
                 </div>

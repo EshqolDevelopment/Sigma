@@ -86,9 +86,39 @@
     width: 100vw;
     height: 100vh;
     top: var(--navigation-height);
-    background: white;
+    animation: whiteBackground 0.3s forwards;
+    display: flex;
+    flex-direction: column;
+    padding-left: 20px;
+    gap: 30px;
 }
 
+@keyframes whiteBackground{
+    0% {
+
+    }
+    100% {
+        background-color: white;
+    }
+
+}
+
+.mobileMenuContent > span {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 70px;
+    margin-bottom: 10px;
+}
+
+.mobileMenuContent > div {
+    display: flex;
+    gap: 20px;
+}
+
+.mobileMenuContent > div > span {
+    font-size: 18px;
+    color: rgb(0, 0, 0, 0.7);
+}
 
 
 @media (max-width: 960px) {

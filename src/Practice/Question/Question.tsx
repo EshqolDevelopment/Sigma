@@ -12,7 +12,7 @@ const username = "Yoav";
 export default function Question() {
     const [question, setQuestion] = useState({
         description: "",
-        example: {input: "", output: ""},
+        example: {input: [], output: ""},
         level: "",
         params: {},
         return: "",
@@ -174,6 +174,25 @@ export default function Question() {
     }
 
 
+    const formatInput = (input: string[]): JSX.Element[] => {
+        if (input.length === 0) return null;
+        const temp = [];
+        for (const i in input) {
+            const inp = input[i];
+            const name = JSON.parse(question.params[i])[0];
+            temp.push([name, inp]);
+        }
+
+        return temp.map(([name, inp]) => {
+            return <div key={name}>
+                <span><span style={{color: "orange", fontWeight: "bold"}}>{name}</span> = {inp}</span>
+            </div>
+        })
+
+
+    }
+
+
     return (
         <div className={"questionLayout"}>
 
@@ -223,7 +242,7 @@ export default function Question() {
                             <div>
                                 <span>Sample Input</span>
                                 <div>
-                                    <span className={"letterSpacing"}>{question.example.input || "Not available"}</span>
+                                    <span className={"letterSpacing"}>{formatInput(question.example.input) || "Not available"}</span>
                                 </div>
                             </div>
                             <div>
