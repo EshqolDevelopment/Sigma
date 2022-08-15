@@ -15,8 +15,17 @@ import 'brace/theme/clouds';
 import 'brace/theme/crimson_editor';
 
 
+type Props = {
+    code: string,
+    setCode: (code: string) => void,
+    language?: string,
+    fontSize?: number,
+    theme?: string,
+    lineNumbers?: boolean,
+}
 
-export default function Editor(props) {
+
+export default function Editor(props: Props) {
 
     return (
         <AceEditor
@@ -31,6 +40,7 @@ export default function Editor(props) {
             setOptions={{
                 showLineNumbers: true,
                 behavioursEnabled: true,
+                showGutter: props.lineNumbers ?? true,
                 tabSize: 2
             }}
 

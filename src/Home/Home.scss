@@ -1,16 +1,21 @@
 
+$max-width: 750px;
+
 @mixin center-flex {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-$max-width: 700px;
+@mixin mobile {
+    @media (max-width: $max-width) {
+        @content;
+    }
+}
+
 
 .home-content {
-    left: 15%;
-    width: 70%;
-    top: 20px;
+    width: 100%;
     margin-right: auto;
     margin-left: auto;
 }
@@ -32,12 +37,10 @@ $max-width: 700px;
     gap: 150px;
 }
 
-h1, h2, h3, h4
-{
+h1, h2, h3, h4 {
     margin: 0;
     padding: 0;
 }
-
 
 .modal {
     animation: fadeIn 0.5s;
@@ -198,14 +201,6 @@ h1, h2, h3, h4
     height: 30px;
 }
 
-
-.home-title {
-    text-align: center;
-    font-size: 36px;
-    margin-top: 95px;
-    color: white;
-}
-
 .description {
     color: white;
     font-size: 18px;
@@ -293,6 +288,7 @@ h1, h2, h3, h4
     font-weight: bold;
 }
 
+
 .question-num {
     display: flex;
     gap: 20px;
@@ -311,13 +307,9 @@ h1, h2, h3, h4
     transition: transform 0.1s ease-in;
 }
 
-
-
 .question-num input[type="radio"]:hover{
     transform: scale(1.1);
 }
-
-
 
 .question-num > div {
     @include center-flex;
@@ -354,6 +346,116 @@ h1, h2, h3, h4
     width: 90%;
 }
 
+.home-upper {
+    padding-top: 20vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: #3d73e7;
+    color: white;
+
+    @include mobile {
+        flex-direction: column;
+        padding-bottom: 50px;
+    }
+}
+
+.home-title {
+    color: white;
+    width: 50%;
+    margin-left: 10%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.home-title > p {
+    font-size: 18px;
+}
+
+.what-is-sigma {
+    margin-top: 10vh;
+    text-align: center;
+    font-weight: 500;
+    font-size: 35px;
+}
+
+.about-sigma {
+    margin-top: 10vh;
+    max-width: 90vw;
+    margin-inline: auto;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.box {
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out box-shadow;
+    flex-shrink: 0;
+}
+
+.box:hover {
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.box > p {
+    font-size: 16px;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    color: #595757;
+}
+
+.box > span {
+    color: #1c98f8;
+    cursor: pointer;
+}
+
+.line-separating {
+    width: 85%;
+    height: 1.5px;
+    background: #595757;
+    margin: 100px 0;
+    margin-inline: auto;
+}
+
+.languages {
+    width: 80vw;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.languages > span {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.languages-list {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.languages-list > span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
 
 @keyframes fadeIn {
     0% {
@@ -364,30 +466,30 @@ h1, h2, h3, h4
     }
 }
 
-@media (max-width: $max-width) {
-    .home-content {
-        width: 90%;
-    }
-
-    .buttons-home-screen {
-        margin-top: 60px;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .buttons-home-screen button {
-        width: 100%;
-    }
-
-    .description span {
-        display: none;
-    }
-
-    .description {
-        margin-top: 35px;
-    }
-
-    .waiting-room > button {
-        width: 70%;
-    }
-}
+//@media (max-width: $max-width) {
+//    .home-content {
+//        width: 90%;
+//    }
+//
+//    .buttons-home-screen {
+//        margin-top: 60px;
+//        flex-direction: column;
+//        gap: 20px;
+//    }
+//
+//    .buttons-home-screen button {
+//        width: 100%;
+//    }
+//
+//    .description span {
+//        display: none;
+//    }
+//
+//    .description {
+//        margin-top: 35px;
+//    }
+//
+//    .waiting-room > button {
+//        width: 70%;
+//    }
+//}

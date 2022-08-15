@@ -8,16 +8,10 @@
     --mobile-gap: 100px;
 }
 
-body {
-    background: var(--background);
-}
-
-
 .container {
     top: var(--start-height);
     position: absolute;
 }
-
 
 .container > div > span {
     font-weight: bold;
@@ -50,7 +44,6 @@ body {
     left: calc(75vw - var(--item-width) / 2 + var(--item-gap));
 }
 
-
 .easyCont > p, .mediumCont > p, .hardCont > p {
     width: 200px;
     color: black;
@@ -75,7 +68,6 @@ body {
     position: absolute;
     background: white;
 }
-
 
 .question-item > div:first-child {
     width: 70%;
@@ -113,6 +105,10 @@ body {
 
 }
 
+.spacer {
+    height: 100px;
+    opacity: 0;
+}
 
 .on-drag {
     transition: transform 0.2s linear;
@@ -181,7 +177,6 @@ body {
     vertical-align: middle;
     white-space: nowrap;
 }
-
 
 .filter-container > img {
     width: 25px;

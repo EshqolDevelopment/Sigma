@@ -54,8 +54,8 @@ class Checker:
             self.result = False
             return False
 
-        if self.input_dict[self.func_name] == []:
-            if d[self.func_name]() != self.output_dict[self.func_name]:
+        if len(self.input_dict) == 0:
+            if d[self.func_name]() != self.output_dict:
                 self.result = False
                 return False
             self.result = True
@@ -64,16 +64,16 @@ class Checker:
         if self.func_name in ["get_indexes", "triplet_sum_array", "area_of_triangle", "minimize_the_sum",
                               "count_solution", "add_binary", "string_product",
                               "queen_attack"] or self.multi_arguments == "true":
-            for i in range(len(self.input_dict[self.func_name])):
-                inp = self.input_dict[self.func_name][i]
-                if d[self.func_name](*inp) != self.output_dict[self.func_name][i]:
+            for i in range(len(self.input_dict)):
+                inp = self.input_dict[i]
+                if d[self.func_name](*inp) != self.output_dict[i]:
                     self.result = False
                     return False
             self.result = True
             return True
 
-        elif str(self.input_dict[self.func_name])[2] == '<' and str(self.input_dict[self.func_name])[-3] == '>':
-            z = self.input_dict[self.func_name]
+        elif str(self.input_dict)[2] == '<' and str(self.input_dict)[-3] == '>':
+            z = self.input_dict
             for i in range(len(z)):
                 arguments = str(z[i])[1:-1].split(",")
                 for x in range(len(arguments)):
@@ -82,15 +82,15 @@ class Checker:
                             arguments[x] = int(arguments[x])
                         else:
                             arguments[x] = float(arguments[x])
-                if d[self.func_name](*arguments) != self.output_dict[self.func_name][i]:
+                if d[self.func_name](*arguments) != self.output_dict[i]:
                     self.result = False
                     return False
             self.result = True
             return True
 
         else:
-            for i in range(len(self.input_dict[self.func_name])):
-                if d[self.func_name](self.input_dict[self.func_name][i]) != self.output_dict[self.func_name][i]:
+            for i in range(len(self.input_dict)):
+                if d[self.func_name](self.input_dict[i]) != self.output_dict[i]:
                     self.result = False
                     return False
             self.result = True
@@ -101,7 +101,7 @@ class Checker:
             self.checks()
         if self.result == False and self.log != "":
             return "Incorrect Answer\\\\nPrints: " + self.log
-        if self.result == False:
+        if self.result is False:
             return False
         return self.result
 
@@ -121,12 +121,11 @@ def main(function, func_name, input_dict, output_dict, multi_arguments):
     try:
         player = Checker(function, func_name, input_dict, output_dict, multi_arguments)
         res = player.get_result()
-        if res == False:
+        if res is False:
             return "Incorrect Answer"
         return str(res)
     except Exception as e:
         return str(e)
-
 
 main("""${code}""", "${function_name}", ${input}, ${output}, "${multi}")`
 }

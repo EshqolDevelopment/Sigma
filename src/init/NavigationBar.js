@@ -3,11 +3,11 @@ import style from "./Navigation.module.css";
 import {getAuth} from "firebase/auth";
 import LoginModal from "../LoginModal";
 
+
 const moveWindow = (page) => window.location.href = `/${page.toLowerCase()}`;
 
 
-
-export default function NavigationBar(props) {
+export default function NavigationBar() {
     const [showLogin, setShowLogin] = useState(false);
     const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
     const currentPage = window.location.pathname.split("/")[1].toLocaleLowerCase();
@@ -56,13 +56,12 @@ export default function NavigationBar(props) {
                 <div/>
             </div>
 
-
             <div className={style.leftSide}>
                 {user && <img src={require("../Photos/p1.png")} className={style.profileImage} alt={"profile"}/>}
                 {!user && <button className={style.loginBtn} onClick={openLoginModal}>Login</button>}
                 {showLogin && <LoginModal show={showLogin} setShow={setShowLogin}/>}
+                <img src={require("../Photos/logo.png")} className={style.sigmaIcon} alt={"logo"}/>
             </div>
-
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
 
@@ -81,7 +80,6 @@ export default function NavigationBar(props) {
                 </div>
 
             </div>}
-
         </nav>
     );
 }

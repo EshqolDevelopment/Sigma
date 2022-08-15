@@ -10,6 +10,7 @@ import Compiler from "./Compiler/Compiler/Compiler";
 import Container from "./Practice/List/Container";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
     <div>
         <NavigationBar/>

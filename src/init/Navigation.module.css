@@ -4,10 +4,11 @@
     top: 0;
     width: 100%;
     height: var(--navigation-height);
-    background: #27282C;
+    background: #e6e6e6;
     display: flex;
     z-index: 100;
     justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
 
@@ -20,28 +21,32 @@
     transition: 0.2s ease-in transform;
     font-size: 18px;
     font-weight: bold;
-    color: rgb(200, 200, 200);
+    color: rgb(50, 50, 50);
     text-decoration: none !important;
     margin-right: 8px;
 }
 
 .page:hover:not(.active) {
-    border-bottom: rgb(200, 200, 200) solid 3px;
+    border-bottom: rgb(50, 50, 50) solid 3px;
     transform: scale(1.02);
 }
 
 .active {
-    border-bottom: white solid 3px;
-    color: white;
+    border-bottom: black solid 3px;
+    color: black;
 }
 
 
-.profileImage {
-    height: 75%;
+.profileImage, .sigmaIcon {
+    height: 80%;
     cursor: pointer;
     margin-top: auto;
     margin-bottom: auto;
-    margin-right: 30px;
+    margin-right: 10px;
+}
+
+.sigmaIcon {
+    border-radius: 50%;
 }
 
 .navMenu {
@@ -57,7 +62,7 @@
     width: 95px;
     border-radius: 20px;
     background: white;
-    border: none;
+    border: 1px solid black;
     font-weight: bold;
     font-size: 16px;
 }

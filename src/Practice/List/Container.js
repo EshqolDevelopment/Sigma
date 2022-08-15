@@ -7,6 +7,7 @@ import "./ListOfQuestions.css";
 const db = getFirestore(app);
 let questionDictGlobal = {};
 
+
 export default function Container() {
     const [questionDict, setQuestionDict] = useState({Easy: [], Medium: [], Hard: []});
     const [questionIsFiltered, setQuestionIsFiltered] = useState(false);
@@ -31,10 +32,6 @@ export default function Container() {
 
         for (const level of ["Easy", "Medium", "Hard"]) {
             data[level] = temp.filter(val => val[2] === level);
-            // const savedIndexes = localStorage.getItem("ListIndexes" + level.toLowerCase())
-            // if (savedIndexes) {
-            //     data[level] = JSON.parse(savedIndexes)
-            // }
         }
         setQuestionDict(data);
         questionDictGlobal = data;
@@ -89,7 +86,6 @@ export default function Container() {
                 <img src={"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"}/>
             </div>
 
-
             <div className={"container"}>
                 <div className={"easyCont"}>
                     <p>Easy - 0/25</p>
@@ -111,6 +107,5 @@ export default function Container() {
                 </div>
             </div>
         </div>
-    );
-
+    )
 }

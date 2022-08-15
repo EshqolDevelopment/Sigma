@@ -168,7 +168,7 @@ export default function ListOfQuestions(props) {
                     subject = isMultiArgument ? subject.substring(1) : subject;
 
                     return (
-                        <div key={i + level}
+                        [<div key={i + level}
                              className={["question-item", currentDragItemIndex === i ? "on-drag" : "not-on-drag"].join(" ")}
                              style={{top: i * ItemHeight}} id={i + level}>
 
@@ -190,11 +190,14 @@ export default function ListOfQuestions(props) {
                                      onTouchStart={() => onTouchStart(i)}/>
                             </div>
 
-                        </div>
+                        </div>,
+
+                        questionList.length - 1 === i &&
+                        <div key={i + level} className={["question-item", "spacer"].join(" ")} style={{top: (i + 1) * ItemHeight}} id={i + level}/>
+                        ]
                     );
                 })
             }
         </div>
-
     );
 }
