@@ -10,23 +10,6 @@ export function MultiPlayerModal(props) {
         {name: "Nadav1", profileImage: "1", coinsNum: 100}
         , {}, {}, {}]);
 
-    const [modalClassName, setModalClassName] = useState("modal")
-
-    useEffect(() => {
-        if (props.show && !multiPlayDialog.current.open) {
-            multiPlayDialog.current.showModal();
-        } else if (!props.show && multiPlayDialog.current.open) {
-            multiPlayDialog.current.close();
-        }
-    }, [props.show]);
-
-    useEffect(() => {
-        if (code) {
-            setModalClassName("modal1")
-        } else {
-            setModalClassName("modal")
-        }
-    },[code])
 
 
     function joinAction(e) {
@@ -52,7 +35,7 @@ export function MultiPlayerModal(props) {
     }
 
     return (
-        <dialog className={modalClassName} ref={multiPlayDialog}>
+        <>
             <div className={"container-modal"}>
                 <div className={"modal-header"}>
                     <img src={"https://static.thenounproject.com/png/57781-200.png"}
@@ -121,6 +104,6 @@ export function MultiPlayerModal(props) {
 
 
             </div>
-        </dialog>
+        </>
     );
 }

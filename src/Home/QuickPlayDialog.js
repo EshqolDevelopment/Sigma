@@ -1,21 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 
 export function QuickPlayModal(props) {
-    const quickPlayDialog = useRef();
     const [level, setLevel] = useState("");
     const [title, setTitle] = useState("Choose a difficulty level");
     const [opponentName, setOpponentName] = useState("Opponent");
     const [opponentProfileImage, setOpponentProfileImage] = useState("");
     const [opponentCoinsNum, setOpponentCoinsNum] = useState(0);
 
-    useEffect(() => {
-        if (props.show && !quickPlayDialog.current.open) {
-            quickPlayDialog.current.showModal();
-        } else if (!props.show && quickPlayDialog.current.open) {
-            quickPlayDialog.current.close();
-            setLevel("");
-        }
-    }, [props.show]);
 
 
     useEffect(() => {
@@ -47,7 +38,7 @@ export function QuickPlayModal(props) {
 
 
     return (
-        <dialog className={"modal"} ref={quickPlayDialog}>
+        <>
             <div className={"container-modal"}>
                 <div className={"modal-header"}>
                     <img src={"https://static.thenounproject.com/png/57781-200.png"} onClick={() => props.setShow(false)}/>
@@ -87,6 +78,6 @@ export function QuickPlayModal(props) {
                 </div>}
 
             </div>
-        </dialog>
+        </>
     )
 }

@@ -77,7 +77,7 @@ export default function Container() {
 
 
     return (
-        <div className={"box"}>
+        <div>
             <h1 className={"practice-title"}>Practice any question in your level, supporting over 10 languages!</h1>
             <div className={"filter-container"}>
                 <button className={"pickRandom"}>Pick Random</button>
