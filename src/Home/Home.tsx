@@ -1,17 +1,39 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./Home.scss";
 import {SampleQuestion} from "./SampleQuestion";
 import {PlayDialog} from "./PlayDialog";
 import * as Svg from './Svg'
+import {getAuth, GoogleAuthProvider} from "firebase/auth";
+import * as firebaseui from 'firebaseui'
+import {GlobalContext} from "../index";
 
 export default function Home() {
-    const username = "Nadav";
     const [showPlayModal, setShowPlayModal] = useState(false)
+    const globalContext = useContext(GlobalContext)
 
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "white");
-    }, [])
+
+        let uiConfig = {
+            signInOptions: [
+                {
+                    provider: GoogleAuthProvider.PROVIDER_ID,
+                    clientId: '794637356909-eirm0bahjum0as2o0mrpjqipchiqp7fo.apps.googleusercontent.com',
+                    customParameters: {
+                        prompt: 'select_account',
+                    },
+                }
+            ],
+            credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO
+        };
+
+        if (globalContext.user === null && !ui) {
+            ui = new firebaseui.auth.AuthUI(getAuth());
+            ui.start("#helper-firebase-ui", uiConfig);
+        }
+
+    }, [globalContext.user])
 
 
     const Box = (props: {title: string, children: string, icon?: string, viewBox?: string, fill?: boolean,
@@ -66,6 +88,8 @@ export default function Home() {
 
     return (
         <div className={'home-content'}>
+            <div style={{display: "none"}} id={"helper-firebase-ui"}></div>
+
 
             <div className={'home-upper'}>
                 <div className={'home-title'}>

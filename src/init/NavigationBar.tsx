@@ -1,8 +1,7 @@
-import React, {createRef, useState} from "react";
+import React, {createRef, useContext, useState} from "react";
 import style from "./Navigation.module.css";
-import {getAuth} from "firebase/auth";
 import LoginModal from "../LoginModal";
-
+import {GlobalContext} from "../index";
 
 const moveWindow = (page) => window.location.href = `/${page.toLowerCase()}`;
 
@@ -12,9 +11,8 @@ export default function NavigationBar() {
     const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
     const currentPage = window.location.pathname.split("/")[1].toLocaleLowerCase();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const mobileMenuRef = createRef();
-
-    const user = getAuth().currentUser;
+    const mobileMenuRef = createRef<HTMLDivElement>();
+    const globalContext = useContext(GlobalContext);
 
     const openLoginModal = () => {
         setShowLogin(true);
@@ -57,15 +55,19 @@ export default function NavigationBar() {
             </div>
 
             <div className={style.leftSide}>
-                {user && <img src={require("../Photos/p1.png")} className={style.profileImage} alt={"profile"}/>}
-                {!user && <button className={style.loginBtn} onClick={openLoginModal}>Login</button>}
-                {showLogin && <LoginModal show={showLogin} setShow={setShowLogin}/>}
-                <img src={require("../Photos/logo.png")} className={style.sigmaIcon} alt={"logo"}/>
+
+                {globalContext.user === null && <>
+                    <button className={style.loginBtn} onClick={openLoginModal}>Login</button>
+                    <LoginModal show={showLogin} setShow={setShowLogin}/>
+                    <img src={require("../Photos/logo.png")} className={style.sigmaIcon} alt={"logo"}/>
+                </>}
+
+                {globalContext.user && <img src={require("../Photos/p1.png")} className={style.sigmaIcon} alt={"logo"}/>}
             </div>
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
 
-                <span>Hello, {user !== null && user.displayName}</span>
+                <span>Hello, {globalContext.user && globalContext.user.displayName}</span>
                 <div>
                     <span>Home</span>
                 </div>

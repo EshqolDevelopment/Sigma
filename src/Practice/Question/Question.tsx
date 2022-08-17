@@ -7,8 +7,6 @@ import {app} from "../../init/firebase";
 import {Language, QuestionData} from "../../DataTypes";
 
 
-const username = "Yoav";
-
 export default function Question() {
     const [question, setQuestion] = useState({
         description: "",
