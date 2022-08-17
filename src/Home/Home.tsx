@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useState} from "react";
 import "./Home.scss";
 import {SampleQuestion} from "./SampleQuestion";
 import {PlayDialog} from "./PlayDialog";
-import * as Svg from './Svg'
+import * as Svg from '../init/Svg'
 import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import * as firebaseui from 'firebaseui'
-import {GlobalContext} from "../index";
+import {GlobalContext} from "../Global";
 
 
 const languages = {
@@ -128,11 +128,9 @@ export default function Home() {
         </div>
     )
 
-
     const playNow = () => {
-        setShowPlayModal(true)
+        window.location.href = 'play'
     }
-
 
     return (
         <div className={'home-content'}>

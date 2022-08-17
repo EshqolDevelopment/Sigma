@@ -1,0 +1,102 @@
+@use "src/init/global" as *;
+
+.levelsList {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    flex-wrap: wrap;
+
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        h3 {
+            font-size: 23px;
+            font-weight: 600;
+        }
+    }
+
+
+    @include mobile {
+        & > div h3 {
+            font-weight: 700;
+        }
+
+    }
+}
+
+
+.easy, .medium, .hard {
+    width: 160px;
+    height: 80px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgb(black, 0.2);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s background ease-in-out, 0.2s transform ease-in-out;
+    border: 0;
+}
+
+:hover:is(.easy, .medium, .hard) {
+    transform: scale(1.05);
+}
+
+.easy {
+    background: dodgerblue;
+
+    &:hover {
+        background: steelblue;
+    }
+}
+
+.medium {
+    background: orange;
+
+    &:hover {
+        background: #d38a00;
+    }
+}
+
+.hard {
+    background: red;
+
+    &:hover {
+        background: darkred;
+    }
+}
+
+
+.levelDetails {
+    h4 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-top: 20px;
+    }
+
+    li:not(:last-of-type) {
+        margin-bottom: 5px;
+    }
+
+    & > span {
+        font-size: 15.5px;
+        font-weight: 500;
+    }
+
+}
+
+.levelDesignContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    gap: 12px;
+
+    img {
+        width: 100px;
+        height: 100px;
+        //box-shadow: 0 0 10px rgb(black, 0.2);
+        //border-radius: 20px;
+    }
+
+}

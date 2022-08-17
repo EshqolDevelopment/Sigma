@@ -1,7 +1,7 @@
 import React, {createRef, useContext, useState} from "react";
 import style from "./Navigation.module.css";
 import LoginModal from "../LoginModal";
-import {GlobalContext} from "../index";
+import {GlobalContext} from "../Global";
 
 const moveWindow = (page) => window.location.href = `/${page.toLowerCase()}`;
 
