@@ -404,14 +404,28 @@ h1, h2, h3, h4 {
     align-items: center;
     padding: 20px;
     cursor: pointer;
-    transition: 0.3s ease-in-out box-shadow;
+    transition: 0.2s ease-in-out box-shadow;
     flex-shrink: 0;
+    border-radius: 5px;
+    background: white;
+    border: 0;
 }
 
 
 .box:hover, .box:focus-visible {
     outline: 0;
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
+
+    svg {
+        transform: scale(1.15);
+    }
+}
+
+.box > svg {
+    width: 50px;
+    margin: 10px 0;
+    // transition for 2 properties: transform and margin
+    transition: transform 0.3s ease-in-out;
 }
 
 .box > p {
@@ -434,11 +448,23 @@ h1, h2, h3, h4 {
     background: #595757;
     margin: 100px 0;
     margin-inline: auto;
+
+    @include mobile {
+        width: 90%;
+    }
 }
 
-.languages {
-    width: 80vw;
+.details {
     margin-inline: auto;
+    gap: 50px;
+    width: 80%;
+
+    @include mobile {
+        width: 94%;
+    }
+}
+
+.details-title {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -452,12 +478,13 @@ h1, h2, h3, h4 {
     }
 }
 
-.languages > span {
+
+.details-title > span {
     font-size: 20px;
     margin-top: 20px;
 }
 
-.languages-list {
+.details-list {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
@@ -465,10 +492,35 @@ h1, h2, h3, h4 {
     gap: 20px;
 }
 
-.languages-list > span {
-    font-size: 20px;
+.details-list > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.details-list > div > span {
+    font-size: 18px;
     font-weight: bold;
 }
+
+.details-list > div > span > span {
+    font-size: 18px;
+    font-weight: normal;
+    color: #464545;
+}
+
+.details-list  {
+    svg {
+        width: 50px;
+
+        @include mobile {
+            min-width: 43px;
+            max-width: 43px;
+        }
+    }
+}
+
 
 .modal-container-body {
     display: flex;

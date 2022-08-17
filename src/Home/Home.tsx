@@ -7,6 +7,41 @@ import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import * as firebaseui from 'firebaseui'
 import {GlobalContext} from "../index";
 
+
+const languages = {
+    'Python': [Svg.Python(), 'Data Scientists & Students'],
+    'JavaScript': [Svg.Javascript(), 'Web developers'],
+    'Kotlin': [Svg.Kotlin(), 'Android developers'],
+    'Java': [Svg.Java(), 'old school programmers'],
+    'C#': [Svg.Csharp(), 'Windows & Unity developers'],
+}
+
+const languagesList = Object.keys(languages);
+
+const realtime = {
+    'Up to 5 Questions per Game': [Svg.Trophy(), 'the first one to answer 3 correctly wins, with maximum of 5 per game'],
+    '4 Different Levels': [Svg.Level(), 'choose the right one for you out of: Beginner, Easy, Medium and Hard'],
+    "Don't waste the time": [Svg.Hourglass(), "it's all about time, so always try to answer the question as fast as possible"]
+}
+
+const friends = {
+    'Solve in your own pace': [Svg.Running(), 'in the multiplayer mode, each player continues to the next question, and not disturbing the other players'],
+    'Improve together': [Svg.HandShake(), 'without any doubt, challenge your friends is the best way to become a coding master'],
+    'Customize your game': [Svg.Settings(), 'modify the number of questions, the level and the language of the game to fit your goals']
+}
+
+const leaderboard = {
+    'Coins': [Svg.Coins(), 'the base number is the amount of coins you have'],
+    'Wins': [Svg.Medal(), 'Add the number of wins you have, each win is worth 10 points'],
+    'Winrate': [Svg.Percentage(), 'Now multiply it by your winrate, for instance if your winrate is 65%, then multiply it by 0.65']
+}
+
+const ide = {
+    'Syntax Highlighting': [Svg.Marker(), "there's no need to explain why is it so important..."],
+    'Line Numbering': [Svg.Numbering(), 'to help you track your code'],
+}
+
+let ui = null;
 export default function Home() {
     const [showPlayModal, setShowPlayModal] = useState(false)
     const globalContext = useContext(GlobalContext)
@@ -52,14 +87,27 @@ export default function Home() {
                 <h2>{props.title}</h2>
                 <p>{props.children}</p>
                 <span>Learn more.</span>
-            </div>
-        )
-    }
+            </button>
 
-    const Spacer = () => {
-        return (
-            <div className={'line-separating'}/>
-        )
+    )
+
+
+    const Spacer = () => (
+        <div className={'line-separating'}/>
+    )
+
+
+    const List = (props) => {
+        return <>
+            { Object.keys(props.data).map((key, index) => (
+                <div key={index}>
+                    {props.data[key][0]}
+                    <span>
+                        {key}<span>{props.children}{props.data[key][1]}</span>
+                    </span>
+                </div>
+            ))}
+        </>
     }
 
 
