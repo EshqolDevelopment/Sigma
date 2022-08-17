@@ -43,7 +43,7 @@ export default function Leaderboard() {
                         <div className={"leftSide"}>
                             <span className={"num"}>#{index + 1}</span>
                             <span className={'flag'}>{countryCodeEmoji(country === '' ? 'us' : country)}</span>
-                            <img className={"person"} src={require(`../Photos/p${image === 'undefined' ? "guest" : image}.png`)} alt={name} onClick={openProfile}/>
+                            <img className={"person"} src={`/images/p${image === 'undefined' ? "guest" : image}.png`} alt={name} onClick={openProfile}/>
                         </div>
 
                         <span className={"itemName"}>{name.replaceAll('_', '')}</span>

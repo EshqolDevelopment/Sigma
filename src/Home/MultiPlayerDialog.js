@@ -58,7 +58,7 @@ export function MultiPlayerModal(props) {
                             return <div key={index} className={"player-item"}>
                                 <span className={"player-item-index"}>Player {index + 1}</span>
                                 <span className={"player-item-name"}>{player.name}</span>
-                                {player.profileImage && <img src={require(`../Photos/p${player.profileImage}.png`)}/>}
+                                {player.profileImage && <img src={`/images/p${player.profileImage}.png`}/>}
                             </div>
                         })}
                     </div>

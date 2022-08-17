@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import arrowIcon from "../../Photos/arrow.svg";
 
 export function ExpandItem(props) {
     const [expanded, setExpanded] = useState(false);
@@ -11,7 +10,7 @@ export function ExpandItem(props) {
     return <div className={"expandItem"}>
         <div className={"expandItemTitle"}>
             <span>Optimal Space & Time Complexity</span>
-            <img src={arrowIcon} onClick={openDescription}
+            <img src={"/images/arrow.svg"} onClick={openDescription}
                  className={["arrow", expanded ? "arrowOpen" : ""].join(" ")}/>
         </div>
 

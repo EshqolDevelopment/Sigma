@@ -1,8 +1,5 @@
 import React, {useState} from "react";
 import "./ListOfQuestions.css";
-import like1Img from "../../Photos/star1.svg";
-import like2Img from "../../Photos/star2.svg";
-
 
 let lastStyleUpdate = Date.now();
 let itemOnMouseIndex = null;
@@ -150,9 +147,9 @@ export default function ListOfQuestions(props) {
     function like(id) {
         const like = document.getElementById(id);
         if (like.src.includes("star2")) {
-            like.src = like1Img;
+            like.src = "/images/star1.svg";
         } else {
-            like.src = like2Img;
+            like.src = "/images/star2.svg";
         }
 
     }
@@ -181,7 +178,7 @@ export default function ListOfQuestions(props) {
 
                             <div className={"rightContainer"}>
                                 <div>
-                                    <img className={"likeImg"} src={like1Img} id={"like" + level + i}
+                                    <img className={"likeImg"} src={"/images/star1.svg"} id={"like" + level + i}
                                          onClick={() => like("like" + level + i)} alt={"Like"}/>
                                 </div>
 

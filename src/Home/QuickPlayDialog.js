@@ -7,8 +7,6 @@ export function QuickPlayModal(props) {
     const [opponentProfileImage, setOpponentProfileImage] = useState("");
     const [opponentCoinsNum, setOpponentCoinsNum] = useState(0);
 
-
-
     useEffect(() => {
         searchingOpponent();
     }, [])
@@ -17,7 +15,7 @@ export function QuickPlayModal(props) {
     function searchingOpponent() {
         setInterval(async () => {
             const randProfile = Math.floor(Math.random() * 8) + 1;
-            setOpponentProfileImage(require(`../Photos/p${randProfile}.png`))
+            setOpponentProfileImage(`/images/p${randProfile}.png`)
         }, 300);
     }
 
@@ -57,14 +55,14 @@ export function QuickPlayModal(props) {
                     <div className={"match-container"}>
                         <div>
                             <span>UserName1</span>
-                            <img src={require("../Photos/p1.png")}/>
+                            <img src={"/images/p1.png"}/>
 
                             <div className={"points-container"}>
                                 <img src={"https://cdn-icons-png.flaticon.com/512/272/272525.png"}/>
                                 <span>5000</span>
                             </div>
                         </div>
-                        <img src={require("../Photos/vs.png")}/>
+                        <img src={"/images/vs.png"}/>
                         <div>
                             <span>{opponentName}</span>
                             <img src={opponentProfileImage}/>
