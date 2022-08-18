@@ -1,7 +1,7 @@
 import styles from "./levels.module.scss";
 import React from "react";
 
-export function Levels() {
+export function Levels(props: { shortVersion?: boolean }) {
     return <div className={styles.levelsList}>
         <div>
             <h3>For all your beginners :)</h3>
@@ -9,7 +9,7 @@ export function Levels() {
                 <img src={"/images/beginner.png"}/>
                 <button className={styles.easy}>Easy</button>
             </div>
-            <div className={styles.levelDetails}>
+            {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
                 <ul>
                     <li>Check if a number is prime</li>
@@ -17,7 +17,7 @@ export function Levels() {
                     <li>Get the median from list of numbers</li>
                 </ul>
                 <span>Average time limit per question: 7 minutes</span>
-            </div>
+            </div>}
         </div>
 
         <div>
@@ -27,7 +27,7 @@ export function Levels() {
                 <button className={styles.medium}>Medium</button>
             </div>
 
-            <div className={styles.levelDetails}>
+            {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
                 <ul>
                     <li>Check if a number is prime</li>
@@ -35,7 +35,7 @@ export function Levels() {
                     <li>Get the median from list of numbers</li>
                 </ul>
                 <span>Average time limit per question: 20 minutes</span>
-            </div>
+            </div>}
         </div>
 
         <div>
@@ -45,7 +45,7 @@ export function Levels() {
                 <button className={styles.hard}>Hard</button>
             </div>
 
-            <div className={styles.levelDetails}>
+            {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
                 <ul>
                     <li>Check if a number is prime</li>
@@ -53,7 +53,7 @@ export function Levels() {
                     <li>Get the median from list of numbers</li>
                 </ul>
                 <span>Average time limit per question: 50 minutes</span>
-            </div>
+            </div>}
         </div>
     </div>;
 }

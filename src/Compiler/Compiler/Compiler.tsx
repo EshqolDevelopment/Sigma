@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Editor from "../../init/Editor";
 import {FaSave, FaTrashAlt} from "react-icons/fa";
 import {BsFillSunFill, BsMoonFill} from "react-icons/bs";
@@ -17,7 +17,6 @@ const LanguageToHelloCode = {
 }
 
 export default function Compiler() {
-    const [files, setFiles] = useState(["main"]);
     const [currentFile, setCurrentFile] = useState("main");
     const [darkMode, setDarkMode] = useState(false);
     const [languagesDialog, setLanguagesDialog] = useState(false);
@@ -108,7 +107,7 @@ export default function Compiler() {
                 <div className={"compiler-editor"}>
                     <div className={"compiler-top"}>
                         <div className={"files"}>
-                            {files.map((file, index) => (
+                            {["main"].map((file, index) => (
                                 <span key={index} className={file === currentFile ? "current-file" : ""}
                                       onClick={() => setCurrentFile(file)}>
                                     {file}.{extensions[language]}
