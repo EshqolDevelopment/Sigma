@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from "react";
 
 type Props = {
-    languages: string[];
+    languages: { [key: string]: any };
     show: boolean;
     setLanguage: (language: string) => void;
     setShow: (show: boolean) => void;
+    setCode: (code: string) => void;
+    LanguageToHelloCode: { [key: string]: string };
 }
 
 export function LanguageDialog(props: Props) {
@@ -24,6 +26,7 @@ export function LanguageDialog(props: Props) {
     const changeLanguage = (language) => {
         localStorage['language'] = language;
         props.setLanguage(language);
+        props.setCode(props.LanguageToHelloCode[language]);
         props.setShow(false);
     }
 

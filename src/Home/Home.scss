@@ -395,6 +395,10 @@ h1, h2, h3, h4 {
     gap: 20px;
     flex-wrap: wrap;
     justify-content: space-evenly;
+
+    @include mobile {
+        margin-top: 60px;
+    }
 }
 
 .box {

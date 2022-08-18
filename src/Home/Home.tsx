@@ -42,6 +42,7 @@ const ide = {
 }
 
 let ui = null;
+
 export default function Home() {
     const [showPlayModal, setShowPlayModal] = useState(false)
     const globalContext = useContext(GlobalContext)

@@ -21,10 +21,24 @@ export default function Play() {
         setStep(1);
     }
 
+    useEffect(() => {
+        // when the user clicks on the back button, we reset the step to 0
+        window.onpopstate = () => {
+            if (step > 0) {
+                setStep(0);
+            } else {
+                window.location.href = "/";
+            }
+        }
+    }, [step])
+
+    useEffect(() => {
+        window.history.pushState(null, null, window.location.pathname);
+    }, [])
+
     return (
         <div>
             { step === 0 && <ChooseModeStep quickPlay={quickPlay} multiPlay={multiPlay}/> }
-
             { step === 1 && gameMode === "SinglePlayer" && <ChooseLevelStep/>}
         </div>
     )
