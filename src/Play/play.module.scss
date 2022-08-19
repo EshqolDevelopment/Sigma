@@ -28,7 +28,7 @@
     margin-bottom: 5px;
   }
 
-  & > p {
+  & > div {
     font-size: 18px;
     @include mobile {
     }
@@ -213,4 +213,15 @@
     border: 3px solid #4a6a93;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(black, 0.5);
+    background: #4a6a93;
+}
+
+.inviteOrJoinTitle {
+  h1 {
+    margin-bottom: -10px;
+    margin-top: -15px;
+  }
+
+  margin-bottom: -20px;
+
 }

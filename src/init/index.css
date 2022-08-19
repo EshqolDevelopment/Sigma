@@ -53,3 +53,8 @@ button {
 .sigma-button:hover {
     background-color: #1d89f6;
 }
+
+
+.sigma-button:disabled {
+    background-color: #84b4e5;
+}

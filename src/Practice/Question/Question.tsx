@@ -5,6 +5,7 @@ import {ExpandItem} from "./ExpandItem";
 import {doc, getDoc, getFirestore} from "firebase/firestore";
 import {app} from "../../init/firebase";
 import {Language, QuestionData} from "../../DataTypes";
+import {postRequest} from "../../Global";
 
 
 export default function Question() {
@@ -14,8 +15,10 @@ export default function Question() {
         level: "",
         params: {},
         return: "",
-        subject: ""
+        subject: "",
+        languages: [],
     } as QuestionData);
+
     const [timer, setTimer] = useState(0);
     const [language, setLanguage] = useState("python" as Language);
     const [funcName, setFuncName] = useState("");
@@ -80,12 +83,12 @@ export default function Question() {
             "int": "Int",
             "float": "Double",
             "bool": "Boolean",
-            "list": "List<Any>",
-            "list[str]": "List<String>",
-            "list[int]": "List<Int>",
-            "list[float]": "List<Double>",
-            "list[bool]": "List<Boolean>",
-            "list[object]": "List<Any>",
+            "list": "Array<Any>",
+            "list[str]": "Array<String>",
+            "list[int]": "Array<Int>",
+            "list[float]": "Array<Double>",
+            "list[bool]": "Array<Boolean>",
+            "list[object]": "Array<Any>",
             "dict": "Map<String, Any>",
         }
 
@@ -129,8 +132,14 @@ export default function Question() {
 
 
     async function getAndSetQuestionData(funcName: string) {
-        const response = await getDoc(doc(db, "client_questions_data/" + funcName));
-        const serverQuestionData = response.data() as QuestionData;
+
+        const response = await postRequest(process.env["REACT_APP_JS_SERVER_URL"] + "/general/getClientQuestionData", {
+            funcName: funcName
+        })
+
+        const serverQuestionData = response.question;
+        serverQuestionData.languages = response.languages;
+
         setQuestion(serverQuestionData);
         setTimer(serverQuestionData.time);
 
@@ -148,27 +157,14 @@ export default function Question() {
 
 
     async function submitQuestion() {
-        const production = false;
+        const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
 
-        let serverURL: string;
-        if (production) {
-            serverURL = language === "kotlin" ? "https://py-server.eshqol.com" : "https://js-server.eshqol.com";
-        } else {
-            serverURL = language === "kotlin" ? "http://localhost:8080" : "http://localhost:8081";
-        }
-
-        const response = await fetch(`${serverURL}/${language}`, {
-            body: JSON.stringify({
+        const result = await postRequest(`${serverURL}/${language}`, {
                 funcName: funcName,
                 code: code[language]
-            }),
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        })
 
-        console.log(await response.json());
+        console.log(result);
     }
 
 
@@ -196,24 +192,13 @@ export default function Question() {
 
             <div className={"container1"}>
                 <div className={"languagePicker"}>
-                    <button onClick={() => setLanguage("python")}>
-                        <img
-                            src={"https://cdn3.iconfinder.com/data/icons/logos-and-brands-adobe/512/267_Python-512.png"}
-                            alt={"python"}/>
-                    </button>
-                    <button onClick={() => setLanguage("javascript")}>
-                        <img src={"https://icon-library.com/images/javascript-icon-png/javascript-icon-png-23.jpg"}
-                             alt={"javascript"}/>
-                    </button>
-                    <button onClick={() => setLanguage("java")}>
-                        <img src={"https://cdn-icons-png.flaticon.com/512/226/226777.png"}
-                             alt={"java"}/>
-                    </button>
-                    <button onClick={() => setLanguage("kotlin")}>
-                        <img
-                            src={"https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Kotlin_Icon.svg/1200px-Kotlin_Icon.svg.png"}
-                            alt={"kotlin"}/>
-                    </button>
+                    {question.languages?.map((lang, i) => (
+                        <button onClick={() => setLanguage(lang)} key={i}>
+                            <img
+                                src={`/images/${lang}.png`}
+                                alt={lang}/>
+                        </button>
+                    ))}
                 </div>
 
                 <div className={"codeEditor"}>
@@ -227,10 +212,9 @@ export default function Question() {
                         <button className={"solutionBtn"}>Solution</button>
                         <select className={"languagePickerMobile"}
                                 onChange={(e) => setLanguage(e.target.value as Language)}>
-                            <option value={"python"}>Python</option>
-                            <option value={"javascript"}>JavaScript</option>
-                            <option value={"java"}>Java</option>
-                            <option value={"kotlin"}>Kotlin</option>
+                            {question.languages?.map((language, i) => (
+                                <option key={i} value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
+                            ))}
                         </select>
                     </div>
                     <div className={"questionJustInfo"}>

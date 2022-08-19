@@ -7,6 +7,7 @@ export type QuestionData = {
     return: string;
     subject: string;
     time: number;
+    languages: Language[];
 }
 
 export type Language = "python" | "javascript" | "java" | "kotlin";

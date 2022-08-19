@@ -14,6 +14,23 @@ type GlobalContextType = {
 }
 export const GlobalContext = createContext<GlobalContextType>(null);
 
+export const postRequest = async (url: string, data: any) => {
+    try {
+        const response = await fetch(url, {
+            body: JSON.stringify(data),
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        return await response.json();
+    } catch (e) {
+        return {error: "General error"};
+    }
+
+}
+
 export function App() {
     const [firebaseUser, setFirebaseUser] = React.useState(undefined as User);
 

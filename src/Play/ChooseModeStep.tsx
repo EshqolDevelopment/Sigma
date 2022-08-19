@@ -13,7 +13,7 @@ export function ChooseModeStep(props: Props) {
         <div className={styles.upper}>
             <div className={styles.title}>
                 <h1>Choose mode</h1>
-                <p>
+                <div>
                     Choose which mode you want to play in. <br/>
                     The modes are differ not only in the number of players but also in the style of the game.
                     <br/>
@@ -23,7 +23,7 @@ export function ChooseModeStep(props: Props) {
                         <li>Quick play (1 vs 1)</li>
                         <li>Multi play (play with friends)</li>
                     </ul>
-                </p>
+                </div>
             </div>
         </div>
 
