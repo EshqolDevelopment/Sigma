@@ -1,13 +1,13 @@
 import styles from "./levels.module.scss";
 import React from "react";
 
-export function Levels(props: { shortVersion?: boolean }) {
+export function Levels(props: { shortVersion?: boolean, onClick?: (level: string) => void }) {
     return <div className={styles.levelsList}>
         <div>
             <h3>For all your beginners :)</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/beginner.png"}/>
-                <button className={styles.easy}>Easy</button>
+                <button className={styles.easy} onClick={() => props.onClick("easy")}>Easy</button>
             </div>
             {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
@@ -24,7 +24,7 @@ export function Levels(props: { shortVersion?: boolean }) {
             <h3>For intermediate programmers</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/intermediate.png"}/>
-                <button className={styles.medium}>Medium</button>
+                <button onClick={() => props.onClick("medium")} className={styles.medium}>Medium</button>
             </div>
 
             {!props.shortVersion && <div className={styles.levelDetails}>
@@ -42,7 +42,7 @@ export function Levels(props: { shortVersion?: boolean }) {
             <h3>For experienced programmers</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/expert.png"}/>
-                <button className={styles.hard}>Hard</button>
+                <button onClick={() => props.onClick("hard")} className={styles.hard}>Hard</button>
             </div>
 
             {!props.shortVersion && <div className={styles.levelDetails}>

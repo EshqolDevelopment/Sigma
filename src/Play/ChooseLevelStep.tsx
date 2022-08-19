@@ -17,7 +17,7 @@ export function ChooseLevelStep() {
         </div>
 
         <div className={styles.levelsContainer}>
-            <Levels/>
+            <Levels onClick={searchForMatch}/>
         </div>
     </div>;
 }
