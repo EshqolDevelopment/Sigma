@@ -19,5 +19,13 @@ export function ChooseLevelStep() {
         <div className={styles.levelsContainer}>
             <Levels onClick={searchForMatch}/>
         </div>
+
+        <dialog className={styles.loading} ref={loadingDialog}>
+            <span>Searching for opponent...</span>
+
+            <img src={"https://cdn.dribbble.com/users/544814/screenshots/3838751/dribbble_hourglass.gif"}/>
+
+            <button>Cancel</button>
+        </dialog>
     </div>;
 }
