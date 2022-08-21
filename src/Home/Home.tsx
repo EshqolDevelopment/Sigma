@@ -7,6 +7,7 @@ import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import * as firebaseui from 'firebaseui'
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const languages = {
@@ -47,6 +48,7 @@ let ui = null;
 export default function Home() {
     const [showPlayModal, setShowPlayModal] = useState(false)
     const globalContext = useContext(GlobalContext)
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -76,7 +78,7 @@ export default function Home() {
     const Box = (props: {title: string, children: string, icon?: string, viewBox?: string, fill?: boolean,
         strokeLine?: "butt" | "round" | "square" | "inherit", strokeWidth?: string, id: string}) => (
 
-            <button className={'box'} onClick={() => props.id === 'questions' ? window.location.href = 'practice' : document.getElementById(props.id).scrollIntoView({
+            <button className={'box'} onClick={() => props.id === 'questions' ? navigate("/practice") : document.getElementById(props.id).scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
                 inline: 'center'
@@ -90,13 +92,9 @@ export default function Home() {
                 <p>{props.children}</p>
                 <span>Learn more.</span>
             </button>
-
     )
 
 
-    const Spacer = () => (
-        <div className={'line-separating'}/>
-    )
 
 
     const List = (props) => {
@@ -115,7 +113,7 @@ export default function Home() {
 
     const ReadMore = (props) => (
         <div id={props.id || ''}>
-            <Spacer/>
+            <div className={'line-separating'}/>
 
             <div className={'details'}>
                 <div className={'details-title'}>
@@ -143,9 +141,7 @@ export default function Home() {
                         Over 200 questions & multi language support!<br/>
                         Become fast, clever and a part of the coding community.
                     </p>
-                    <Link to={"/play"} className={"remove-link-style"}>
-                        <button className={'sigma-button'} >Play Now!</button>
-                    </Link>
+                    <button className={'sigma-button'} onClick={() => navigate("/play")}>Play Now!</button>
                 </div>
 
                 <SampleQuestion/>
@@ -212,8 +208,7 @@ export default function Home() {
                 To avoid this, we have a user-friendly IDE that make your experience much more enjoyable.
             </ReadMore>
 
-            <Spacer/>
-
+            <div className={'line-separating'}/>
 
             {showPlayModal && <PlayDialog  show={showPlayModal} setShow={setShowPlayModal}/>}
 

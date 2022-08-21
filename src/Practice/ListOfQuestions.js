@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import "./ListOfQuestions.css";
+import {useNavigate} from "react-router-dom";
 
 let lastStyleUpdate = Date.now();
 let itemOnMouseIndex = null;
@@ -10,6 +11,7 @@ export default function ListOfQuestions(props) {
     const [currentDragItemIndex, setCurrentDragItemIndex] = useState(null);
     const ItemHeight = 56;
     const questionList = props.questionList;
+    const navigate = useNavigate();
 
     function onMouseDown(i) {
         const top = document.getElementById(i + level).style.top;
@@ -171,7 +173,7 @@ export default function ListOfQuestions(props) {
 
                             <div>
                                 <div className={"circle"}/>
-                                <span onClick={() => window.location.href = `/practice/${name}`}
+                                <span onClick={() => navigate(`/practice/${name}`)}
                                       className={"nameText"}>{name}</span>
                             </div>
 

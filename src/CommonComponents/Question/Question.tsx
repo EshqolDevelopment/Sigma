@@ -2,13 +2,14 @@ import {useEffect, useState} from "react";
 import "./Question.css";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
-import {doc, getDoc, getFirestore} from "firebase/firestore";
-import {app} from "../../init/firebase";
 import {Language, QuestionData} from "../../DataTypes";
 import {postRequest} from "../../Global";
 
+type Props = {
+    funcName: string;
+}
 
-export default function Question() {
+export default function Question(props: Props) {
     const [question, setQuestion] = useState({
         description: "",
         example: {input: [], output: ""},
@@ -21,20 +22,14 @@ export default function Question() {
 
     const [timer, setTimer] = useState(0);
     const [language, setLanguage] = useState("python" as Language);
-    const [funcName, setFuncName] = useState("");
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
-    const db = getFirestore(app);
 
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
-
-        const location = window.location.pathname.split("/").slice(1);
-        const questionName = location[1].replaceAll("%20", " ");
-        const funcName = questionName.replaceAll(" ", "_").toLowerCase();
-        setFuncName(funcName);
-        getAndSetQuestionData(funcName).then(() => {
+        console.log(props.funcName)
+        getAndSetQuestionData(props.funcName).then(() => {
             console.log("Question data loaded");
         });
     }, []);
@@ -137,6 +132,8 @@ export default function Question() {
             funcName: funcName
         })
 
+        console.log(response)
+
         const serverQuestionData = response.question;
         serverQuestionData.languages = response.languages;
 
@@ -152,7 +149,7 @@ export default function Question() {
 
 
     function questionName() {
-        return funcName ? funcName[0].toUpperCase() + funcName.slice(1).replaceAll("_", " ") : "";
+        return props.funcName ? props.funcName[0].toUpperCase() + props.funcName.slice(1).replaceAll("_", " ") : "";
     }
 
 
@@ -160,7 +157,7 @@ export default function Question() {
         const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
 
         const result = await postRequest(`${serverURL}/${language}`, {
-                funcName: funcName,
+                funcName: props.funcName,
                 code: code[language]
         })
 

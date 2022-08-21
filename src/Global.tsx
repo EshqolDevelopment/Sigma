@@ -5,9 +5,10 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Home from "./Home/Home";
 import Leaderboard from "./Leaderboard/Leaderboard";
 import Compiler from "./Compiler/Compiler/Compiler";
-import Container from "./Practice/List/Container";
-import Question from "./Practice/Question/Question";
+import Practice from "./Practice/Practice";
+import Question from "./CommonComponents/Question/Question";
 import Play from "./Play/Play";
+import PracticeQuestion from "./Practice/PracticeQuestion";
 
 type GlobalContextType = {
     user: User
@@ -49,10 +50,11 @@ export function App() {
             user: firebaseUser
         }}>
             <div>
-                <NavigationBar/>
 
                 <div className={"content"}>
                     <BrowserRouter>
+                        <NavigationBar/>
+
                         <Routes>
                             <Route path="/" element={<Home/>}/>
                             <Route path="/home" element={<Home/>}/>
@@ -60,8 +62,8 @@ export function App() {
                             <Route path="/leaderboard" element={<Leaderboard/>}/>
                             <Route path="/compiler" element={<Compiler/>}/>
 
-                            <Route path="/practice" element={<Container/>}/>
-                            <Route path="/practice/*" element={<Question/>}/>
+                            <Route path="/practice" element={<Practice/>}/>
+                            <Route path="/practice/*" element={<PracticeQuestion/>}/>
 
                             <Route path="/play" element={<Play/>}/>
                         </Routes>

@@ -2,17 +2,17 @@ import React, {createRef, useContext, useState} from "react";
 import style from "./Navigation.module.css";
 import LoginModal from "../LoginModal";
 import {GlobalContext} from "../Global";
+import {Link} from "react-router-dom";
 
-const moveWindow = (page) => window.location.href = `/${page.toLowerCase()}`;
 
 
 export default function NavigationBar() {
     const [showLogin, setShowLogin] = useState(false);
     const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
-    const currentPage = window.location.pathname.split("/")[1].toLocaleLowerCase();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const mobileMenuRef = createRef<HTMLDivElement>();
     const globalContext = useContext(GlobalContext);
+    const [activePage, setActivePage] = useState(window.location.pathname.split("/")[1].toLocaleLowerCase());
 
     const openLoginModal = () => {
         setShowLogin(true);
@@ -33,17 +33,21 @@ export default function NavigationBar() {
         return false;
     };
 
+    const onPageChange = (page) => {
+        setActivePage(page);
+    }
+
 
     return (
         <nav className={style.navigationBar}>
             <div className={style.navMenu}>
                 {pages.map((page, index) => {
                     return (
-                        <a key={index}
-                           className={[style.page, isActive(currentPage.toLocaleLowerCase(), page.toLocaleLowerCase()) ? style.active : ""].join(" ")}
-                           onClick={() => moveWindow(page)} href={"/" + page.toLowerCase()}>
+                        <Link key={index} onClick={() => onPageChange(page)}
+                           className={[style.page, isActive(activePage.toLocaleLowerCase(), page.toLocaleLowerCase()) ? style.active : ""].join(" ")}
+                            to={"/" + (page.toLowerCase() === "home" ? "" :  page.toLowerCase())}>
                             {page}
-                        </a>
+                        </Link>
                     );
                 })}
             </div>

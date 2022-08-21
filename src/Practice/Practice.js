@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {doc, getDoc, getFirestore} from "firebase/firestore";
-import {app} from "../../init/firebase";
+import {app} from "../init/firebase";
 import ListOfQuestions from "./ListOfQuestions";
 import "./ListOfQuestions.css";
 
@@ -8,7 +8,7 @@ const db = getFirestore(app);
 let questionDictGlobal = {};
 
 
-export default function Container() {
+export default function Practice() {
     const [questionDict, setQuestionDict] = useState({Easy: [], Medium: [], Hard: []});
     const [questionIsFiltered, setQuestionIsFiltered] = useState(false);
 
