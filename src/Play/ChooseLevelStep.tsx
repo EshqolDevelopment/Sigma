@@ -17,15 +17,11 @@ export function ChooseLevelStep() {
         </div>
 
         <div className={styles.levelsContainer}>
-            <Levels onClick={searchForMatch}/>
+            <Levels onClick={setLevel}/>
         </div>
 
-        <dialog className={styles.loading} ref={loadingDialog}>
-            <span>Searching for opponent...</span>
+        {level && <SearchForMatch level={level} setLevel={setLevel}/>}
 
-            <img src={"https://cdn.dribbble.com/users/544814/screenshots/3838751/dribbble_hourglass.gif"}/>
 
-            <button>Cancel</button>
-        </dialog>
     </div>;
 }

@@ -51,6 +51,12 @@ export default function Play() {
                 <WaitingRoom code={"123931"}/>
             }
 
+            {step === 3 && gameMode === "SinglePlayer" &&
+                <div>
+                    <h1>Single Player</h1>
+                </div>
+            }
+
         </div>
     );
 }
