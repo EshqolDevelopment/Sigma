@@ -1,5 +1,5 @@
 import styles from "../Play/play.module.scss";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import {GlobalContext, Level, postRequest} from "../Global";
 
 type Props = {
@@ -27,7 +27,6 @@ export default function SearchForMatch(props: Props) {
             console.log(removed.current);
             if (!removed.current) {
                 console.log(data);
-                loadingDialog.current.close();
             } else {
                 console.log('removed');
             }
@@ -36,10 +35,7 @@ export default function SearchForMatch(props: Props) {
 
 
 
-    const searchForMatch = async (): Promise<{
-        opponentName: string,
-        questions: string[],
-    }> => {
+    const searchForMatch = async () => {
         return await postRequest(process.env["REACT_APP_JS_SERVER_URL"] + '/general/searchForOpponent', {
             name: userName,
             level: props.level

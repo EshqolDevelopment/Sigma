@@ -1,8 +1,13 @@
 import styles from "./play.module.scss";
-import {Levels} from "./Levels";
-import React from "react";
+import { Levels } from "./Levels";
+import {GlobalContext, Level, postRequest} from "../Global";
+import SearchForMatch from "../Home/SearchForMatch";
+
+
 
 export function ChooseLevelStep() {
+    const [level, setLevel] = React.useState<Level | "">("");
+
     return <div className={styles.chooseLevelContainer}>
 
         <div className={styles.upper}>
