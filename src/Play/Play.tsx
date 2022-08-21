@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {ChooseModeStep} from "./ChooseModeStep";
-import {ChooseLevelStep} from "./ChooseLevelStep";
-import {InviteOrJoinStep} from "./InviteOrJoinStep";
+import {SinglePlayer} from "./SinglePlayer";
+import {MultiPlayer} from "./MultiPlayer";
 import styles from "./play.module.scss";
 import WaitingRoom from "./WaitingRoom";
 
@@ -25,30 +25,21 @@ export default function Play() {
         setStep(1);
     };
 
-    const moveToWaitingRoom = () => {
-        setStep(2);
-    }
-
 
     return (
         <div className={styles.stepsContainer}>
-            {step === 0 &&
+            {!gameMode &&
                 <ChooseModeStep
                     quickPlay={quickPlay}
                     multiPlay={multiPlay}
                 />
             }
-            {step === 1 && gameMode === "SinglePlayer" &&
-                <ChooseLevelStep/>
+            {gameMode === "SinglePlayer" &&
+                <SinglePlayer/>
             }
 
-            {step === 1 && gameMode === "MultiPlayer" &&
-                <InviteOrJoinStep
-                    moveToWaitingRoom={moveToWaitingRoom}
-                />
-            }
-            {step === 2 && gameMode === "MultiPlayer" &&
-                <WaitingRoom code={"123931"}/>
+            {gameMode === "MultiPlayer" &&
+                <MultiPlayer/>
             }
 
         </div>

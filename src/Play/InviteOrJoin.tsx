@@ -1,21 +1,20 @@
+import React, {useState} from "react";
 import styles from "./play.module.scss";
 import {Levels} from "./Levels";
-import React, {useState} from "react";
+
 
 type Props = {
-    moveToWaitingRoom: () => void;
+    onSubmit: (code: string) => void;
 }
 
-export function InviteOrJoinStep(props: Props) {
+export function InviteOrJoin(props: Props) {
 
     const [code, setCode] = useState("");
 
-
-    const createGame = (e) => {
-        e.preventDefault()
-        props.moveToWaitingRoom();
-    }
-
+    const joinGame = (e) => {
+        e.preventDefault();
+        props.onSubmit(code);
+    };
 
     return <div className={styles.chooseLevelContainer}>
 
@@ -30,14 +29,14 @@ export function InviteOrJoinStep(props: Props) {
             </div>
         </div>
 
-
         <div className={styles.inviteOrJoinMainContent}>
 
             <div className={styles.joinContainer}>
                 <h3>Join a game</h3>
-                <form onSubmit={createGame}>
+                <form onSubmit={joinGame}>
                     <span>Enter the code you received from your friend</span>
-                    <input value={code} onChange={(text) => setCode(text.target.value)} type={"text"} placeholder={"Enter your invitation code"} name={"code"}/>
+                    <input value={code} onChange={(e) => setCode(e.target.value)} type={"text"}
+                           placeholder={"Enter your invitation code"} name={"code"}/>
                     <button className={"sigma-button"} disabled={code.length === 0}>Join</button>
                 </form>
             </div>

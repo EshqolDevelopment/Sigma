@@ -11,3 +11,7 @@ $max-width: 750px;
     @content;
   }
 }
+
+.remove-link-style {
+    text-decoration: none;
+}

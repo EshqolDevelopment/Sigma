@@ -1,10 +1,12 @@
 import styles from "../Play/play.module.scss";
 import React, {useEffect, useRef} from "react";
 import {GlobalContext, Level, postRequest} from "../Global";
+import {SinglePlayerGameData} from "../DataTypes";
 
 type Props = {
     level: Level;
     setLevel: (level: Level | "") => void;
+    onMatchFind: (data: SinglePlayerGameData) => void;
 }
 
 export default function SearchForMatch(props: Props) {
@@ -14,26 +16,17 @@ export default function SearchForMatch(props: Props) {
     const userEmail = globalContext.user.email;
     const [name, email] = userEmail.split('@')
     const userName = email !== 'eshqol.com' ? name + '_' : name
-    const removed = React.useRef(false);
-
-    const [matchData, setMatchData] = React.useState({} as {
-        opponent: string,
-        questions: string[],
-    });
 
     useEffect(() => {
         loadingDialog.current.showModal();
-        searchForMatch().then((data) => {
-            console.log(removed.current);
-            if (!removed.current) {
-                console.log(data);
-            } else {
-                console.log('removed');
+        searchForMatch().then((data: SinglePlayerGameData) => {
+            if (!data.error && data.questions) {
+                props.onMatchFind(data);
             }
+
+            loadingDialog.current.close();
         })
     }, [])
-
-
 
     const searchForMatch = async () => {
         return await postRequest(process.env["REACT_APP_JS_SERVER_URL"] + '/general/searchForOpponent', {
@@ -49,7 +42,6 @@ export default function SearchForMatch(props: Props) {
         })
         if (response.result === "OK") {
             props.setLevel("");
-            removed.current = true;
         }
     }
 

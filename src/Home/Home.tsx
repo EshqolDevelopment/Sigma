@@ -6,6 +6,7 @@ import * as Svg from '../init/Svg'
 import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import * as firebaseui from 'firebaseui'
 import {GlobalContext} from "../Global";
+import {Link} from "react-router-dom";
 
 
 const languages = {
@@ -129,9 +130,6 @@ export default function Home() {
         </div>
     )
 
-    const playNow = () => {
-        window.location.href = 'play'
-    }
 
     return (
         <div className={'home-content'}>
@@ -145,7 +143,9 @@ export default function Home() {
                         Over 200 questions & multi language support!<br/>
                         Become fast, clever and a part of the coding community.
                     </p>
-                    <button className={'sigma-button'} onClick={playNow}>Play Now!</button>
+                    <Link to={"/play"} className={"remove-link-style"}>
+                        <button className={'sigma-button'} >Play Now!</button>
+                    </Link>
                 </div>
 
                 <SampleQuestion/>

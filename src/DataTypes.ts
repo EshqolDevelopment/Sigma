@@ -10,4 +10,10 @@ export type QuestionData = {
     languages: Language[];
 }
 
+export type SinglePlayerGameData = {
+    opponent: string,
+    questions: string[],
+    error?: "canceled",
+}
+
 export type Language = "python" | "javascript" | "java" | "kotlin";
