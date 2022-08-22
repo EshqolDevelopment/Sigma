@@ -13,7 +13,9 @@ export default function PracticeQuestion() {
 
     return (
         <div>
-            {funcName && <Question funcName={funcName} numberOfQuestions={1} seekBar={false}/>}
+            {funcName && <Question funcName={funcName}
+                                   numberOfQuestions={1}
+            />}
         </div>
     )
 }

@@ -14,6 +14,7 @@ export type SinglePlayerGameData = {
     opponent: string,
     questions: string[],
     error?: "canceled",
+    gameCode: string,
 }
 
 export type Language = "python" | "javascript" | "java" | "kotlin";

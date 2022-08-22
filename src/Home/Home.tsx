@@ -64,12 +64,12 @@ export default function Home() {
             credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO
         };
 
-        if (globalContext.user === null && !ui) {
+        if (globalContext.userName === null && !ui) {
             ui = new firebaseui.auth.AuthUI(getAuth());
             ui.start("#helper-firebase-ui", uiConfig);
         }
 
-    }, [globalContext.user])
+    }, [globalContext.userName])
 
 
     const Box = (props: {title: string, children: string, icon?: string, viewBox?: string, fill?: boolean,

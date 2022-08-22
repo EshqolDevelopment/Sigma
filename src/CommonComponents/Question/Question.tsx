@@ -4,13 +4,13 @@ import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
 import {postRequest} from "../../Global";
-import {SeekBar} from "./SeekBar";
+
 
 type Props = {
     funcName: string;
-    seekBar: boolean;
     numberOfQuestions?: number;
     currentQuestionNum?: number;
+    onCorrectAnswer?: () => void;
 }
 
 export default function Question(props: Props) {
@@ -130,8 +130,7 @@ export default function Question(props: Props) {
 
 
     async function getAndSetQuestionData(funcName: string) {
-
-        const response = await postRequest(process.env["REACT_APP_JS_SERVER_URL"] + "/general/getClientQuestionData", {
+        const response = await postRequest("/general/getClientQuestionData", {
             funcName: funcName
         })
 
@@ -162,6 +161,9 @@ export default function Question(props: Props) {
                 code: code[language]
         })
 
+        if (result.result === "success") {
+            if (props.onCorrectAnswer) props.onCorrectAnswer();
+        }
     }
 
 
@@ -240,9 +242,6 @@ export default function Question(props: Props) {
                     </div>
                 </div>
             </div>
-
-            {props.seekBar && <SeekBar steps={props.numberOfQuestions} currentStep={props.currentQuestionNum}/>}
-
 
         </div>
     );

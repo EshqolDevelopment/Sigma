@@ -11,11 +11,7 @@ type Props = {
 
 export default function SearchForMatch(props: Props) {
     const loadingDialog = useRef<HTMLDialogElement>();
-
     const globalContext = React.useContext(GlobalContext);
-    const userEmail = globalContext.user.email;
-    const [name, email] = userEmail.split('@')
-    const userName = email !== 'eshqol.com' ? name + '_' : name
 
     useEffect(() => {
         loadingDialog.current.showModal();
@@ -26,20 +22,19 @@ export default function SearchForMatch(props: Props) {
             } else {
                 props.setLevel("");
             }
-
         })
     }, [])
 
     const searchForMatch = async () => {
-        return await postRequest(process.env["REACT_APP_JS_SERVER_URL"] + '/general/searchForOpponent', {
-            name: userName,
+        return await postRequest('/quick-play/searchForOpponent', {
+            name: globalContext.userName,
             level: props.level
         })
     }
 
     const cancelSearch = async () => {
-        const response = await postRequest(process.env["REACT_APP_JS_SERVER_URL"] + '/general/removeFromWaitingPool', {
-            name: userName,
+        const response = await postRequest('/quick-play/removeFromWaitingPool', {
+            name: globalContext.userName,
             level: props.level
         })
         if (response.result === "OK") {
