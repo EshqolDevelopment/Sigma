@@ -1,12 +1,16 @@
 import {useEffect, useState} from "react";
-import "./Question.css";
+import styles from "./question.module.css";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
 import {postRequest} from "../../Global";
+import {SeekBar} from "./SeekBar";
 
 type Props = {
     funcName: string;
+    seekBar: boolean;
+    numberOfQuestions?: number;
+    currentQuestionNum?: number;
 }
 
 export default function Question(props: Props) {
@@ -28,7 +32,6 @@ export default function Question(props: Props) {
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
-        console.log(props.funcName)
         getAndSetQuestionData(props.funcName).then(() => {
             console.log("Question data loaded");
         });
@@ -132,8 +135,6 @@ export default function Question(props: Props) {
             funcName: funcName
         })
 
-        console.log(response)
-
         const serverQuestionData = response.question;
         serverQuestionData.languages = response.languages;
 
@@ -161,7 +162,6 @@ export default function Question(props: Props) {
                 code: code[language]
         })
 
-        console.log(result);
     }
 
 
@@ -185,10 +185,10 @@ export default function Question(props: Props) {
 
 
     return (
-        <div className={"questionLayout"}>
+        <div className={styles.questionLayout}>
 
-            <div className={"container1"}>
-                <div className={"languagePicker"}>
+            <div className={styles.container1}>
+                <div className={styles.languagePicker}>
                     {question.languages?.map((lang, i) => (
                         <button onClick={() => setLanguage(lang)} key={i}>
                             <img
@@ -198,46 +198,52 @@ export default function Question(props: Props) {
                     ))}
                 </div>
 
-                <div className={"codeEditor"}>
+                <div className={styles.codeEditor}>
                     <Editor language={language} code={code[language] || defaultCode[language]}
                             setCode={(currentCode) => setCode({...code, [language]: currentCode})}/>
                 </div>
 
-                <div className={"questionInfo"}>
-                    <div className={"actionsButtonsContainer"}>
-                        <button className={"sendBtn"} onClick={submitQuestion}>Submit</button>
-                        <button className={"solutionBtn"}>Solution</button>
-                        <select className={"languagePickerMobile"}
+                <div className={styles.questionInfo}>
+                    <div className={styles.actionsButtonsContainer}>
+                        <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
+                        <button className={styles.solutionBtn}>Solution</button>
+                        <select className={styles.languagePickerMobile}
                                 onChange={(e) => setLanguage(e.target.value as Language)}>
                             {question.languages?.map((language, i) => (
-                                <option key={i} value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
+                                <option key={i}
+                                        value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
                             ))}
                         </select>
                     </div>
-                    <div className={"questionJustInfo"}>
-                        <span className={"questionName"}>{questionName()}</span>
-                        <span className={"questionDescription"}>{question.description}</span>
-                        <div className={"exampleContainer"}>
+                    <div className={styles.questionJustInfo}>
+                        <span className={styles.questionName}>{questionName()}</span>
+                        <span className={styles.questionDescription}>{question.description}</span>
+                        <div className={styles.exampleContainer}>
                             <div>
                                 <span>Sample Input</span>
                                 <div>
-                                    <span className={"letterSpacing"}>{formatInput(question.example.input) || "Not available"}</span>
+                                    <span
+                                        className={styles.letterSpacing}>{formatInput(question.example.input) || "Not available"}</span>
                                 </div>
                             </div>
                             <div>
                                 <span>Sample Output</span>
-                                <div className={"letterSpacing"}>{question.example.output || "Not available"}</div>
+                                <div className={styles.letterSpacing}>{question.example.output || "Not available"}</div>
                             </div>
 
                             <div>
                                 <span>General Info</span>
-                                <ExpandItem/>
+                                <ExpandItem title={"Optimal Space & Time Complexity"}
+                                            content={<span>Not Available</span>}/>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+
+            {props.seekBar && <SeekBar steps={props.numberOfQuestions} currentStep={props.currentQuestionNum}/>}
+
+
         </div>
     );
 }

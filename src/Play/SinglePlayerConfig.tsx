@@ -4,10 +4,11 @@ import { Levels } from "./Levels";
 import { Level} from "../Global";
 import SearchForMatch from "../Home/SearchForMatch";
 import {SinglePlayerGameData} from "../DataTypes";
+import SinglePlayerGame from "./SinglePlayerGame";
 
 
 
-export function SinglePlayer() {
+export function SinglePlayerConfig() {
     const [level, setLevel] = useState<Level | "">("");
     const [gameData, setGameData] = useState<SinglePlayerGameData | null>(null);
 
@@ -32,7 +33,7 @@ export function SinglePlayer() {
             {level && <SearchForMatch level={level} setLevel={setLevel} onMatchFind={setGameData}/>}
         </div>}
 
-        {gameData && <p>sdgsdfgdfgdfs</p>}
+        {gameData && <SinglePlayerGame gameData={gameData}/>}
 
     </>)
 }

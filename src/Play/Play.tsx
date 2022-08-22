@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {ChooseModeStep} from "./ChooseModeStep";
-import {SinglePlayer} from "./SinglePlayer";
+import {SinglePlayerConfig} from "./SinglePlayerConfig";
 import {MultiPlayer} from "./MultiPlayer";
 import styles from "./play.module.scss";
 import WaitingRoom from "./WaitingRoom";
@@ -35,7 +35,7 @@ export default function Play() {
                 />
             }
             {gameMode === "SinglePlayer" &&
-                <SinglePlayer/>
+                <SinglePlayerConfig/>
             }
 
             {gameMode === "MultiPlayer" &&

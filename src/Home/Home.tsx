@@ -1,12 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect} from "react";
 import "./Home.scss";
 import {SampleQuestion} from "./SampleQuestion";
-import {PlayDialog} from "./PlayDialog";
 import * as Svg from '../init/Svg'
 import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import * as firebaseui from 'firebaseui'
 import {GlobalContext} from "../Global";
-import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 
@@ -46,7 +44,6 @@ const ide = {
 let ui = null;
 
 export default function Home() {
-    const [showPlayModal, setShowPlayModal] = useState(false)
     const globalContext = useContext(GlobalContext)
     const navigate = useNavigate();
 
@@ -209,8 +206,6 @@ export default function Home() {
             </ReadMore>
 
             <div className={'line-separating'}/>
-
-            {showPlayModal && <PlayDialog  show={showPlayModal} setShow={setShowPlayModal}/>}
 
         </div>
     );

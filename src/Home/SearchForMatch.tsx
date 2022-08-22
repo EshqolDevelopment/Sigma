@@ -20,11 +20,13 @@ export default function SearchForMatch(props: Props) {
     useEffect(() => {
         loadingDialog.current.showModal();
         searchForMatch().then((data: SinglePlayerGameData) => {
+            console.log(data)
             if (!data.error && data.questions) {
                 props.onMatchFind(data);
+            } else {
+                props.setLevel("");
             }
 
-            loadingDialog.current.close();
         })
     }, [])
 

@@ -1,0 +1,51 @@
+@use "../../init/global" as *;
+
+.seekBar {
+    width: 50%;
+    height: 30px;
+    background: #2a5273;
+    border-radius: 30px;
+    margin-top: 30px;
+    margin-inline: auto;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+
+    @include mobile {
+        width: 90%;
+    }
+}
+
+
+.seekBar > div {
+    width: 40px;
+    height: 100%;
+    background: #fd971f;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.seekBar div > img {
+    width: 55px;
+    height: 55px;
+    position: absolute;
+    transition: left 1s ease-in-out;
+}
+
+.seekBar div:last-of-type > img{
+
+}
+
+@include mobile {
+    .seekBar div > img {
+        width: 52px;
+        height: 52px;
+    }
+
+    .last img{
+        margin-left: -80px;
+    }
+}
+
+

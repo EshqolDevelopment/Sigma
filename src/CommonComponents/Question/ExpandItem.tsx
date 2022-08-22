@@ -1,22 +1,28 @@
 import React, {useState} from "react";
+import styles from "./expandItem.module.css";
 
-export function ExpandItem(props) {
+type Props = {
+    title: string;
+    content: JSX.Element;
+}
+
+export function ExpandItem(props: Props) {
     const [expanded, setExpanded] = useState(false);
 
     function openDescription() {
         setExpanded(!expanded);
     }
 
-    return <div className={"expandItem"}>
-        <div className={"expandItemTitle"}>
+    return <div className={styles.expandItem}>
+        <div className={styles.expandItemTitle}>
             <span>Optimal Space & Time Complexity</span>
             <img src={"/images/arrow.svg"} onClick={openDescription}
                  className={["arrow", expanded ? "arrowOpen" : ""].join(" ")}/>
         </div>
 
         {expanded &&
-            <div className={"timeComplexityContainer"}>
-                <span>Not available</span>
+            <div className={styles.contentContainer}>
+                {props.content}
             </div>
         }
     </div>;

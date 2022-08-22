@@ -21,11 +21,6 @@
     cursor: pointer;
 }
 
-/*.languagePicker img:not([name^="python"]) {*/
-/*    opacity: 0.3;*/
-/*    cursor: initial;*/
-/*}*/
-
 .languagePicker img[alt="kotlin"] {
     width: 60px;
     height: 60px;
@@ -134,33 +129,6 @@
 }
 
 
-.expandItemTitle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.expandItemTitle img {
-    width: 23px;
-    height: 23px;
-    filter: invert(100%) sepia(0%) saturate(7496%) hue-rotate(327deg) brightness(107%) contrast(101%);
-    cursor: pointer;
-}
-
-.expandItemTitle span {
-    font-weight: bold;
-}
-
-.expandItem {
-    display: flex;
-    flex-direction: column;
-}
-
-.timeComplexityContainer {
-    margin-top: 15px;
-    animation: expand 3s ease;
-}
-
 .arrow {
     transition: transform 0.2s ease;
 }
@@ -176,22 +144,8 @@
 .questionDescription {
     color: white;
     font-size: 18px;
-    margin-top: 0px;
+    margin-top: 0;
 }
-
-@keyframes expand {
-    0% {
-        opacity: 0;
-        max-height: 0;
-    }
-    40% {
-        opacity: 1;
-    }
-    100% {
-        max-height: 1000px;
-    }
-}
-
 
 
 @media (max-width: 960px) {
