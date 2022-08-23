@@ -1,0 +1,49 @@
+
+
+
+@mixin showResultScreen {
+    width: 100%;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+
+    h3 {
+        font-size: 45px;
+        margin-bottom: 20px;
+    }
+
+    img {
+        margin-top: 30px;
+        width: 330px;
+        height: 330px;
+    }
+
+    .loadDesc {
+        font-size: 24px;
+        text-align: center;
+
+    }
+
+    .scoreText {
+        margin-top: 15px;
+        font-weight: 600;
+        font-size: 32px;
+        text-align: center;
+
+    }
+}
+
+
+.wonLoadingScreen {
+    background: dodgerblue;
+    @include showResultScreen;
+}
+
+.lostLoadingScreen {
+    background: #704817;
+    @include showResultScreen;
+
+}
+

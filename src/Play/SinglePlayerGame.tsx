@@ -1,10 +1,11 @@
 import {SinglePlayerGameData} from "../DataTypes";
 import Question from "../CommonComponents/Question/Question";
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {SeekBar} from "../CommonComponents/Question/SeekBar";
 import {GlobalContext, postRequest} from "../Global";
 import {ref, onValue, get} from "firebase/database";
 import {db} from "../init/firebase";
+import styles from "./singlePlayer.module.scss";
 
 
 type Props = {
@@ -15,13 +16,25 @@ type Props = {
 export default function SinglePlayerGame(props: Props) {
     const [questionNumber, setQuestionNumber] = useState(0);
     const globalContext = useContext(GlobalContext)
+    const [score, setScore] = useState([0, 0]);
+    const [lastQuestionState, setLastQuestionState] = useState<"" | "won" | "lost">("");
 
     const won = () => {
-        console.log("You won!");
+        setLastQuestionState("won");
+        setQuestionNumber(questionNumber + 1);
+        setTimeout(() => {
+            setScore([score[0] + 1, score[1]]);
+            setLastQuestionState("");
+        }, 3000);
     }
 
     const lost = () => {
-        console.log("You lost");
+        setLastQuestionState("lost");
+        setQuestionNumber(questionNumber + 1);
+        setTimeout(() => {
+            setScore([score[0], score[1] + 1]);
+            setLastQuestionState("");
+        }, 3000);
     }
 
     useEffect(() => {
@@ -55,13 +68,36 @@ export default function SinglePlayerGame(props: Props) {
 
     return (
         <div>
-            <Question funcName={props.gameData.questions[0]}
-                      numberOfQuestions={props.gameData.questions.length}
-                      currentQuestionNum={questionNumber}
-                      onCorrectAnswer={onCorrectAnswer}
-            />
+            {questionNumber !== 3 && <>
+                {!lastQuestionState && <Question funcName={props.gameData.questions[questionNumber]}
+                                                   numberOfQuestions={props.gameData.questions.length}
+                                                   currentQuestionNum={questionNumber}
+                                                   onCorrectAnswer={onCorrectAnswer}
+                />}
 
-            <SeekBar steps={props.gameData.questions.length} currentStep={0}/>
+                {lastQuestionState === "won" && <div className={styles.wonLoadingScreen}>
+                    <h3>You won!</h3>
+                    <span className={styles.loadDesc}>You will be redirected to the next question in 3 seconds...</span>
+                    <span className={styles.scoreText}>Score: {score[0]} - {score[1]}</span>
+
+                    <img src={"/images/timer.gif"}/>
+                </div>}
+
+                {lastQuestionState === "lost" && <div className={styles.lostLoadingScreen}>
+                    <h3>You lost!</h3>
+                    <span className={styles.loadDesc}>You will be redirected to the next question in 3 seconds...</span>
+                    <span className={styles.scoreText}>Score: {score[0]} - {score[1]}</span>
+                    <img src={"/images/timer.gif"}/>
+                </div>}
+
+                <SeekBar steps={props.gameData.questions.length} currentStep={questionNumber}/>
+            </>}
+
+
+            {Math.max(score[0], score[1]) === 3 && <div className={styles.gameSummary}>
+                <span>Game Summary</span>
+            </div>}
+
         </div>
     )
 }
