@@ -14,12 +14,6 @@
         margin-bottom: 20px;
     }
 
-    img {
-        margin-top: 30px;
-        width: 330px;
-        height: 330px;
-    }
-
     .loadDesc {
         font-size: 24px;
         text-align: center;
@@ -39,11 +33,86 @@
 .wonLoadingScreen {
     background: dodgerblue;
     @include showResultScreen;
+
+    img {
+        margin-top: 30px;
+        width: 330px;
+        height: 330px;
+    }
 }
 
 .lostLoadingScreen {
     background: #704817;
     @include showResultScreen;
 
+    img {
+        margin-top: 40px;
+        width: 270px;
+        height: 270px;
+    }
 }
 
+
+.gameSummary {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin-top: 100px;
+    align-items: center;
+
+    & > h3 {
+        font-size: 43px;
+        font-weight: 400;
+    }
+
+    & > span {
+        font-size: 24px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+
+}
+
+.playersSummaryContainer {
+    display: flex;
+    gap: 100px;
+    margin-top: 100px;
+}
+
+.playerScoreContainer {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+
+    img {
+        width: 200px;
+        height: 200px;
+    }
+
+    span {
+        font-size: 26px;
+        font-weight: 400;
+        z-index: 100;
+    }
+
+    .crown {
+        position: absolute;
+        top: -120px;
+        width: 180px;
+        height: 180px;
+    }
+}
+
+
+.summaryBtn {
+    width: 400px !important;
+    font-weight: bold;
+}
+
+.summaryBtn:nth-of-type(1) {
+    margin-top: 50px;
+    margin-bottom: 15px;
+}

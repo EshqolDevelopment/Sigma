@@ -37,6 +37,10 @@
 
 }
 
+.current {
+    background: #fd6100 !important;
+}
+
 @include mobile {
     .seekBar div > img {
         width: 52px;

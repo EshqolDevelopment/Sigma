@@ -23,7 +23,6 @@ export default function WaitingRoom(props: Props) {
             img: "5",
             score: 100
         }
-
     ]
 
     return (

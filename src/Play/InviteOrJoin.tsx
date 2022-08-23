@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import styles from "./play.module.scss";
 import {Levels} from "./Levels";
+import {GlobalContext, postRequest} from "../Global";
 
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
 }
 
 export function InviteOrJoin(props: Props) {
+    const globalContext = React.useContext(GlobalContext);
 
     const [code, setCode] = useState("");
 
@@ -15,6 +17,14 @@ export function InviteOrJoin(props: Props) {
         e.preventDefault();
         props.onSubmit(code);
     };
+
+    const createPlayingRoom = async (level) => {
+        const res = await postRequest("/multi-play/createRoom", {
+            level: level,
+            name: globalContext.userName
+        })
+        console.log(res)
+    }
 
     return <div className={styles.chooseLevelContainer}>
 
@@ -45,7 +55,7 @@ export function InviteOrJoin(props: Props) {
 
             <div className={styles.inviteContainer}>
                 <h3>Invite your friends</h3>
-                <Levels shortVersion={true}/>
+                <Levels shortVersion={true} onClick={createPlayingRoom}/>
             </div>
 
 

@@ -2,7 +2,7 @@ import styles from "./levels.module.scss";
 import React from "react";
 import {Level} from "../Global";
 
-export function Levels(props: { shortVersion?: boolean, onClick?: (level: Level) => void }) {
+export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) => void }) {
     return <div className={styles.levelsList}>
         <div>
             <h3>For all your beginners :)</h3>

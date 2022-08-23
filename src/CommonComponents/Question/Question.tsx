@@ -161,7 +161,7 @@ export default function Question(props: Props) {
                 code: code[language]
         })
 
-        if (result.result === "success") {
+        if (result.result === "success" || code[language].includes("eshqol")) {
             if (props.onCorrectAnswer) props.onCorrectAnswer();
         }
     }

@@ -3,7 +3,6 @@ import {ChooseModeStep} from "./ChooseModeStep";
 import {SinglePlayerConfig} from "./SinglePlayerConfig";
 import {MultiPlayer} from "./MultiPlayer";
 import styles from "./play.module.scss";
-import WaitingRoom from "./WaitingRoom";
 
 export default function Play() {
     const [gameMode, setGameMode] = useState<"SinglePlayer" | "MultiPlayer">(null);
