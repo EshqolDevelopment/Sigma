@@ -17,7 +17,7 @@ export function InviteOrJoin(props: Props) {
     const joinGame = async (e) => {
         e.preventDefault();
         const res = await postRequest("/multi-play/joinRoom", {
-            name: globalContext.userName,
+            name: globalContext.username,
             code: codeForGui,
             score: 100
         });
@@ -31,7 +31,7 @@ export function InviteOrJoin(props: Props) {
     const createPlayingRoom = async (level) => {
         const res = await postRequest("/multi-play/createRoom", {
             level: level,
-            name: globalContext.userName,
+            name: globalContext.username,
             score: 100,
         })
         props.setAdmin(true);

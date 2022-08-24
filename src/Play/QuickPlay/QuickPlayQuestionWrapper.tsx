@@ -32,7 +32,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
         const winnerListener = onValue(winnerRef, (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                if (data === globalContext.userName) {
+                if (data === globalContext.username) {
                     props.won();
                 } else if (data === "draw") {
                     props.draw();
@@ -46,7 +46,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
             const drawListener = onValue(drawRef, (snapshot) => {
                 if (snapshot.exists()) {
                     const data = snapshot.val() as DrawData;
-                    if (data.name === globalContext.userName) {
+                    if (data.name === globalContext.username) {
                         if (data.response === "accepted") {
                             resolve("offer accepted");
                         } else if (data.response === "rejected") {
@@ -62,7 +62,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
         const drawListener = onValue(drawRef, (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val() as DrawData;
-                if (data.name === globalContext.userName && data.response === "waiting") {
+                if (data.name === globalContext.username && data.response === "waiting") {
                     toast.promise(waitForDrawResponse, {
                         pending: 'Waiting for response from your opponent',
                         success: 'Your opponent accepted your draw offer',
@@ -86,7 +86,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
 
     const onCorrectAnswer = async () => {
         await postRequest("/quick-play/onAnswerSuccess", {
-            name: globalContext.userName,
+            name: globalContext.username,
             gameCode: props.gameData.gameCode,
             questionNumber: props.questionNumber
         }).catch(() => toast.error("Something went wrong"));
@@ -96,7 +96,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
         setAlreadyOfferedDraw(true);
         try {
             await postRequest("/quick-play/suggestDraw", {
-                name: globalContext.userName,
+                name: globalContext.username,
                 gameCode: props.gameData.gameCode,
                 questionNumber: props.questionNumber
             });
@@ -109,7 +109,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
 
     const answerDraw = async (accept: boolean) => {
         await postRequest("/quick-play/drawAnswer", {
-            name: globalContext.userName,
+            name: globalContext.username,
             gameCode: props.gameData.gameCode,
             questionNumber: props.questionNumber,
             accept: accept

@@ -53,7 +53,7 @@ export default function WaitingRoom(props: Props) {
 
     const startPlaying = async (numberOfQuestions: number) => {
         const res = await postRequest("/multi-play/startGame", {
-            name: globalContext.userName,
+            name: globalContext.username,
             code: props.code,
             numberOfQuestions: numberOfQuestions,
         });

@@ -27,14 +27,14 @@ export default function SearchForMatch(props: Props) {
 
     const searchForMatch = async () => {
         return await postRequest('/quick-play/searchForOpponent', {
-            name: globalContext.userName,
+            name: globalContext.username,
             level: props.level
         })
     }
 
     const cancelSearch = async () => {
         const response = await postRequest('/quick-play/removeFromWaitingPool', {
-            name: globalContext.userName,
+            name: globalContext.username,
             level: props.level
         })
         if (response.result === "OK") {

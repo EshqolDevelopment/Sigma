@@ -59,16 +59,16 @@ export default function NavigationBar() {
             </div>
 
             <div className={style.leftSide}>
-                {globalContext.userName === null && <>
+                {globalContext.username === null && <>
                     <button className={style.loginBtn} onClick={openLoginModal}>Login</button>
                     <LoginModal show={showLogin} setShow={setShowLogin}/>
                     <img src={"/images/logo.png"} className={style.sigmaIcon} alt={"logo"}/>
                 </>}
-                {globalContext.userName && <img src={"/images/p1.png"} className={style.sigmaIcon} alt={"logo"}/>}
+                {globalContext.username && <img src={"/images/p1.png"} className={style.sigmaIcon} alt={"logo"}/>}
             </div>
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
-                <span>Hello, {globalContext.userName}</span>
+                <span>Hello, {globalContext.username}</span>
                 <div>
                     <span>Home</span>
                 </div>

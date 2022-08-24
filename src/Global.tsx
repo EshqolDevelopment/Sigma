@@ -1,8 +1,7 @@
 import React, {createContext} from "react";
-import {Player} from "./DataTypes";
 
 type GlobalContextType = {
-    userName: string;
+    username: string;
 }
 export const GlobalContext = createContext<GlobalContextType>(null);
 

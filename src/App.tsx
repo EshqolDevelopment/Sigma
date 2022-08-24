@@ -28,7 +28,7 @@ export default function App() {
 
     return (
         <GlobalContext.Provider value={{
-            userName: userName
+            username: userName
         }}>
             <div>
 

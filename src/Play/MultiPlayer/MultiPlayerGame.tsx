@@ -18,6 +18,17 @@ type Props = {
     numberOfQuestions: number;
 }
 
+const NumToWord = {
+    1: "first",
+    2: "second",
+    3: "third",
+    4: "fourth",
+    5: "fifth",
+    6: "sixth",
+    7: "seventh",
+    8: "eighth",
+    9: "ninth",
+}
 
 export default function MultiPlayerGame(props: Props) {
     const globalContext = useContext(GlobalContext);
@@ -36,8 +47,8 @@ export default function MultiPlayerGame(props: Props) {
                     for (let playerName in data) {
                         const currentQuestion = data[playerName].currentQuestion;
                         const lastQuestion = lastPlayersData[playerName].currentQuestion;
-                        if (currentQuestion !== lastQuestion) {
-                            notify(`${playerName} moved to question ${currentQuestion + 1}`);
+                        if (currentQuestion !== lastQuestion && playerName !== globalContext.username) {
+                            notify(`${playerName} moved to the ${NumToWord[currentQuestion + 1]} question`);
                         }
                     }
                     return data;
@@ -50,7 +61,7 @@ export default function MultiPlayerGame(props: Props) {
 
     const onCorrectAnswer = async () => {
         const res = await postRequest("/multi-play/onAnswerSuccess", {
-            name: globalContext.userName,
+            name: globalContext.username,
             code: props.code,
         })
 
@@ -65,9 +76,9 @@ export default function MultiPlayerGame(props: Props) {
 
     return (
         <div>
-            {!inTransition && <Question funcName={props.questions[playersData[globalContext.userName].currentQuestion]}
+            {!inTransition && <Question funcName={props.questions[playersData[globalContext.username].currentQuestion]}
                       numberOfQuestions={props.questions.length}
-                      currentQuestionNum={playersData[globalContext.userName].currentQuestion}
+                      currentQuestionNum={playersData[globalContext.username].currentQuestion}
                       onCorrectAnswer={onCorrectAnswer}
             />}
 
@@ -78,7 +89,7 @@ export default function MultiPlayerGame(props: Props) {
             </div>}
 
             <SeekBarMultiPlayer steps={props.numberOfQuestions}
-                                currentStep={playersData[globalContext.userName].currentQuestion}
+                                currentStep={playersData[globalContext.username].currentQuestion}
                                 playersData={playersData}/>
 
             <ToastContainer />

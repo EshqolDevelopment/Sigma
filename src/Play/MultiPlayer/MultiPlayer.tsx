@@ -4,7 +4,7 @@ import {InviteOrJoin} from "./InviteOrJoin";
 import {useNavigate} from "react-router-dom";
 import {GlobalContext, postRequest} from "../../Global";
 import MultiPlayerGame from "./MultiPlayerGame";
-import {Player, PlayersData} from "../../DataTypes";
+import {PlayersData} from "../../DataTypes";
 
 
 export default function MultiPlayer() {
@@ -20,7 +20,7 @@ export default function MultiPlayer() {
 
     const closeRoom = async (code: string) => {
         return await postRequest("/multi-play/closeRoom", {
-            name: globalContext.userName,
+            name: globalContext.username,
             code: code
         });
     };

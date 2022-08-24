@@ -15,7 +15,7 @@ export default function QuickPlayGame(props: Props) {
     const globalContext = useContext(GlobalContext);
     const [score, setScore] = useState([0, 0]);
     const [lastQuestionState, setLastQuestionState] = useState<"" | "won" | "lost" | "draw">("");
-    const timeToWait = 1500;
+    const TransitionTimeBetweenQuestions = 3000;
 
     const won = () => {
         setLastQuestionState("won");
@@ -23,7 +23,7 @@ export default function QuickPlayGame(props: Props) {
         setScore([score[0] + 1, score[1]]);
         setTimeout(() => {
             setLastQuestionState("");
-        }, timeToWait);
+        }, TransitionTimeBetweenQuestions);
     };
 
     const lost = () => {
@@ -32,7 +32,7 @@ export default function QuickPlayGame(props: Props) {
         setScore([score[0], score[1] + 1]);
         setTimeout(() => {
             setLastQuestionState("");
-        }, timeToWait);
+        }, TransitionTimeBetweenQuestions);
     };
 
     const draw = () => {
@@ -41,7 +41,7 @@ export default function QuickPlayGame(props: Props) {
         setScore([score[0] + 1, score[1] + 1]);
         setTimeout(() => {
             setLastQuestionState("");
-        }, timeToWait);
+        }, TransitionTimeBetweenQuestions);
     };
 
     return (<div>
@@ -72,10 +72,10 @@ export default function QuickPlayGame(props: Props) {
             </div>}
 
             {lastQuestionState === "draw" && <div className={styles.drawLoadingScreen}>
-                <h3>You lost!</h3>
+                <h3>Draw!</h3>
                 <span className={styles.loadDesc}>You will be redirected to the next question in 3 seconds...</span>
                 <span className={styles.scoreText}>Score: {score[0]} - {score[1]}</span>
-                <img src={"/images/sad.gif"}/>
+                <img src={"/images/draw_face.png"}/>
             </div>}
 
             <SeekBarSinglePlayer steps={3} currentStep={score[0]}/>
@@ -92,7 +92,7 @@ export default function QuickPlayGame(props: Props) {
                         <img className={styles.crown} src={"/images/crown.png"}/>
                     </>}
                     <img src={"/images/p1.png"}/>
-                    <span>{globalContext.userName}</span>
+                    <span>{globalContext.username}</span>
                 </div>
 
                 <div className={styles.playerScoreContainer}>
