@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import styles from "./question.module.css";
+import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
@@ -13,6 +13,7 @@ type Props = {
     onCorrectAnswer?: () => void;
     showSolution?: boolean;
     suggestDrawAction?: () => void;
+    alreadyOfferedDraw?: boolean;
 }
 
 export default function Question(props: Props) {
@@ -211,7 +212,9 @@ export default function Question(props: Props) {
                     <div className={styles.actionsButtonsContainer}>
                         <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
                         { props.showSolution && <button className={styles.solutionBtn}>Solution</button> }
-                        { props.suggestDrawAction && <button className={styles.solutionBtn} onClick={props.suggestDrawAction}>Suggest Draw</button> }
+                        { props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
+                            props.suggestDrawAction();
+                        }}>Suggest Draw</button> }
                         <select className={styles.languagePickerMobile}
                                 onChange={(e) => setLanguage(e.target.value as Language)}>
                             {question.languages?.map((language, i) => (

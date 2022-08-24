@@ -102,6 +102,11 @@
     font-weight: 600;
 }
 
+.actionsButtonsContainer button:disabled {
+    background-color: #9eb5ee;
+    cursor: default;
+}
+
 .exampleContainer {
     margin-top: 30px;
 }
