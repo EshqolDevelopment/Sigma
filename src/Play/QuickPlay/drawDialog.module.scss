@@ -1,0 +1,60 @@
+
+.drawDialog {
+    background: white;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    margin-top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    text-align: center;
+    border-radius: 20px;
+    padding-block: 25px;
+    padding-inline: 18px;
+    box-shadow:5px 7px 5px rgba(black, 0.7);
+    z-index: 100;
+
+
+    span:nth-of-type(1) {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    & > div {
+        display: flex;
+        margin-top: 20px;
+        gap: 20px;
+    }
+
+    button {
+        border-radius: 10px;
+        border: 0;
+        width: 140px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        span {
+            font-weight: 800;
+            font-size: 19px;
+        }
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+
+}
+
+.accept {
+    background: greenyellow;
+}
+
+.reject {
+    background: #fa7171;
+}

@@ -1,5 +1,5 @@
 
-
+@use "../../init/global" as *;
 
 @mixin showResultScreen {
     width: 100%;
@@ -52,6 +52,17 @@
     }
 }
 
+.drawLoadingScreen {
+    background: #63acf3;
+    @include showResultScreen;
+
+    img {
+        margin-top: 40px;
+        width: 270px;
+        height: 270px;
+    }
+}
+
 
 .gameSummary {
     color: white;
@@ -63,6 +74,10 @@
     & > h3 {
         font-size: 43px;
         font-weight: 400;
+
+        @include mobile {
+            font-size: 38px;
+        }
     }
 
     & > span {
@@ -78,6 +93,10 @@
     display: flex;
     gap: 100px;
     margin-top: 100px;
+
+    @include mobile {
+        gap: 50px;
+    }
 }
 
 .playerScoreContainer {
@@ -109,6 +128,11 @@
 
 .summaryBtn {
     width: 400px !important;
+
+    @include mobile {
+        width: 90% !important;
+        margin-top: 12px;
+    }
     font-weight: bold;
 }
 

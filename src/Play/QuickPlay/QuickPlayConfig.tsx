@@ -1,16 +1,16 @@
 import React, {useState} from "react";
-import styles from "./play.module.scss";
-import { Levels } from "./Levels";
-import { Level} from "../Global";
-import SearchForMatch from "../Home/SearchForMatch";
-import {SinglePlayerGameData} from "../DataTypes";
-import SinglePlayerGame from "./SinglePlayerGame";
+import styles from "../Setup/play.module.scss";
+import { Levels } from "../Setup/Levels";
+import { Level} from "../../Global";
+import SearchForMatch from "../../Home/SearchForMatch";
+import {QuickPlayGameData} from "../../DataTypes";
+import QuickPlayGame from "./QuickPlayGame";
 
 
 
-export function SinglePlayerConfig() {
+export function QuickPlayConfig() {
     const [level, setLevel] = useState<Level | "">("");
-    const [gameData, setGameData] = useState<SinglePlayerGameData | null>(null);
+    const [gameData, setGameData] = useState<QuickPlayGameData | null>(null);
 
     return (<>
         {!gameData && <div className={styles.chooseLevelContainer}>
@@ -33,7 +33,7 @@ export function SinglePlayerConfig() {
             {level && <SearchForMatch level={level} setLevel={setLevel} onMatchFind={setGameData}/>}
         </div>}
 
-        {gameData && <SinglePlayerGame gameData={gameData}/>}
+        {gameData && <QuickPlayGame gameData={gameData}/>}
 
     </>)
 }

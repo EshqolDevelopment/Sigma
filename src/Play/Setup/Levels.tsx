@@ -1,6 +1,6 @@
 import styles from "./levels.module.scss";
 import React from "react";
-import {Level} from "../Global";
+import {Level} from "../../Global";
 
 export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) => void }) {
     return <div className={styles.levelsList}>

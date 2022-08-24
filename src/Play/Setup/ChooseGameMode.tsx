@@ -1,14 +1,24 @@
 import styles from "./play.module.scss";
-import React from "react";
+import React, {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 
 
-type Props = {
-    quickPlay: () => void;
-    multiPlay: () => void;
-}
+export function ChooseGameMode() {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        document.documentElement.style.setProperty("--background", "#cdced2");
+    }, []);
+
+    const quickPlay = () => {
+        navigate("/quick-play");
+    };
+
+    const multiPlay = () => {
+        navigate("/multi-player");
+    };
 
 
-export function ChooseModeStep(props: Props) {
     return <div>
         <div className={styles.upper}>
             <div className={styles.title}>
@@ -43,7 +53,7 @@ export function ChooseModeStep(props: Props) {
                     <img src={"/images/singlePlayer.svg"}/>
                 </div>
 
-                <button onClick={props.quickPlay}>Play Now!</button>
+                <button onClick={quickPlay}>Play Now!</button>
             </div>
 
             <div>
@@ -58,7 +68,7 @@ export function ChooseModeStep(props: Props) {
                     <img src={"/images/multiPlayer.svg"}/>
                 </div>
 
-                <button onClick={props.multiPlay}>Play Now!</button>
+                <button onClick={multiPlay}>Play Now!</button>
             </div>
         </div>
     </div>;

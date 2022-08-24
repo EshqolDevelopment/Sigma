@@ -1,12 +1,12 @@
-import styles from "../Play/play.module.scss";
+import styles from "../Play/Setup/play.module.scss";
 import React, {useEffect, useRef} from "react";
 import {GlobalContext, Level, postRequest} from "../Global";
-import {SinglePlayerGameData} from "../DataTypes";
+import {QuickPlayGameData} from "../DataTypes";
 
 type Props = {
     level: Level;
     setLevel: (level: Level | "") => void;
-    onMatchFind: (data: SinglePlayerGameData) => void;
+    onMatchFind: (data: QuickPlayGameData) => void;
 }
 
 export default function SearchForMatch(props: Props) {
@@ -15,7 +15,7 @@ export default function SearchForMatch(props: Props) {
 
     useEffect(() => {
         loadingDialog.current.showModal();
-        searchForMatch().then((data: SinglePlayerGameData) => {
+        searchForMatch().then((data: QuickPlayGameData) => {
             console.log(data)
             if (!data.error && data.questions) {
                 props.onMatchFind(data);

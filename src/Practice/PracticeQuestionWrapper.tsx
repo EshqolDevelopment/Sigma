@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import Question from "../CommonComponents/Question/Question";
 
-export default function PracticeQuestion() {
+export default function PracticeQuestionWrapper() {
     const [funcName, setFuncName] = useState<string>(null);
 
     useEffect(() => {

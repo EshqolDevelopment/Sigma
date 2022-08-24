@@ -1,0 +1,29 @@
+@use "../../init/global" as *;
+
+.wonLoadingScreen {
+    background: dodgerblue;
+
+    width: 100%;
+    min-height: 75vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+
+    h3 {
+        font-size: 34px;
+        text-align: center;
+    }
+
+    img {
+        margin-top: 50px;
+        width: 330px;
+        height: 330px;
+    }
+
+    @include mobile {
+        h3 {
+            font-size: 28px;
+        }
+    }
+}

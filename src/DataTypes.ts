@@ -10,11 +10,23 @@ export type QuestionData = {
     languages: Language[];
 }
 
-export type SinglePlayerGameData = {
-    opponent: string,
+export type QuickPlayGameData = {
+    opponentName: string,
     questions: string[],
     error?: "canceled",
     gameCode: string,
 }
+
+export type Player = {
+    admin: boolean;
+    currentQuestion: number;
+    image: string;
+    score: number
+}
+
+export type PlayersData = {
+    [name: string]: Player;
+}
+
 
 export type Language = "python" | "javascript" | "java" | "kotlin";
