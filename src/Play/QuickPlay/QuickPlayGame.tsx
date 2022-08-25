@@ -44,6 +44,9 @@ export default function QuickPlayGame(props: Props) {
         }, TransitionTimeBetweenQuestions);
     };
 
+    console.log(props.gameData.opponent)
+    console.log(globalContext.userData)
+
     return (<div>
         {Math.max(score[0], score[1]) < 3 && <>
             {!lastQuestionState &&
@@ -91,7 +94,7 @@ export default function QuickPlayGame(props: Props) {
                         <Trophy/>
                         <img className={styles.crown} src={"/images/crown.png"}/>
                     </>}
-                    <img src={"/images/p1.png"}/>
+                    <img src={`/images/p${globalContext.userData.image}.png`}/>
                     <span>{globalContext.username}</span>
                 </div>
 
@@ -100,15 +103,14 @@ export default function QuickPlayGame(props: Props) {
                         <Trophy/>
                         <img className={styles.crown} src={"/images/crown.png"}/>
                     </>}
-                    <img src={"/images/p2.png"}/>
-                    <span>{props.gameData.opponentName}</span>
+                    <img src={`/images/p${props.gameData.opponent.image}.png`}/>
+                    <span>{props.gameData.opponent.name}</span>
                 </div>
             </div>
 
             <button className={["sigma-button", styles.summaryBtn].join(" ")}>Go Home</button>
             <button className={["sigma-button", styles.summaryBtn].join(" ")}>Play Again</button>
         </div>}
-
 
     </div>);
 

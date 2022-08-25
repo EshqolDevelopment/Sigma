@@ -1,13 +1,16 @@
 import React, {createContext} from "react";
+import {UserData} from "./DataTypes";
 
 type GlobalContextType = {
     username: string;
+    userData: UserData
 }
+
 export const GlobalContext = createContext<GlobalContextType>(null);
 
 export type Level = "easy" | "medium" | "hard";
 
-export const postRequest = async (url: string = "", data: any) => {
+export const postRequest = async (url: string = "", data: any): Promise<object> => {
     if (!url.includes("http")) {
         url = process.env["REACT_APP_JS_SERVER_URL"] + url;
     }

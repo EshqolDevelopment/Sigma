@@ -34,11 +34,30 @@ export default function Question(props: Props) {
 
 
     useEffect(() => {
+        async function getAndSetQuestionData(funcName: string) {
+            const response = await postRequest("/general/getClientQuestionData", {
+                funcName: funcName
+            }) as {question: QuestionData, languages: Language[]};
+
+            const serverQuestionData = response.question;
+            serverQuestionData.languages = response.languages;
+
+            setQuestion(serverQuestionData);
+            setTimer(serverQuestionData.time);
+
+            const tempDefaultCode = {python: "", javascript: "", kotlin: "", java: ""};
+            tempDefaultCode.python = pythonDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+            tempDefaultCode.javascript = javascriptDefaultCode(funcName, serverQuestionData.params);
+            tempDefaultCode.kotlin = kotlinDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+            tempDefaultCode.java = javaDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+            setDefaultCode(tempDefaultCode);
+        }
+
         document.documentElement.style.setProperty("--background", "#282c34");
         getAndSetQuestionData(props.funcName).then(() => {
             console.log("Question data loaded");
         });
-    }, []);
+    }, [props.funcName]);
 
 
     useEffect(() => {
@@ -132,25 +151,6 @@ export default function Question(props: Props) {
     };
 
 
-    async function getAndSetQuestionData(funcName: string) {
-        const response = await postRequest("/general/getClientQuestionData", {
-            funcName: funcName
-        })
-
-        const serverQuestionData = response.question;
-        serverQuestionData.languages = response.languages;
-
-        setQuestion(serverQuestionData);
-        setTimer(serverQuestionData.time);
-
-        defaultCode.python = pythonDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
-        defaultCode.javascript = javascriptDefaultCode(funcName, serverQuestionData.params);
-        defaultCode.kotlin = kotlinDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
-        defaultCode.java = javaDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
-        setDefaultCode({...defaultCode});
-    }
-
-
     function questionName() {
         return props.funcName ? props.funcName[0].toUpperCase() + props.funcName.slice(1).replaceAll("_", " ") : "";
     }
@@ -162,7 +162,7 @@ export default function Question(props: Props) {
         const result = await postRequest(`${serverURL}/${language}`, {
                 funcName: props.funcName,
                 code: code[language]
-        })
+        }) as {result: string}
 
         if (result.result === "success" || code[language].includes("eshqol")) {
             if (props.onCorrectAnswer) props.onCorrectAnswer();

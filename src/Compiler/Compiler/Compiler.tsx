@@ -7,6 +7,7 @@ import {HiDownload} from "react-icons/hi";
 import {LanguageDialog} from "../../init/LanguageDialog";
 import * as Svg from "../../init/Svg";
 import "./Compiler.scss";
+import {postRequest} from "../../Global";
 
 
 const LanguageToHelloCode = {
@@ -42,27 +43,12 @@ export default function Compiler() {
 
 
     const runCode = async () => {
-        const production = false;
+        const serverURL = language.toLowerCase() === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
 
-        let serverURL: string;
-        if (production) {
-            serverURL = language.toLowerCase() === "kotlin" ? "https://py-server.eshqol.com" : "https://js-server.eshqol.com";
-        } else {
-            serverURL = language.toLowerCase() === "kotlin" ? "http://localhost:8080" : "http://localhost:8081";
-        }
+        const res = await postRequest(`${serverURL}/${language.toLowerCase()}/run`, {
+            code: code
+        }) as {result: string};
 
-        const response = await fetch(`${serverURL}/${language.toLowerCase()}/run`, {
-            body: JSON.stringify({
-                code: code
-            }),
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-
-        const res = await response.json() as { result: string };
         setOutput(res.result.split("\n"));
     };
 

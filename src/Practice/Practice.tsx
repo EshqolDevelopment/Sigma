@@ -1,46 +1,26 @@
 import React, {useEffect, useState} from "react";
-import {doc, getDoc, getFirestore} from "firebase/firestore";
-import {app} from "../init/firebase";
 import ListOfQuestions from "./ListOfQuestions";
 import "./ListOfQuestions.css";
+import {postRequest} from "../Global";
+import {PracticeQuestionList} from "../DataTypes";
 
-const db = getFirestore(app);
-let questionDictGlobal = {};
+let questionDictGlobal: PracticeQuestionList = {Easy: [], Medium: [], Hard: []};
 
 
 export default function Practice() {
-    const [questionDict, setQuestionDict] = useState({Easy: [], Medium: [], Hard: []});
+    const [questionDict, setQuestionDict] = useState<PracticeQuestionList>({Easy: [], Medium: [], Hard: []});
     const [questionIsFiltered, setQuestionIsFiltered] = useState(false);
 
     async function fetchQuestions() {
-        if (sessionStorage["questions"])
-            return JSON.parse(sessionStorage["questions"]);
-
-        const data = await getDoc(doc(db, "questions/python"));
-        const questions = data.data();
-
-        sessionStorage["questions"] = JSON.stringify(questions);
-        return questions;
-    }
-
-
-    async function reformatData() {
-        const allQuestions = await fetchQuestions();
-
-        const temp = allQuestions["names"].split("@").map((val, i) => [...val.split("&"), i]);
-        const data = {Easy: [], Medium: [], Hard: []};
-
-        for (const level of ["Easy", "Medium", "Hard"]) {
-            data[level] = temp.filter(val => val[2] === level);
-        }
-        setQuestionDict(data);
-        questionDictGlobal = data;
+        const serverQuestionDict = await postRequest("/general/getQuestionList", {}) as PracticeQuestionList;
+        setQuestionDict(serverQuestionDict)
+        questionDictGlobal = serverQuestionDict;
     }
 
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#f6f9fc");
-        reformatData();
+        fetchQuestions();
     }, []);
 
 
@@ -55,7 +35,7 @@ export default function Practice() {
         const isFiltered = text.length > 0;
         setQuestionIsFiltered(isFiltered);
 
-        const cols = document.getElementsByClassName('question-item');
+        const cols = document.getElementsByClassName('question-item') as HTMLCollectionOf<HTMLDivElement>;
         if (isFiltered) {
             for(let i = 0; i < cols.length; i++) {
                 cols[i].style.position = 'static';
@@ -69,12 +49,11 @@ export default function Practice() {
         }
 
         const copyData = {...questionDictGlobal};
-        for (const level of ["Easy", "Medium", "Hard"]) {
-            copyData[level] = copyData[level].filter(val => val[0].toLowerCase().includes(text.toLowerCase()));
+        for (const level in copyData) {
+            copyData[level] = copyData[level].filter(val => val.name.toLowerCase().replaceAll(" ", "").replaceAll("_", "").includes(text.toLowerCase().replaceAll(" ", "")));
         }
         setQuestionDict(copyData);
     }
-
 
     return (
         <div>

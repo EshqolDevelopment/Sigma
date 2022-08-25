@@ -1,12 +1,22 @@
 import React, {useState} from "react";
 import "./ListOfQuestions.css";
 import {useNavigate} from "react-router-dom";
+import {PracticeQuestionItem} from "../DataTypes";
 
 let lastStyleUpdate = Date.now();
 let itemOnMouseIndex = null;
 let currentDragItemIndexGlobal = null;
 
-export default function ListOfQuestions(props) {
+
+type Props = {
+    level: "easy" | "medium" | "hard";
+    questionList: PracticeQuestionItem[];
+    aboveListLength: number;
+    questionIsFiltered: boolean;
+}
+
+
+export default function ListOfQuestions(props: Props) {
     const level = props.level;
     const [currentDragItemIndex, setCurrentDragItemIndex] = useState(null);
     const ItemHeight = 56;
@@ -14,8 +24,8 @@ export default function ListOfQuestions(props) {
     const navigate = useNavigate();
 
     function onMouseDown(i) {
-        const top = document.getElementById(i + level).style.top;
-        currentDragItemIndexGlobal = Math.floor(top.slice(0, top.length - 2) / ItemHeight);
+        const top = document.getElementById(i + level).style.top as any;
+        currentDragItemIndexGlobal = Math.floor(top.slice(0, top.length - 2)  / ItemHeight);
         setCurrentDragItemIndex(i);
     }
 
@@ -35,7 +45,7 @@ export default function ListOfQuestions(props) {
         const duplicates = new Map();
         for (let i = 0; i < questionList.length; i++) {
             const item = document.getElementById(i + level);
-            let top = item.style.top;
+            let top = item.style.top as any;
             top = parseInt(top.slice(0, top.length - 2));
             if (top % ItemHeight !== 0) {
                 top = top - top % ItemHeight;
@@ -79,12 +89,12 @@ export default function ListOfQuestions(props) {
 
         const currentDragItem = document.getElementById(currentDragItemIndex + level);
 
-        let startHeight = getComputedStyle(document.documentElement).getPropertyValue("--start-height");
+        let startHeight = getComputedStyle(document.documentElement).getPropertyValue("--start-height") as any;
         startHeight = parseInt(startHeight.slice(0, startHeight.length - 2));
 
         let aboveHeight = 0;
         if (window.innerWidth < 960) {
-            let mobileGap = getComputedStyle(document.documentElement).getPropertyValue("--mobile-gap");
+            let mobileGap = getComputedStyle(document.documentElement).getPropertyValue("--mobile-gap") as any;
             mobileGap = parseInt(mobileGap.slice(0, mobileGap.length - 2));
 
             if (level === "medium") {
@@ -147,13 +157,18 @@ export default function ListOfQuestions(props) {
     }
 
     function like(id) {
-        const like = document.getElementById(id);
+        const like = document.getElementById(id) as HTMLImageElement;
         if (like.src.includes("star2")) {
             like.src = "/images/star1.svg";
         } else {
             like.src = "/images/star2.svg";
         }
+    }
 
+    function formatFuncName(funcName: string): string {
+        let questionName = funcName.replaceAll("_", " ");
+        questionName = questionName[0].toUpperCase() + questionName.slice(1).toLowerCase();
+        return questionName;
     }
 
     return (
@@ -161,11 +176,6 @@ export default function ListOfQuestions(props) {
              onTouchMove={(e) => onMouseMove(e.touches[0].pageY)}>
             {
                 questionList.map((data, i) => {
-
-                    let [name, subject, level1, num] = data;
-                    const isMultiArgument = subject.startsWith("$");
-                    subject = isMultiArgument ? subject.substring(1) : subject;
-
                     return (
                         [<div key={i + level}
                              className={["question-item", currentDragItemIndex === i ? "on-drag" : "not-on-drag"].join(" ")}
@@ -173,8 +183,8 @@ export default function ListOfQuestions(props) {
 
                             <div>
                                 <div className={"circle"}/>
-                                <span onClick={() => navigate(`/practice/${name}`)}
-                                      className={"nameText"}>{name}</span>
+                                <span onClick={() => navigate(`/practice/${data.name}`)}
+                                      className={"nameText"}>{formatFuncName(data.name)}</span>
                             </div>
 
 
@@ -192,7 +202,7 @@ export default function ListOfQuestions(props) {
                         </div>,
 
                         questionList.length - 1 === i &&
-                        <div key={i + level} className={["question-item", "spacer"].join(" ")} style={{top: (i + 1) * ItemHeight}} id={i + level}/>
+                        <div key={"spacer" + level} className={["question-item", "spacer"].join(" ")} style={{top: (i + 1) * ItemHeight}} id={i + level}/>
                         ]
                     );
                 })

@@ -1,7 +1,7 @@
 import Editor from "../init/Editor";
-import React, {createRef, useRef, useState} from "react";
-//@ts-ignore
+import React, {useState} from "react";
 import styles from "./sampleQuestion.module.scss";
+import {postRequest} from "../Global";
 
 const questionsList: { name: string; title: string; description: string; }[] = [
     {
@@ -32,32 +32,12 @@ export function SampleQuestion() {
     }
 
     async function submitSampleQuestion() {
-        const language: string = "python"
-        const funcName = question.name;
-
         setSampleQuestionLoadingState("loading")
-        const production = false;
+        const res = await postRequest(`/python`, {
+            funcName: question.name,
+            code: sampleQuestionCode
+        }) as {result: string}
 
-        let serverURL: string;
-        if (production) {
-            serverURL = language === "kotlin" ? "https://py-server.eshqol.com" : "https://js-server.eshqol.com";
-        } else {
-            serverURL = language === "kotlin" ? "http://localhost:8080" : "http://localhost:8081";
-        }
-
-        const response = await fetch(`${serverURL}/${language}`, {
-            body: JSON.stringify({
-                funcName: funcName,
-                code: sampleQuestionCode
-            }),
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-
-        const res = await response.json()
         await sleep(1000)
 
         setResult(res.result)

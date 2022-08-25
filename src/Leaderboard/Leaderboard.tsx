@@ -7,8 +7,6 @@ import { countryCodeEmoji } from 'country-code-emoji'
 
 
 export default function Leaderboard() {
-
-
     const [data, setData] = useState([])
 
     useEffect(() => {

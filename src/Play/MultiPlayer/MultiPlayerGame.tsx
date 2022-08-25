@@ -1,5 +1,5 @@
 import {PlayersData} from "../../DataTypes";
-import {useContext, useEffect, useRef, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {onValue, ref} from "firebase/database";
 import {db} from "../../init/firebase";
 import {GlobalContext, postRequest} from "../../Global";
@@ -56,14 +56,14 @@ export default function MultiPlayerGame(props: Props) {
             }
         });
         return () => listener();
-    }, [props.code])
+    }, [props.code, globalContext.username])
 
 
     const onCorrectAnswer = async () => {
         const res = await postRequest("/multi-play/onAnswerSuccess", {
             name: globalContext.username,
             code: props.code,
-        })
+        }) as {result: string};
 
         if (res.result === "OK") {
             setInTransition(true);

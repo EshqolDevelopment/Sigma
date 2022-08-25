@@ -127,7 +127,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
             />
 
             {waitingForDrawDecision && <DrawDecisionDialog
-                opponentName={props.gameData.opponentName}
+                opponentName={props.gameData.opponent.name}
                 onAccept={() => answerDraw(true) }
                 onDecline={() => answerDraw(false)}
             />}

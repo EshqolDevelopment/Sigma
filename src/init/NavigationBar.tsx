@@ -3,6 +3,7 @@ import style from "./Navigation.module.css";
 import LoginModal from "../LoginModal";
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
+import {getAuth} from "firebase/auth";
 
 
 
@@ -37,6 +38,11 @@ export default function NavigationBar() {
         setActivePage(page);
     }
 
+    const openProfile = () => {
+        getAuth().signOut();
+    }
+
+    console.log(globalContext.userData)
 
     return (
         <nav className={style.navigationBar}>
@@ -64,7 +70,7 @@ export default function NavigationBar() {
                     <LoginModal show={showLogin} setShow={setShowLogin}/>
                     <img src={"/images/logo.png"} className={style.sigmaIcon} alt={"logo"}/>
                 </>}
-                {globalContext.username && <img src={"/images/p1.png"} className={style.sigmaIcon} alt={"logo"}/>}
+                {globalContext.userData && globalContext.username && <img src={`/images/p${globalContext.userData.image}.png`} className={style.sigmaIcon} alt={"logo"} onClick={openProfile}/>}
             </div>
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>

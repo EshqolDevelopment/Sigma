@@ -6,7 +6,7 @@ import {QuickPlayGameData} from "../DataTypes";
 type Props = {
     level: Level;
     setLevel: (level: Level | "") => void;
-    onMatchFind: (data: QuickPlayGameData) => void;
+    setGameData: (data: QuickPlayGameData) => void;
 }
 
 export default function SearchForMatch(props: Props) {
@@ -14,29 +14,30 @@ export default function SearchForMatch(props: Props) {
     const globalContext = React.useContext(GlobalContext);
 
     useEffect(() => {
+        const searchForMatchAction = async () => {
+            return await postRequest('/quick-play/searchForOpponent', {
+                name: globalContext.username,
+                level: props.level
+            })
+        }
+
+
         loadingDialog.current.showModal();
-        searchForMatch().then((data: QuickPlayGameData) => {
+        searchForMatchAction().then((data: QuickPlayGameData) => {
             console.log(data)
             if (!data.error && data.questions) {
-                props.onMatchFind(data);
+                props.setGameData(data);
             } else {
                 props.setLevel("");
             }
         })
-    }, [])
-
-    const searchForMatch = async () => {
-        return await postRequest('/quick-play/searchForOpponent', {
-            name: globalContext.username,
-            level: props.level
-        })
-    }
+    }, [globalContext.username, props.level])
 
     const cancelSearch = async () => {
         const response = await postRequest('/quick-play/removeFromWaitingPool', {
             name: globalContext.username,
             level: props.level
-        })
+        }) as {result: string};
         if (response.result === "OK") {
             props.setLevel("");
         }

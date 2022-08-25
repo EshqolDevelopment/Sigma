@@ -20,7 +20,7 @@ export function InviteOrJoin(props: Props) {
             name: globalContext.username,
             code: codeForGui,
             score: 100
-        });
+        }) as {result: string};
 
         if (res.result === "OK") {
             props.setAdmin(false);
@@ -33,7 +33,7 @@ export function InviteOrJoin(props: Props) {
             level: level,
             name: globalContext.username,
             score: 100,
-        })
+        }) as {roomCode: string};
         props.setAdmin(true);
         props.onSubmit(res.roomCode);
     }

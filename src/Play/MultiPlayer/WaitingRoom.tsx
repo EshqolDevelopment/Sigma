@@ -2,7 +2,7 @@ import styles from "./waitingRoom.module.scss";
 import React, {useEffect} from "react";
 import {ref, onValue} from "firebase/database";
 import {db} from "../../init/firebase";
-import {Player, PlayersData} from "../../DataTypes";
+import {PlayersData} from "../../DataTypes";
 import { GlobalContext, postRequest} from "../../Global";
 import SelectQuestionsNum from "./SelectQuestionsNum/SelectQuestionsNum";
 

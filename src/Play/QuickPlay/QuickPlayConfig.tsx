@@ -30,7 +30,7 @@ export function QuickPlayConfig() {
                 <Levels onClick={setLevel}/>
             </div>
 
-            {level && <SearchForMatch level={level} setLevel={setLevel} onMatchFind={setGameData}/>}
+            {level && <SearchForMatch level={level} setLevel={setLevel} setGameData={setGameData}/>}
         </div>}
 
         {gameData && <QuickPlayGame gameData={gameData}/>}
