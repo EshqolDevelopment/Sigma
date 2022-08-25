@@ -81,7 +81,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
             drawListener();
         };
 
-    }, [props.questionNumber, props.gameData]);
+    }, [props.questionNumber, props.gameData, globalContext.username, props]);
 
 
     const onCorrectAnswer = async () => {

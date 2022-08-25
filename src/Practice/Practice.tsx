@@ -62,7 +62,7 @@ export default function Practice() {
                 <button className={"pickRandom"}>Pick Random</button>
                 <input className={"filter-question"} type={"text"} placeholder={"Search for a question"}
                        onChange={filterQuestions}/>
-                <img src={"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/Search_Icon.svg/1024px-Search_Icon.svg.png"}/>
+                <img src={"search logo"}/>
             </div>
 
             <div className={"container"}>

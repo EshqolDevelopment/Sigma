@@ -21,7 +21,6 @@ export default function SearchForMatch(props: Props) {
             })
         }
 
-
         loadingDialog.current.showModal();
         searchForMatchAction().then((data: QuickPlayGameData) => {
             console.log(data)
@@ -31,7 +30,7 @@ export default function SearchForMatch(props: Props) {
                 props.setLevel("");
             }
         })
-    }, [globalContext.username, props.level])
+    }, [globalContext.username, props, props.level])
 
     const cancelSearch = async () => {
         const response = await postRequest('/quick-play/removeFromWaitingPool', {
@@ -48,7 +47,7 @@ export default function SearchForMatch(props: Props) {
             <dialog className={styles.loading} ref={loadingDialog}>
                 <span>Searching for opponent...</span>
 
-                <img src={"https://cdn.dribbble.com/users/544814/screenshots/3838751/dribbble_hourglass.gif"}/>
+                <img src={"https://cdn.dribbble.com/users/544814/screenshots/3838751/dribbble_hourglass.gif"} alt={"hourglass"}/>
 
                 <button onClick={cancelSearch}>Cancel</button>
             </dialog>

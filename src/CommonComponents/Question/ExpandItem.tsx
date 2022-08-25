@@ -16,7 +16,7 @@ export function ExpandItem(props: Props) {
     return <div className={styles.expandItem}>
         <div className={styles.expandItemTitle}>
             <span>Optimal Space & Time Complexity</span>
-            <img src={"/images/arrow.svg"} onClick={openDescription}
+            <img src={"/images/arrow.svg"} onClick={openDescription} alt={"open and close description"}
                  className={["arrow", expanded ? "arrowOpen" : ""].join(" ")}/>
         </div>
 

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import WaitingRoom from "./WaitingRoom";
 import {InviteOrJoin} from "./InviteOrJoin";
 import {useNavigate} from "react-router-dom";
@@ -18,12 +18,12 @@ export default function MultiPlayer() {
     const [players, setPlayers] = React.useState<PlayersData>({});
     const [numberOfQuestions, setNumberOfQuestions] = useState(0);
 
-    const closeRoom = async (code: string) => {
+    const closeRoom = useCallback(async (code: string) => {
         return await postRequest("/multi-play/closeRoom", {
             name: globalContext.username,
             code: code
         });
-    };
+    }, [globalContext.username]);
 
     useEffect(() => {
         window.onpopstate = async () => {
@@ -32,7 +32,7 @@ export default function MultiPlayer() {
                 setCode("");
             }
         };
-    }, [code, admin]);
+    }, [code, admin, closeRoom]);
 
     const onEnterWaitingRoom = (code) => {
         setCode(code);

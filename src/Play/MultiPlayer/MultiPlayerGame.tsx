@@ -85,7 +85,7 @@ export default function MultiPlayerGame(props: Props) {
             {inTransition && <div className={styles.wonLoadingScreen}>
                 <h3>You answer correctly!<br/>
                     You have two more questions remaining</h3>
-                <img src={"/images/timer.gif"}/>
+                <img src={"/images/timer.gif"} alt={"timer"}/>
             </div>}
 
             <SeekBarMultiPlayer steps={props.numberOfQuestions}

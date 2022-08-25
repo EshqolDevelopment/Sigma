@@ -7,7 +7,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
         <div>
             <h3>For all your beginners :)</h3>
             <div className={styles.levelDesignContainer}>
-                <img src={"/images/beginner.png"}/>
+                <img src={"/images/beginner.png"} alt={"beginner programmer"}/>
                 <button className={styles.easy} onClick={() => props.onClick("easy")}>Easy</button>
             </div>
             {!props.shortVersion && <div className={styles.levelDetails}>
@@ -24,7 +24,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
         <div>
             <h3>For intermediate programmers</h3>
             <div className={styles.levelDesignContainer}>
-                <img src={"/images/intermediate.png"}/>
+                <img src={"/images/intermediate.png"} alt={"intermediate programmer"}/>
                 <button onClick={() => props.onClick("medium")} className={styles.medium}>Medium</button>
             </div>
 
@@ -42,7 +42,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
         <div>
             <h3>For experienced programmers</h3>
             <div className={styles.levelDesignContainer}>
-                <img src={"/images/expert.png"}/>
+                <img src={"/images/expert.png"} alt={"expert programmer"}/>
                 <button onClick={() => props.onClick("hard")} className={styles.hard}>Hard</button>
             </div>
 

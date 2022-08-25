@@ -60,7 +60,7 @@ export default function LoginModal(props) {
         <dialog ref={multiPlayDialog} className={loginStyle.popup}>
 
             <div className={loginStyle.container}>
-                <img src={"https://static.thenounproject.com/png/57781-200.png"}
+                <img src={"/images/x.png"} alt={"close dialog"}
                      onClick={() => props.setShow(false)}/>
 
                 <h3 className={loginStyle.title}>Login</h3>
@@ -77,7 +77,7 @@ export default function LoginModal(props) {
                         <span className={loginStyle.or}>Or</span>
                         <button name={"google"} onClick={googleLogin} className={loginStyle.loginWithGoogle}>
                             <span>Continue with Google</span>
-                            <img src={"https://freesvg.org/img/1534129544.png"}/>
+                            <img src={"/images/google.png"} alt={"google logo"}/>
                         </button>
                     </div>
                 </div>

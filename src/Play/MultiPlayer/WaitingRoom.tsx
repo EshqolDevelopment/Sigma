@@ -24,6 +24,13 @@ export default function WaitingRoom(props: Props) {
     const globalContext = React.useContext(GlobalContext);
     const isHost = true;
 
+    const setLevel = props.setLevel;
+    const setQuestions = props.setQuestions;
+    const setPlayers = props.setPlayers;
+    const setNumberOfQuestions = props.setNumberOfQuestions;
+    const setGameStart = props.setGameStart;
+
+
     useEffect(() => {
         const groupRef = ref(db,  `multi-play/${props.code}`);
         const listener = onValue(groupRef, (snap) => {
@@ -37,22 +44,22 @@ export default function WaitingRoom(props: Props) {
                 numberOfQuestions: number;
             }
 
-            props.setLevel(data.level)
-            props.setQuestions(JSON.parse(data.questions))
-            props.setPlayers(data.players)
-            props.setNumberOfQuestions(data.numberOfQuestions)
+            setLevel(data.level)
+            setQuestions(JSON.parse(data.questions))
+            setPlayers(data.players)
+            setNumberOfQuestions(data.numberOfQuestions)
 
             if (data.startTime) {
-                props.setGameStart(true);
+                setGameStart(true);
             }
         })
 
         return () => listener();
-    }, [props.code])
+    }, [props.code, setGameStart, setLevel, setNumberOfQuestions, setPlayers, setQuestions])
 
 
     const startPlaying = async (numberOfQuestions: number) => {
-        const res = await postRequest("/multi-play/startGame", {
+        await postRequest("/multi-play/startGame", {
             name: globalContext.username,
             code: props.code,
             numberOfQuestions: numberOfQuestions,
@@ -103,7 +110,7 @@ export default function WaitingRoom(props: Props) {
                             {player.admin &&
                                 <img src={'https://iconarchive.com/download/i103432/paomedia/small-n-flat/key.ico'}
                                      alt={'Admin'}/>}
-                            <img src={`/images/p${player.image}.png`}/>
+                            <img src={`/images/p${player.image}.png`} alt={"Player profile"}/>
                         </div>
                     </div>
                 })}

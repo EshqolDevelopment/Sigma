@@ -8,7 +8,7 @@ export default function PracticeQuestionWrapper() {
         const location = window.location.pathname.split("/");
         const funcName = location.at(-1);
         setFuncName(funcName);
-    })
+    }, [])
 
     return (
         <div>

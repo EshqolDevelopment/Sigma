@@ -64,21 +64,21 @@ export default function QuickPlayGame(props: Props) {
                 <span className={styles.loadDesc}>You will be redirected to the next question in 3 seconds...</span>
                 <span className={styles.scoreText}>Score: {score[0]} - {score[1]}</span>
 
-                <img src={"/images/happy.gif"}/>
+                <img src={"/images/happy.gif"} alt={"happy face emoji"}/>
             </div>}
 
             {lastQuestionState === "lost" && <div className={styles.lostLoadingScreen}>
                 <h3>You lost!</h3>
                 <span className={styles.loadDesc}>You will be redirected to the next question in 3 seconds...</span>
                 <span className={styles.scoreText}>Score: {score[0]} - {score[1]}</span>
-                <img src={"/images/sad.gif"}/>
+                <img src={"/images/sad.gif"} alt={"sad face emoji"}/>
             </div>}
 
             {lastQuestionState === "draw" && <div className={styles.drawLoadingScreen}>
                 <h3>Draw!</h3>
                 <span className={styles.loadDesc}>You will be redirected to the next question in 3 seconds...</span>
                 <span className={styles.scoreText}>Score: {score[0]} - {score[1]}</span>
-                <img src={"/images/draw_face.png"}/>
+                <img src={"/images/draw_face.png"} alt={"face without any feeling"}/>
             </div>}
 
             <SeekBarSinglePlayer steps={3} currentStep={score[0]}/>
@@ -92,18 +92,18 @@ export default function QuickPlayGame(props: Props) {
                 <div className={styles.playerScoreContainer}>
                     {score[0] > score[1] && <>
                         <Trophy/>
-                        <img className={styles.crown} src={"/images/crown.png"}/>
+                        <img className={styles.crown} src={"/images/crown.png"} alt={"crown"}/>
                     </>}
-                    <img src={`/images/p${globalContext.userData.image}.png`}/>
+                    <img src={`/images/p${globalContext.userData.image}.png`} alt={"Your profile"}/>
                     <span>{globalContext.username}</span>
                 </div>
 
                 <div className={styles.playerScoreContainer}>
                     {score[1] > score[0] && <>
                         <Trophy/>
-                        <img className={styles.crown} src={"/images/crown.png"}/>
+                        <img className={styles.crown} src={"/images/crown.png"} alt={"crown"}/>
                     </>}
-                    <img src={`/images/p${props.gameData.opponent.image}.png`}/>
+                    <img src={`/images/p${props.gameData.opponent.image}.png`} alt={"Opponent profile"}/>
                     <span>{props.gameData.opponent.name}</span>
                 </div>
             </div>
