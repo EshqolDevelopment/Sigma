@@ -44,8 +44,6 @@ export default function QuickPlayGame(props: Props) {
         }, TransitionTimeBetweenQuestions);
     };
 
-    console.log(props.gameData.opponent)
-    console.log(globalContext.userData)
 
     return (<div>
         {Math.max(score[0], score[1]) < 3 && <>

@@ -17,7 +17,6 @@ export default function Practice() {
         questionDictGlobal = serverQuestionDict;
     }
 
-
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#f6f9fc");
         fetchQuestions();
@@ -62,7 +61,7 @@ export default function Practice() {
                 <button className={"pickRandom"}>Pick Random</button>
                 <input className={"filter-question"} type={"text"} placeholder={"Search for a question"}
                        onChange={filterQuestions}/>
-                <img src={"search logo"}/>
+                <img alt={"search logo"} src={"/images/search.png"}/>
             </div>
 
             <div className={"container"}>

@@ -3,7 +3,7 @@ import {UserData} from "./DataTypes";
 
 type GlobalContextType = {
     username: string;
-    userData: UserData
+    userData: UserData;
 }
 
 export const GlobalContext = createContext<GlobalContextType>(null);
@@ -28,4 +28,10 @@ export const postRequest = async (url: string = "", data: any): Promise<object> 
         return {error: "General error"};
     }
 
+}
+
+export const winRate = (userData: UserData) => {
+    const wins = userData.wins;
+    const losses = userData.losses;
+    return Math.round((wins / (wins + losses)) * 100 || 0);
 }

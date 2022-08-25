@@ -1,10 +1,9 @@
-import React, {createRef, useContext, useState} from "react";
+import React, {createRef, useContext, useRef, useState} from "react";
 import style from "./Navigation.module.css";
 import LoginModal from "../LoginModal";
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
-import {getAuth} from "firebase/auth";
-
+import {Profile} from "../CommonComponents/Profile/Profile";
 
 
 export default function NavigationBar() {
@@ -14,6 +13,7 @@ export default function NavigationBar() {
     const mobileMenuRef = createRef<HTMLDivElement>();
     const globalContext = useContext(GlobalContext);
     const [activePage, setActivePage] = useState(window.location.pathname.split("/")[1].toLocaleLowerCase());
+    const [showProfile, setShowProfile] = useState(false);
 
     const openLoginModal = () => {
         setShowLogin(true);
@@ -39,10 +39,9 @@ export default function NavigationBar() {
     }
 
     const openProfile = () => {
-        getAuth().signOut();
+        setShowProfile(true);
     }
 
-    console.log(globalContext.userData)
 
     return (
         <nav className={style.navigationBar}>
@@ -50,8 +49,8 @@ export default function NavigationBar() {
                 {pages.map((page, index) => {
                     return (
                         <Link key={index} onClick={() => onPageChange(page)}
-                           className={[style.page, isActive(activePage.toLocaleLowerCase(), page.toLocaleLowerCase()) ? style.active : ""].join(" ")}
-                            to={"/" + (page.toLowerCase() === "home" ? "" :  page.toLowerCase())}>
+                              className={[style.page, isActive(activePage.toLocaleLowerCase(), page.toLocaleLowerCase()) ? style.active : ""].join(" ")}
+                              to={"/" + (page.toLowerCase() === "home" ? "" : page.toLowerCase())}>
                             {page}
                         </Link>
                     );
@@ -70,7 +69,18 @@ export default function NavigationBar() {
                     <LoginModal show={showLogin} setShow={setShowLogin}/>
                     <img src={"/images/logo.png"} className={style.sigmaIcon} alt={"logo"}/>
                 </>}
-                {globalContext.userData && globalContext.username && <img src={`/images/p${globalContext.userData.image}.png`} className={style.sigmaIcon} alt={"logo"} onClick={openProfile}/>}
+
+                {globalContext.userData && globalContext.username &&
+                    <>
+                        <span className={style.coinsText}>{globalContext.userData.coins}</span>
+                        <img src={"/images/coins.png"} className={style.coins}/>
+                        <img src={`/images/p${globalContext.userData.image}.png`} className={style.sigmaIcon}
+                             alt={"logo"}
+                             onClick={openProfile}
+                        />
+                    </>
+                }
+
             </div>
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
@@ -88,6 +98,9 @@ export default function NavigationBar() {
                     <span>Compiler</span>
                 </div>
             </div>}
+
+
+            {showProfile && <Profile close={() => setShowProfile(false)}/>}
         </nav>
     );
 }

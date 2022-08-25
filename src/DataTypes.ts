@@ -11,15 +11,10 @@ export type QuestionData = {
 }
 
 export type QuickPlayGameData = {
-    opponent: {
-        name: string;
-        countryCode: string;
-        image: string;
-        coins: number;
-    },
-    questions: string[],
-    error?: "canceled",
-    gameCode: string,
+    opponent: UserData;
+    questions: string[];
+    error?: "canceled";
+    gameCode: string;
 }
 
 export type Player = {
@@ -37,7 +32,7 @@ export type UserData = {
     name: string;
     coins: number;
     wins: number;
-    loses: number;
+    losses: number;
     draws: number;
     points: number;
     countryCode: string;
@@ -45,9 +40,8 @@ export type UserData = {
     mediumRecord: number;
     hardRecord: number;
     image: string;
+    displayName: string;
 }
-
-
 
 export type PracticeQuestionItem = {
     name: string;

@@ -12,11 +12,13 @@ import {QuickPlayConfig} from "./Play/QuickPlay/QuickPlayConfig";
 import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
 import {UserData} from "./DataTypes";
+import {QueryClient, QueryClientProvider} from "react-query";
 
 
 export default function App() {
     const [userName, setUserName] = React.useState<string>(undefined);
     const [userData, setUserData] = React.useState<UserData>(undefined);
+    const queryClient = new QueryClient()
 
     getAuth().onAuthStateChanged(user => {
         if (user) {
@@ -43,33 +45,34 @@ export default function App() {
     }, [userName]);
 
     return (
-        <GlobalContext.Provider value={{
-            username: userName,
-            userData: userData
-        }}>
-            <div>
-                <div className={"content"}>
-                    <BrowserRouter>
-                        <NavigationBar/>
+        <QueryClientProvider client={queryClient}>
+            <GlobalContext.Provider value={{
+                username: userName,
+                userData: userData,
+            }}>
+                <div>
+                    <div className={"content"}>
+                        <BrowserRouter>
+                            <NavigationBar/>
 
-                        <Routes>
-                            <Route path={"/"} element={<Home/>}/>
-                            <Route path={"/home"} element={<Home/>}/>
+                            <Routes>
+                                <Route path={"/"} element={<Home/>}/>
+                                <Route path={"/home"} element={<Home/>}/>
 
-                            <Route path={"/leaderboard"} element={<Leaderboard/>}/>
-                            <Route path={"/compiler"} element={<Compiler/>}/>
+                                <Route path={"/leaderboard"} element={<Leaderboard/>}/>
+                                <Route path={"/compiler"} element={<Compiler/>}/>
 
-                            <Route path={"/practice"} element={<Practice/>}/>
-                            <Route path={"/practice/*"} element={<PracticeQuestionWrapper/>}/>
+                                <Route path={"/practice"} element={<Practice/>}/>
+                                <Route path={"/practice/*"} element={<PracticeQuestionWrapper/>}/>
 
-                            <Route path={"/play"} element={<ChooseGameMode/>}/>
-                            <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
-                            <Route path={"/multi-player"} element={<MultiPlayer/>}/>
-                        </Routes>
-                    </BrowserRouter>
+                                <Route path={"/play"} element={<ChooseGameMode/>}/>
+                                <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
+                                <Route path={"/multi-player"} element={<MultiPlayer/>}/>
+                            </Routes>
+                        </BrowserRouter>
+                    </div>
                 </div>
-            </div>
-        </GlobalContext.Provider>
-
+            </GlobalContext.Provider>
+        </QueryClientProvider>
     );
 }

@@ -1,0 +1,131 @@
+@use "../../init/global" as *;
+
+
+.profileDialog {
+    border: 0;
+    border-radius: 30px;
+    width: 560px;
+
+    &::backdrop {
+        background: rgba(0, 0, 0, 0.7);
+    }
+}
+
+.profileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 30px;
+}
+
+.removeDefault {
+    border: 0;
+    background: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+.profileTitleRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.record img {
+    width: 55px;
+    height: 55px;
+}
+
+.x img {
+    width: 35px;
+    height: 35px;
+}
+
+
+.profileImage {
+    width: 170px;
+    height: 170px;
+    margin-top: -35px;
+}
+
+.infoRow {
+    display: flex;
+    justify-content: space-between;
+    width: 60%;
+
+    span:nth-of-type(1) {
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    span:nth-of-type(2) {
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    @include mobile {
+        width: 90%;
+    }
+}
+
+.signOut {
+    background: #e85656;
+    color: white;
+    border: 0;
+    border-radius: 3px;
+    font-weight: bold;
+    padding: 8px;
+}
+
+
+.chooseProfileContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+        width: 100px;
+        height: 100px;
+    }
+
+    h3 {
+        font-size: 26px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+
+        @include mobile {
+            font-size: 22px;
+        }
+    }
+
+    & > div {
+        background: wheat;
+        border: 3px solid black;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        padding-block: 5px;
+    }
+}
+
+.back {
+    margin-right: auto;
+    margin-top: -30px;
+    position: relative;
+    top: 32px;
+
+    @include mobile {
+        top: 20px;
+        margin-top: -20px;
+    }
+}
+
+
+.back img{
+    width: 30px;
+    height: 30px;
+}
+

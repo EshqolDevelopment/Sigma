@@ -1,23 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { app } from '../init/firebase';
-import { doc, getDoc, getFirestore } from "firebase/firestore";
-import './Leaderboard.css'
-import { countryCodeEmoji } from 'country-code-emoji'
-
+import React, {useEffect} from "react";
+import {app} from "../init/firebase";
+import {doc, getDoc, getFirestore} from "firebase/firestore";
+import "./Leaderboard.css";
+import {countryCodeEmoji} from "country-code-emoji";
+import {useQuery} from "react-query";
 
 
 export default function Leaderboard() {
-    const [data, setData] = useState([])
+    const {data} = useQuery(['leaderboard'], getLeaderboardData, {
+        initialData: [],
+    })
+
+    async function getLeaderboardData() {
+        const ref = doc(getFirestore(app), 'leaderboard/leaderboard')
+        const res = await getDoc(ref)
+        return res.data()['leaderboard'].split('@')
+    }
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
-
-        const ref = doc(getFirestore(app), 'leaderboard/leaderboard')
-        getDoc(ref).then(res => {
-            const data = res.data()['leaderboard'].split('@')
-            setData(data)
-        })
-
     }, [])
 
     function openProfile() {

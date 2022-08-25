@@ -13,6 +13,15 @@
 
     @include mobile {
         width: 90%;
+        position: fixed;
+        bottom: 3vh;
+        z-index: 100;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    @media (max-height: 450px) {
+        display: none;
     }
 }
 
