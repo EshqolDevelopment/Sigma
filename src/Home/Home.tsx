@@ -206,8 +206,7 @@ export default function Home() {
                 To avoid this, we have a user-friendly IDE that make your experience much more enjoyable.
             </ReadMore>
 
-            <div className={'line-separating'}/>
-
+            <Footer/>
         </div>
     );
 }
