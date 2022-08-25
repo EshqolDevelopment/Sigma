@@ -1,0 +1,68 @@
+@use "../../init/global" as *;
+
+.container {
+    width: 100%;
+    min-height: 110px;
+    background: #f5f5f5;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid gray;
+}
+
+.pages {
+    display: flex;
+    width: 70%;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 18px;
+    justify-content: center;
+    gap: 20px;
+
+    .link {
+        text-decoration: none;
+        color: #3d73e7;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .link::after {
+        content: " ";
+        height: 1px;
+        width: 0;
+        background: #3d73e7;
+        transition: width 0.3s ease-out;
+    }
+
+    .link:hover::after {
+        width: 100%;
+    }
+
+    & > div {
+        height: 20px;
+        width: 1px;
+        background: gray;
+    }
+
+    *:last-child {
+        border: initial;
+    }
+
+    @include mobile {
+        width: 90%;
+    }
+}
+
+.copyRight {
+    margin-top: 15px;
+    margin-bottom: 7px;
+    color: #505050;
+    font-size: 16px;
+    text-align: center ;
+}
+
+

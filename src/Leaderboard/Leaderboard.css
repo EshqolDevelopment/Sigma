@@ -7,13 +7,13 @@
     left: -20px;
     display: flex;
     flex-direction: column;
-    color: white;
+    color: black;
 }
 
 .leaderboard-content > div:not(:first-child) {
     height: 60px;
     max-width: 100%;
-    background: #363b45;
+    background: #d7dce3;
     margin-inline: auto;
     border-radius: 10px;
     font-size: 20px;
@@ -26,7 +26,9 @@
     cursor: pointer;
 }
 
-
+.leaderboard-content > div:nth-child(odd):not(:first-child) {
+    background: #cbccce;
+}
 
 .leaderboard-content > div:not(:first-child):hover {
     transform: scale(1.03);
@@ -68,10 +70,6 @@
     margin-bottom: auto;
 }
 
-.leaderboard-content > div:nth-child(odd):not(:first-child) {
-   background: #282c34;
-}
-
 .flag {
     font-size: 30px;
 }
@@ -88,8 +86,8 @@
     margin-bottom: 20px;
     padding: 0 10px 8px;
     font-weight: bold;
-    border-bottom: 3px solid white;
-    color: white;
+    color: black;
+    border-bottom: 3px solid;
     width: calc(100% + 20px);
 }
 

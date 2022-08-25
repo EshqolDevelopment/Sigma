@@ -8,28 +8,29 @@ import {LanguageDialog} from "../../init/LanguageDialog";
 import * as Svg from "../../init/Svg";
 import "./Compiler.scss";
 import {postRequest} from "../../Global";
+import Footer from "../../CommonComponents/Footer/Footer";
 
 
 const LanguageToHelloCode = {
     "Python": "print('Hello World!')",
     "JavaScript": "console.log('Hello World!')",
     "Kotlin": "fun main() {\n    println('Hello World!')\n}",
-    "Java": "Public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}",
-}
+    "Java": "Public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
+};
 
 export default function Compiler() {
     const [currentFile, setCurrentFile] = useState("main");
     const [darkMode, setDarkMode] = useState(false);
     const [languagesDialog, setLanguagesDialog] = useState(false);
-    const [language, setLanguage] = useState(localStorage['language'] || "Python");
-    const [code, setCode] = useState(LanguageToHelloCode[localStorage['language'] || "Python"]);
+    const [language, setLanguage] = useState(localStorage["language"] || "Python");
+    const [code, setCode] = useState(LanguageToHelloCode[localStorage["language"] || "Python"]);
 
     const [output, setOutput] = useState([]);
     const languages = {
         "Python": Svg.Python(),
         "JavaScript": Svg.Javascript(),
         "Kotlin": Svg.Kotlin(),
-        "Java": Svg.Java(),
+        "Java": Svg.Java()
     };
     const extensions = {
         "Python": "py",
@@ -41,13 +42,12 @@ export default function Compiler() {
     };
 
 
-
     const runCode = async () => {
         const serverURL = language.toLowerCase() === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
 
         const res = await postRequest(`${serverURL}/${language.toLowerCase()}/run`, {
             code: code
-        }) as {result: string};
+        }) as { result: string };
 
         setOutput(res.result.split("\n"));
     };
@@ -62,24 +62,9 @@ export default function Compiler() {
                             <FaSave/>
                         </button>
 
-                        {/*<button>*/}
-                        {/*    <RiFolderOpenLine/>*/}
-                        {/*</button>*/}
-
-                        {/*<button>*/}
-                        {/*    <FaUndo/>*/}
-                        {/*</button>*/}
-
-                        {/*<button>*/}
-                        {/*    <FaRedo/>*/}
-                        {/*</button>*/}
                     </div>
 
                     <div className={"buttons"}>
-                        {/*<button>*/}
-                        {/*    <IoMdSettings/>*/}
-                        {/*</button>*/}
-
                         <button onClick={() => setDarkMode(dark => !dark)}>
                             {darkMode ? <BsFillSunFill/> : <BsMoonFill/>}
                         </button>
@@ -98,12 +83,7 @@ export default function Compiler() {
                                       onClick={() => setCurrentFile(file)}>
                                     {file}.{extensions[language]}
                                 </span>
-                            ))
-                            }
-
-                            {/*<button>*/}
-                            {/*<BsPlusLg/>*/}
-                            {/*</button>*/}
+                            ))}
                         </div>
                     </div>
 
@@ -111,6 +91,7 @@ export default function Compiler() {
                         <Editor theme={darkMode ? "monokai" : "xcode"} code={code} setCode={setCode}
                                 language={language.toString().toLowerCase()}/>
                     </div>
+
                 </div>
 
                 <div className={"run-row"}>
@@ -145,14 +126,15 @@ export default function Compiler() {
                             <div key={index}>
                                 <span>{item}</span>
                             </div>
-                        ))
-                        }
+                        ))}
                     </div>
                 </div>
             </div>
 
             <LanguageDialog languages={languages} setLanguage={setLanguage} show={languagesDialog}
                             setShow={setLanguagesDialog} setCode={setCode} LanguageToHelloCode={LanguageToHelloCode}/>
+            <Footer/>
+
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styles from "../Setup/play.module.scss";
 import {Levels} from "../Setup/Levels";
 import {GlobalContext, postRequest} from "../../Global";
+import Footer from "../../CommonComponents/Footer/Footer";
 
 
 type Props = {

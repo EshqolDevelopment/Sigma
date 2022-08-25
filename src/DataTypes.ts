@@ -21,7 +21,8 @@ export type Player = {
     admin: boolean;
     currentQuestion: number;
     image: string;
-    score: number
+    score: number;
+    time: number;
 }
 
 export type PlayersData = {
