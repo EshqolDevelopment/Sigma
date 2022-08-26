@@ -13,9 +13,6 @@ import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
 import {UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
-import Footer from "./CommonComponents/Footer/Footer";
-import Map from "./CommonComponents/Map/Map";
-
 import {doc, getFirestore, onSnapshot} from "firebase/firestore";
 import {app} from "./init/firebase";
 
@@ -85,25 +82,20 @@ export default function App() {
                         <BrowserRouter>
                             <NavigationBar/>
 
-                            <div className={'content-page'}>
-                                <Routes>
-                                    <Route path={"/"} element={<Home/>}/>
-                                    <Route path={"/home"} element={<Home/>}/>
-                                    <Route path={"/map"} element={<Map/>}/>
+                            <Routes>
+                                <Route path={"/"} element={<Home/>}/>
+                                <Route path={"/home"} element={<Home/>}/>
 
-                                    <Route path={"/leaderboard"} element={<Leaderboard/>}/>
-                                    <Route path={"/compiler"} element={<Compiler/>}/>
+                                <Route path={"/leaderboard"} element={<Leaderboard/>}/>
+                                <Route path={"/compiler"} element={<Compiler/>}/>
 
-                                    <Route path={"/practice"} element={<Practice/>}/>
-                                    <Route path={"/practice/*"} element={<PracticeQuestionWrapper/>}/>
+                                <Route path={"/practice"} element={<Practice/>}/>
+                                <Route path={"/practice/*"} element={<PracticeQuestionWrapper/>}/>
 
-                                    <Route path={"/play"} element={<ChooseGameMode/>}/>
-                                    <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
-                                    <Route path={"/multi-player"} element={<MultiPlayer/>}/>
-                                </Routes>
-                            </div>
-
-                            <Footer/>
+                                <Route path={"/play"} element={<ChooseGameMode/>}/>
+                                <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
+                                <Route path={"/multi-player"} element={<MultiPlayer/>}/>
+                            </Routes>
                         </BrowserRouter>
                     </div>
                 </div>

@@ -2,10 +2,9 @@
 
 
 .profileDialog {
-    border-radius: 10px;
+    border: 0;
+    border-radius: 30px;
     width: 560px;
-    border: 2px solid white;
-    background: #e1e1e1;
 }
 
 .profileContainer {
@@ -21,13 +20,6 @@
     background: inherit;
     padding: 0;
     margin: 0;
-}
-
-.name {
-    font-size: 24px;
-    font-weight: bold;
-    margin-top: -50px;
-    margin-bottom: 30px;
 }
 
 .profileTitleRow {
@@ -78,7 +70,7 @@
     background: #e85656;
     color: white;
     border: 0;
-    border-radius: 5px;
+    border-radius: 3px;
     font-weight: bold;
     padding: 8px;
 }

@@ -40,40 +40,31 @@ export function Profile(props: Props) {
 
     return <dialog ref={profileRef} className={style.profileDialog}>
         {!chooseProfile && <div className={style.profileContainer}>
-
             <div className={style.profileTitleRow}>
                 <button className={style.x + " " + style.removeDefault} onClick={props.close}>
                     <img src={"/images/x.png"}/>
                 </button>
                 <button className={style.signOut} onClick={signOut}>Sign Out</button>
             </div>
-
-            <span className={style.name}>{globalContext.userData.displayName}</span>
-
             <button className={style.removeDefault} onClick={() => setChooseProfile(true)}>
                 <img src={`/images/p${globalContext.userData.image}.png`} className={style.profileImage}/>
             </button>
-
             <div className={style.infoRow}>
                 <span>Victories</span>
                 <span>{globalContext.userData.wins}</span>
             </div>
-
             <div className={style.infoRow}>
                 <span>Defeats</span>
                 <span>{globalContext.userData.losses}</span>
             </div>
-
             <div className={style.infoRow}>
                 <span>Winning rate</span>
                 <span>{winRate(globalContext.userData)} %</span>
             </div>
-
             <div className={style.infoRow}>
                 <span>Coins</span>
                 <span>{globalContext.userData.coins}</span>
             </div>
-
             <div className={style.infoRow}>
                 <span>Points</span>
                 <span>{globalContext.userData.points}</span>
