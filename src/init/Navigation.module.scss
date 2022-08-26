@@ -1,9 +1,11 @@
+@use "global" as *;
+
 
 .navigationBar {
     position: fixed;
     top: 0;
     width: 100%;
-    height: var(--navigation-height);
+    height: $nav-height;
     background: #e6e6e6;
     display: flex;
     z-index: 200;

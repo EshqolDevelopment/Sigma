@@ -6,7 +6,6 @@ import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import * as firebaseui from 'firebaseui'
 import {GlobalContext} from "../Global";
 import { useNavigate } from "react-router-dom";
-import Footer from "../CommonComponents/Footer/Footer";
 
 
 const languages = {
@@ -75,8 +74,7 @@ export default function Home() {
 
     const Box = (props: {title: string, children: string, icon?: string, viewBox?: string, fill?: boolean,
         strokeLine?: "butt" | "round" | "square" | "inherit", strokeWidth?: string, id: string}) => (
-
-            <button className={'box'} onClick={() => props.id === 'questions' ? navigate("/practice") : document.getElementById(props.id).scrollIntoView({
+        <button className={'box'} onClick={() => props.id === 'questions' ? navigate("/practice") : document.getElementById(props.id).scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
                 inline: 'center'
@@ -91,9 +89,6 @@ export default function Home() {
                 <span>Learn more.</span>
             </button>
     )
-
-
-
 
     const List = (props) => {
         return <>
@@ -126,11 +121,9 @@ export default function Home() {
         </div>
     )
 
-
     return (
         <div className={'home-content'}>
-            <div style={{display: "none"}} id={"helper-firebase-ui"}></div>
-
+            <div style={{display: "none"}} id={"helper-firebase-ui"}/>
 
             <div className={'home-upper'}>
                 <div className={'home-title'}>
@@ -206,7 +199,7 @@ export default function Home() {
                 To avoid this, we have a user-friendly IDE that make your experience much more enjoyable.
             </ReadMore>
 
-            <Footer/>
+            <div style={{paddingTop: '100px'}}/>
         </div>
-    );
+    )
 }
