@@ -44,7 +44,7 @@ export default function SearchForMatch(props: Props) {
                 props.setLevel("");
             }
         });
-    }, [globalContext.username, props, props.level]);
+    }, []);
 
     const cancelSearch = async () => {
         const response = await postRequest("/quick-play/removeFromWaitingPool", {

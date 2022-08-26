@@ -22,8 +22,7 @@ export function GameSummary(props: Props) {
 
     return <div className={styles.gameSummary}>
         <div className={styles.coins}>
-            <span>Coins:&nbsp;&nbsp;+</span>
-            <span className={styles.coinsAdded}>{props.gameFinishedData?.coins}</span>
+            <span className={styles.coinsAdded}>Coins:&nbsp;&nbsp;+{props.gameFinishedData?.coins}</span>
             <img src={"/images/coin.png"}/>
         </div>
         <h3>{props.score[0] > props.score[1] ? "You won the game!" : "You lost the game!"}</h3>

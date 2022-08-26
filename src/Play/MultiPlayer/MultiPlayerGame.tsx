@@ -34,6 +34,7 @@ export default function MultiPlayerGame(props: Props) {
     const globalContext = useContext(GlobalContext);
     const [playersData, setPlayersData] = useState<PlayersData>(props.players);
     const [inTransition, setInTransition] = useState(false);
+    const [coins, setCoins] = useState(0);
 
     const notify = (text: string) => toast.info(text);
 
@@ -63,7 +64,11 @@ export default function MultiPlayerGame(props: Props) {
         const res = await postRequest("/multi-play/onAnswerSuccess", {
             name: globalContext.username,
             code: props.code,
-        }) as {result: string};
+        }) as {result: string, coins: number | null};
+
+        if (res.coins) {
+            setCoins(res.coins);
+        }
 
         if (res.result === "OK") {
             setInTransition(true);
@@ -112,6 +117,10 @@ export default function MultiPlayerGame(props: Props) {
             </> :
 
                 <div className={styles.finishContainer}>
+                    <div className={styles.coins}>
+                        <span className={styles.coinsAdded}>Coins:&nbsp;&nbsp;+{coins}</span>
+                        <img src={"/images/coin.png"}/>
+                    </div>
                     <h2>You finished the game in the {NumToWord[winners.map((player) => player.name).indexOf(globalContext.userData.name) + 1]} place!</h2>
 
                     <div className={styles.podium}>

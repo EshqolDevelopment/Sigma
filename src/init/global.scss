@@ -15,3 +15,7 @@ $max-width: 750px;
 .remove-link-style {
     text-decoration: none;
 }
+
+dialog::backdrop {
+  background: rgba(black, 0.85);
+}

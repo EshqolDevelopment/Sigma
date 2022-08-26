@@ -15,7 +15,6 @@ import {UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {doc, getFirestore, onSnapshot} from "firebase/firestore";
 import {app} from "./init/firebase";
-import dialogPolyfill from 'dialog-polyfill'
 
 
 const getDisplayName = (username: string): string => {
@@ -56,7 +55,6 @@ export default function App() {
             setUserName(null);
         }
     });
-
 
     const getUserData = async (username: string) => {
         onSnapshot(doc(getFirestore(app), `root/${username}`), (doc) => {
