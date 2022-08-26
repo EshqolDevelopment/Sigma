@@ -28,7 +28,7 @@ export function Profile(props: Props) {
             image: image,
             name: globalContext.userData.name
         })
-        window.location.reload();
+        setChooseProfile(false);
     }
 
     const profileImages = []

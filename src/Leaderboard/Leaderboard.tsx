@@ -8,9 +8,7 @@ import Footer from "../CommonComponents/Footer/Footer";
 
 
 export default function Leaderboard() {
-    const {data} = useQuery(['leaderboard'], getLeaderboardData, {
-        initialData: [],
-    })
+    const {data} = useQuery(['leaderboard'], getLeaderboardData)
 
     async function getLeaderboardData() {
         const ref = doc(getFirestore(app), 'leaderboard/leaderboard')
@@ -38,7 +36,7 @@ export default function Leaderboard() {
                     <span>Score</span>
                 </div>
 
-                {data.map((item, index) => {
+                {data?.map((item, index) => {
                     const [name, country, score, image] = item.split('.')
                     return (
                         <div key={index}>

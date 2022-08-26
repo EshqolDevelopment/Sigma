@@ -7,12 +7,38 @@ import Leaderboard from "./Leaderboard/Leaderboard";
 import Compiler from "./Compiler/Compiler/Compiler";
 import Practice from "./Practice/Practice";
 import PracticeQuestionWrapper from "./Practice/PracticeQuestionWrapper";
-import {GlobalContext, postRequest} from "./Global";
+import {GlobalContext} from "./Global";
 import {QuickPlayConfig} from "./Play/QuickPlay/QuickPlayConfig";
 import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
 import {UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
+import {doc, getFirestore, onSnapshot} from "firebase/firestore";
+import {app} from "./init/firebase";
+import dialogPolyfill from 'dialog-polyfill'
+
+
+const getDisplayName = (username: string): string => {
+    let name = username.replaceAll("_", " ").trim();
+    return name[0].toUpperCase() + name.slice(1);
+}
+
+const formatDBUserData = (name: string, userData: any): UserData => {
+    return {
+        name: name,
+        coins: userData[0],
+        wins: userData[1],
+        losses: userData[2],
+        draws: userData[3],
+        points: userData["a"],
+        countryCode: userData["c"],
+        easyRecord: userData["easy_record"],
+        mediumRecord: userData["medium_record"],
+        hardRecord: userData["hard_record"],
+        image: userData["p"].toString(),
+        displayName: getDisplayName(name)
+    };
+};
 
 
 export default function App() {
@@ -31,10 +57,13 @@ export default function App() {
         }
     });
 
-    const getUserData = async (name) => {
-        const response = await postRequest("/general/getUserData", {name}) as UserData;
-        setUserData(response);
-    };
+
+    const getUserData = async (username: string) => {
+        onSnapshot(doc(getFirestore(app), `root/${username}`), (doc) => {
+            const formattedData = formatDBUserData(username, doc.data());
+            setUserData(formattedData);
+        });
+    }
 
     useEffect(() => {
         if (userName) {

@@ -1,10 +1,10 @@
-import {QuickPlayGameData} from "../../DataTypes";
+import {QuickPlayGameData, QuickPlayGameFinished} from "../../DataTypes";
 import {useContext, useState} from "react";
 import SeekBarSinglePlayer from "../../CommonComponents/SeekBar/SeekBarSinglePlayer";
-import {GlobalContext} from "../../Global";
+import {GlobalContext, postRequest} from "../../Global";
 import styles from "./quickPlay.module.scss";
-import {Trophy} from "../../init/Svg";
 import QuickPlayQuestionWrapper from "./QuickPlayQuestionWrapper";
+import {GameSummary} from "./GameSummary";
 
 type Props = {
     gameData: QuickPlayGameData;
@@ -15,6 +15,7 @@ export default function QuickPlayGame(props: Props) {
     const globalContext = useContext(GlobalContext);
     const [score, setScore] = useState([0, 0]);
     const [lastQuestionState, setLastQuestionState] = useState<"" | "won" | "lost" | "draw">("");
+    const [gameFinishedData, setGameFinishedData] = useState<QuickPlayGameFinished>();
     const TransitionTimeBetweenQuestions = 3000;
 
     const won = () => {
@@ -24,6 +25,7 @@ export default function QuickPlayGame(props: Props) {
         setTimeout(() => {
             setLastQuestionState("");
         }, TransitionTimeBetweenQuestions);
+        checkIfGameFinishedAndWin([score[0] + 1, score[1]])
     };
 
     const lost = () => {
@@ -33,6 +35,7 @@ export default function QuickPlayGame(props: Props) {
         setTimeout(() => {
             setLastQuestionState("");
         }, TransitionTimeBetweenQuestions);
+        checkIfGameFinishedAndWin([score[0], score[1] + 1])
     };
 
     const draw = () => {
@@ -42,8 +45,21 @@ export default function QuickPlayGame(props: Props) {
         setTimeout(() => {
             setLastQuestionState("");
         }, TransitionTimeBetweenQuestions);
+        checkIfGameFinishedAndWin([score[0] + 1, score[1] + 1])
     };
 
+    const checkIfGameFinishedAndWin = (score) => {
+        if (Math.max(score[0], score[1]) >= 3) {
+            postRequest("/quick-play/onGameFinished", {
+                name: globalContext.userData.name,
+                opponent: props.gameData.opponent.name,
+                gameCode: props.gameData.gameCode,
+                level: props.gameData.level
+            }).then((data: QuickPlayGameFinished) => {
+                setGameFinishedData(data);
+            })
+        }
+    }
 
     return (<div>
         {Math.max(score[0], score[1]) < 3 && <>
@@ -83,32 +99,12 @@ export default function QuickPlayGame(props: Props) {
         </>}
 
 
-        {Math.max(score[0], score[1]) >= 3 && <div className={styles.gameSummary}>
-            <h3>{score[0] > score[1] ? "You won the game!" : "You lost the game!"}</h3>
-            <span>Score: {score[0]} - {score[1]}</span>
-            <div className={styles.playersSummaryContainer}>
-                <div className={styles.playerScoreContainer}>
-                    {score[0] > score[1] && <>
-                        <Trophy/>
-                        <img className={styles.crown} src={"/images/crown.png"} alt={"crown"}/>
-                    </>}
-                    <img src={`/images/p${globalContext.userData.image}.png`} alt={"Your profile"}/>
-                    <span>{globalContext.username}</span>
-                </div>
-
-                <div className={styles.playerScoreContainer}>
-                    {score[1] > score[0] && <>
-                        <Trophy/>
-                        <img className={styles.crown} src={"/images/crown.png"} alt={"crown"}/>
-                    </>}
-                    <img src={`/images/p${props.gameData.opponent.image}.png`} alt={"Opponent profile"}/>
-                    <span>{props.gameData.opponent.name}</span>
-                </div>
-            </div>
-
-            <button className={["sigma-button", styles.summaryBtn].join(" ")}>Go Home</button>
-            <button className={["sigma-button", styles.summaryBtn].join(" ")}>Play Again</button>
-        </div>}
+        {Math.max(score[0], score[1]) >= 3 &&
+            <GameSummary
+                score={score}
+                gameData={props.gameData}
+                gameFinishedData={gameFinishedData}
+        />}
 
     </div>);
 

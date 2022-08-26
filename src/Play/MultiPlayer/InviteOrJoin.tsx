@@ -20,7 +20,8 @@ export function InviteOrJoin(props: Props) {
         const res = await postRequest("/multi-play/joinRoom", {
             name: globalContext.username,
             code: codeForGui,
-            score: 100
+            score: 100,
+            image: globalContext.userData.image
         }) as {result: string};
 
         if (res.result === "OK") {
@@ -34,6 +35,7 @@ export function InviteOrJoin(props: Props) {
             level: level,
             name: globalContext.username,
             score: 100,
+            image: globalContext.userData.image
         }) as {roomCode: string};
         props.setAdmin(true);
         props.onSubmit(res.roomCode);

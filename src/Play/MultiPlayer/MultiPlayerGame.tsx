@@ -1,4 +1,4 @@
-import {Player, PlayersData} from "../../DataTypes";
+import {PlayersData} from "../../DataTypes";
 import {useContext, useEffect, useState} from "react";
 import {onValue, ref} from "firebase/database";
 import {db} from "../../init/firebase";
@@ -34,10 +34,6 @@ export default function MultiPlayerGame(props: Props) {
     const globalContext = useContext(GlobalContext);
     const [playersData, setPlayersData] = useState<PlayersData>(props.players);
     const [inTransition, setInTransition] = useState(false);
-    const [winnersArr, setWinnersArr] = useState<{
-        name: string;
-        time: number;
-    }[]>([]);
 
     const notify = (text: string) => toast.info(text);
 
@@ -85,6 +81,7 @@ export default function MultiPlayerGame(props: Props) {
         }
     }).filter((player) => player.time !== undefined);
 
+
     const winners = arr.sort((a, b) => a.time - b.time);
     if (winners.length < 3) {
         for (let i = winners.length; i < 3; i++) {
@@ -115,7 +112,7 @@ export default function MultiPlayerGame(props: Props) {
             </> :
 
                 <div className={styles.finishContainer}>
-                    <h2>You finished the game in the first place!</h2>
+                    <h2>You finished the game in the {NumToWord[winners.map((player) => player.name).indexOf(globalContext.userData.name) + 1]} place!</h2>
 
                     <div className={styles.podium}>
                         {winners.map((player, index) => {
@@ -130,6 +127,11 @@ export default function MultiPlayerGame(props: Props) {
                                 </div>
                             )
                         })}
+                    </div>
+
+                    <div className={styles.buttonContainer}>
+                        <button>Go Home</button>
+                        <button>Play Again</button>
                     </div>
 
                 </div>}

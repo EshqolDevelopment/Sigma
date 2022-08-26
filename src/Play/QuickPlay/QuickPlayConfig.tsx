@@ -1,9 +1,8 @@
 import React, {useState} from "react";
 import styles from "../Setup/play.module.scss";
 import { Levels } from "../Setup/Levels";
-import { Level} from "../../Global";
 import SearchForMatch from "../../Home/SearchForMatch";
-import {QuickPlayGameData} from "../../DataTypes";
+import {Level, QuickPlayGameData} from "../../DataTypes";
 import QuickPlayGame from "./QuickPlayGame";
 
 

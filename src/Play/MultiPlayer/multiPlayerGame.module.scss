@@ -126,3 +126,26 @@
         font-size: 30px;
     }
 }
+
+
+.buttonContainer {
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    margin-top: 70px;
+
+}
+
+.buttonContainer button {
+    width: 300px;
+    border: 0;
+    background: dodgerblue;
+    color: white;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px;
+
+}

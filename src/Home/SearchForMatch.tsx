@@ -1,8 +1,8 @@
 import styles from "../Play/Setup/play.module.scss";
 import matchScreenStyle from "../Play/QuickPlay/matchScreen.module.scss";
 import {useContext, useEffect, useRef, useState} from "react";
-import {GlobalContext, Level, postRequest} from "../Global";
-import {QuickPlayGameData, UserData} from "../DataTypes";
+import {GlobalContext, postRequest} from "../Global";
+import {Level, QuickPlayGameData, UserData} from "../DataTypes";
 import MatchScreen from "../Play/QuickPlay/MatchScreen";
 
 type Props = {
@@ -26,7 +26,11 @@ export default function SearchForMatch(props: Props) {
         };
 
         if (!loadingDialog.current.open) {
-            loadingDialog.current.showModal();
+            try {
+                loadingDialog.current.showModal();
+            } catch (e) {
+                console.log(e);
+            }
         }
         searchForMatchAction().then((data: QuickPlayGameData) => {
             if (!data.error && data.questions) {
@@ -61,8 +65,7 @@ export default function SearchForMatch(props: Props) {
                     <img src={"https://cdn.dribbble.com/users/544814/screenshots/3838751/dribbble_hourglass.gif"}
                          alt={"hourglass"}/>
                     <button onClick={cancelSearch}>Cancel</button>
-                </>
-                }
+                </>}
 
                 {showMatchScreen && <MatchScreen opponent={opponentData}/>}
             </dialog>

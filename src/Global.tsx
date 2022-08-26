@@ -8,7 +8,6 @@ type GlobalContextType = {
 
 export const GlobalContext = createContext<GlobalContextType>(null);
 
-export type Level = "easy" | "medium" | "hard";
 
 export const postRequest = async (url: string = "", data: any): Promise<object> => {
     if (!url.includes("http")) {

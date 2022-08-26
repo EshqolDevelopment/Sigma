@@ -10,11 +10,30 @@ export type QuestionData = {
     languages: Language[];
 }
 
+export type Level = "easy" | "medium" | "hard";
+
+
 export type QuickPlayGameData = {
     opponent: UserData;
     questions: string[];
     error?: "canceled";
     gameCode: string;
+    level: Level;
+}
+
+export enum Bonus {
+    perfectMatch = "perfectMatch",
+    significantAdvantage = "significantAdvantage",
+    closeMatch = "closeMatch",
+    fasterThan70Percent = "fasterThan70Percent",
+}
+
+export type QuickPlayGameFinished = {
+    coins: number;
+    bonuses: {
+        name: Bonus;
+        amount: number;
+    }[];
 }
 
 export type Player = {
