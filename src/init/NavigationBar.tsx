@@ -107,7 +107,7 @@ export default function NavigationBar() {
             </div>
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
-                <span>Hello, {globalContext.userData.displayName}</span>
+                <span>Hello, {globalContext.userData?.displayName}</span>
                 <div>
                     <span>Home</span>
                 </div>
