@@ -21,8 +21,14 @@
 }
 
 .nameText {
+    border: 0;
+    padding: 0;
+    background: inherit;
     cursor: pointer;
     transition: color 0.1s ease-in-out;
+    font-family: Avenir, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .nameText:hover {

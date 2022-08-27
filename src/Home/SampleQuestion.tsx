@@ -19,7 +19,6 @@ const question = questionsList[Math.floor(Math.random() * questionsList.length)]
 
 
 export function SampleQuestion() {
-
     const [sampleQuestionCode, setSampleQuestionCode] = useState(question.title)
     const [sampleQuestionLoadingState, setSampleQuestionLoadingState] = useState("")
     const [result, setResult] = useState("")

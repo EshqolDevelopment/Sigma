@@ -183,8 +183,8 @@ export default function ListOfQuestions(props: Props) {
 
                             <div>
                                 <div className={"circle"}/>
-                                <span onClick={() => navigate(`/practice/${data.name}`)}
-                                      className={"nameText"}>{formatFuncName(data.name)}</span>
+                                <button onClick={() => navigate(`/practice/${data.name}`)}
+                                      className={"nameText"}>{formatFuncName(data.name)}</button>
                             </div>
 
 

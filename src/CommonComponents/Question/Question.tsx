@@ -4,6 +4,7 @@ import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
 import {postRequest} from "../../Global";
+import ShowResult from "./ShowResult";
 
 
 type Props = {
@@ -31,6 +32,7 @@ export default function Question(props: Props) {
     const [language, setLanguage] = useState("python" as Language);
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
+    const [result, setResult] = useState(null);
 
 
     useEffect(() => {
@@ -157,16 +159,18 @@ export default function Question(props: Props) {
 
 
     async function submitQuestion() {
-        const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
+        setResult("loading");
 
-        const result = await postRequest(`${serverURL}/${language}`, {
+        const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
+        const response = await postRequest(`${serverURL}/${language}`, {
                 funcName: props.funcName,
                 code: code[language]
         }) as {result: string}
 
-        if (result.result === "success" || code[language].includes("eshqol")) {
+        if (response.result === "success" || code[language].includes("eshqol")) {
             if (props.onCorrectAnswer) props.onCorrectAnswer();
         }
+        setResult(response.result);
     }
 
 
@@ -248,6 +252,8 @@ export default function Question(props: Props) {
                     </div>
                 </div>
             </div>
+
+            {result !== null && <ShowResult close={() => setResult(null)} result={result}/>}
 
         </div>
     );
