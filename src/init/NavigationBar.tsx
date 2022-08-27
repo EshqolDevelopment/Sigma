@@ -12,7 +12,7 @@ export default function NavigationBar() {
     const [showLogin, setShowLogin] = useState(false);
     const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const mobileMenuRef = createRef<HTMLDivElement>();
+    const mobileMenuRef = createRef<HTMLButtonElement>();
     const globalContext = useContext(GlobalContext);
     const [activePage, setActivePage] = useState(window.location.pathname.split("/")[1].toLocaleLowerCase());
     const [showProfile, setShowProfile] = useState(false);
@@ -75,11 +75,11 @@ export default function NavigationBar() {
                 })}
             </div>
 
-            <div className={style.mobileMenu} onClick={openMobileMenu} ref={mobileMenuRef}>
+            <button className={style.mobileMenu} onClick={openMobileMenu} ref={mobileMenuRef}>
                 <div/>
                 <div/>
                 <div/>
-            </div>
+            </button>
 
             <div className={style.leftSide}>
                 {globalContext.username === null && <>
@@ -108,18 +108,15 @@ export default function NavigationBar() {
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
                 <span>Hello, {globalContext.userData?.displayName}</span>
-                <div>
-                    <span>Home</span>
-                </div>
-                <div>
-                    <span>Practice</span>
-                </div>
-                <div>
-                    <span>Leaderboard</span>
-                </div>
-                <div>
-                    <span>Compiler</span>
-                </div>
+                {pages.map((page, index) => {
+                    return (
+                        <Link className={style.mobileLink} onClick={openMobileMenu} key={index} to={"/" + (page.toLowerCase() === "home" ? "" : page.toLowerCase())}>
+                            <img src={`/images/${page.toLowerCase()}.png`}/>
+                            <span>{page}</span>
+                        </Link>
+                    );
+                })}
+
             </div>}
 
 

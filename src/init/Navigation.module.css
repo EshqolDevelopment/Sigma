@@ -84,6 +84,9 @@
     display: none;
     margin-left: 20px;
     margin-block: auto;
+    border: 0;
+    background: inherit;
+    padding: 0;
 }
 
 .mobileMenuContent {
@@ -177,7 +180,31 @@
     animation: fadeOut 8s forwards;
     color: #a69228;
     text-shadow: 2px 2px 4px #000000;
+}
 
+.mobileLink {
+    text-decoration: none;
+    font-size: 20px;
+    color: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobileLink img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    filter: invert(44%) sepia(79%) saturate(683%) hue-rotate(172deg) brightness(97%) contrast(104%);
+}
+
+.mobileLink:nth-of-type(1) img, .mobileLink:nth-of-type(2) img{
+    width: 40px;
+    height: 30px;
+    transform: scaleY(1.33);
+    margin-left: -10px;
+    position: relative;
+    left: 4px;
 }
 
 
