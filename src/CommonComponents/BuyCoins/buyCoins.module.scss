@@ -1,0 +1,122 @@
+
+.dialog {
+    border-radius: 30px;
+    width: 509px;
+    background: #7a5800;
+    color: white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    h3 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-inline: auto;
+        text-decoration: underline;
+        text-underline-offset: 8px;
+        margin-top: -20px;
+    }
+}
+
+
+.close > img {
+    width: 30px;
+    height: 30px;
+    filter: brightness(0) invert(1);
+}
+
+
+.shopOptions {
+    margin-inline: auto;
+    margin-top: 24px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    width: 100%;
+}
+
+.shopOptions > div {
+    box-sizing: border-box;
+    background: rgba(186, 145, 0);
+    border: rgb(245, 188, 6) solid 7px;
+    color: white;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 30px;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+
+    & > span {
+        font-weight: bold;
+        font-size: 24px;
+    }
+
+    & > button {
+        background: #4ad362;
+        color: #135324;
+        border: 0;
+        border-radius: 5px;
+        padding-block: 10px;
+        padding-inline: 26px;
+        font-weight: 900;
+        font-family: Verdana, serif;
+    }
+}
+
+.shopOptions > div:nth-of-type(1) img {
+    width: 60px;
+    height: 60px;
+}
+
+.shopOptions  > div:nth-of-type(2) img {
+    position: absolute;
+    width: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.shopOptions  > div:nth-of-type(3) img {
+    width: 80px;
+    height: 80px;
+}
+
+.payContainer {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 16px;
+
+    h3 {
+        margin-inline: auto;
+        font-size: 28px;
+        margin-top: -10px;
+    }
+    span:nth-of-type(1) {
+        margin-inline: auto;
+        margin-top: 8px;
+        font-size: 20px;
+    }
+    span:nth-of-type(2) {
+        margin-inline: auto;
+        margin-top: 20px;
+        font-size: 18px;
+        margin-bottom: 84px;
+
+    }
+
+    .back {
+        margin-right: auto;
+    }
+
+    img {
+        width: 30px;
+        height: 30px;
+        filter: brightness(0) invert(1);
+    }
+}

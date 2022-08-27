@@ -1,0 +1,125 @@
+@use "../init/global.scss" as *;
+
+
+.title-row {
+    margin-top: 60px;
+    height: 30px;
+    max-width: calc(100% + 20px);
+    margin-inline: auto;
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: black;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+        position: relative;
+        border-bottom: 2px solid;
+        padding-inline: 5px;
+    }
+}
+
+
+.leaderboard-content {
+    width: 80%;
+    max-width: 700px;
+    margin-top: 30px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    color: black;
+    margin-bottom: 100px;
+    $border-radius: 10px;
+    min-height: 90vh;
+
+    @include mobile {
+        width: 95%;
+    }
+
+    & > div:not(:first-child) {
+        height: 60px;
+        background: #d7dce3;
+        margin-inline: auto;
+        font-size: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-inline: 20px;
+        margin-left: -10px;
+        width: calc(100% - 20px);
+        cursor: pointer;
+        transition: all 0.25s ease-in-out;
+
+        &:nth-child(odd) {
+            background: #cbccce;
+        }
+
+        &:hover {
+            transform: scale(1.04);
+            box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.5);
+            border-radius: $border-radius;
+            z-index: 100;
+            font-size: 22px;
+
+            img {
+                transform: scale(1.1);
+            }
+        }
+
+        &:nth-child(2) {
+            border-top-right-radius: $border-radius;
+            border-top-left-radius: $border-radius;
+        }
+
+        &:last-child {
+            border-bottom-right-radius: $border-radius;
+            border-bottom-left-radius: $border-radius;
+        }
+
+        & > div {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        &:nth-child(odd) img:hover {
+            transform: rotate(-20deg);
+        }
+
+        &:nth-child(even) img:hover {
+            transform: rotate(20deg);
+        }
+
+        img {
+            height: 90%;
+            margin-top: auto;
+            margin-bottom: auto;
+            transition: transform 0.2s ease-in;
+        }
+    }
+
+
+    .flag {
+        font-size: 30px;
+    }
+}
+
+
+.itemName {
+    width: 150px;
+}
+
+
+.itemScore {
+    width: 70px;
+    position: relative;
+    left: 10px;
+}
+
+.leftSide {
+    width: 150px;
+}

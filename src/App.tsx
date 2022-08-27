@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {getAuth} from "firebase/auth";
+import {getAuth, GoogleAuthProvider} from "firebase/auth";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavigationBar from "./init/NavigationBar";
 import Home from "./Home/Home";
@@ -15,6 +15,7 @@ import {UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {doc, getFirestore, onSnapshot} from "firebase/firestore";
 import {app} from "./init/firebase";
+import * as firebaseui from "firebaseui";
 
 
 const getDisplayName = (username: string): string => {
@@ -40,10 +41,33 @@ const formatDBUserData = (name: string, userData: any): UserData => {
 };
 
 
+let ui = null;
+
 export default function App() {
     const [userName, setUserName] = React.useState<string>(undefined);
     const [userData, setUserData] = React.useState<UserData>(undefined);
     const queryClient = new QueryClient()
+
+    useEffect(() => {
+        let uiConfig = {
+            signInOptions: [
+                {
+                    provider: GoogleAuthProvider.PROVIDER_ID,
+                    clientId: '794637356909-eirm0bahjum0as2o0mrpjqipchiqp7fo.apps.googleusercontent.com',
+                    customParameters: {
+                        prompt: 'select_account',
+                    },
+                }
+            ],
+            credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO
+        };
+
+        if (userName === null && !ui) {
+            ui = new firebaseui.auth.AuthUI(getAuth());
+            ui.start("#helper-firebase-ui", uiConfig);
+        }
+    }, [userName])
+
 
     getAuth().onAuthStateChanged(user => {
         if (user) {
@@ -78,6 +102,8 @@ export default function App() {
                 userData: userData,
             }}>
                 <div>
+                    <div style={{display: "none"}} id={"helper-firebase-ui"}/>
+
                     <div className={"content"}>
                         <BrowserRouter>
                             <NavigationBar/>

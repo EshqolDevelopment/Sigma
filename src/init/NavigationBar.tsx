@@ -1,11 +1,13 @@
-import React, {createRef, useContext, useRef, useState} from "react";
+import React, {createRef, useContext, useEffect, useRef, useState} from "react";
 import style from "./Navigation.module.css";
 import LoginModal from "../LoginModal";
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
 import {Profile} from "../CommonComponents/Profile/Profile";
+import BuyCoins from "../CommonComponents/BuyCoins/BuyCoins";
 
 
+let lastCoinsUpdate = 0;
 export default function NavigationBar() {
     const [showLogin, setShowLogin] = useState(false);
     const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
@@ -14,6 +16,19 @@ export default function NavigationBar() {
     const globalContext = useContext(GlobalContext);
     const [activePage, setActivePage] = useState(window.location.pathname.split("/")[1].toLocaleLowerCase());
     const [showProfile, setShowProfile] = useState(false);
+    const [showCoinsShop, setShowCoinsShop] = useState(false);
+    const [lastCoinsDelta, setLastCoinsDelta] = useState(0);
+
+    useEffect(() => {
+        if (globalContext.userData && globalContext.userData.coins - lastCoinsUpdate !== 0) {
+            setLastCoinsDelta(globalContext.userData.coins - lastCoinsUpdate);
+
+            lastCoinsUpdate = globalContext.userData.coins;
+            setTimeout(() => {
+                setLastCoinsDelta(0);
+            }, 10_000);
+        }
+    }, [globalContext.userData, globalContext.userData?.coins]);
 
     const openLoginModal = () => {
         setShowLogin(true);
@@ -42,6 +57,9 @@ export default function NavigationBar() {
         setShowProfile(true);
     }
 
+    const buyCoins = () => {
+        setShowCoinsShop(true);
+    }
 
     return (
         <nav className={style.navigationBar}>
@@ -72,19 +90,24 @@ export default function NavigationBar() {
 
                 {globalContext.userData && globalContext.username &&
                     <>
+                        {!!lastCoinsDelta && lastCoinsDelta !== globalContext.userData.coins && <span className={style.plusCoins}>{lastCoinsDelta >= 0 ? "+" : ""}{lastCoinsDelta}</span>}
                         <span className={style.coinsText}>{globalContext.userData.coins}</span>
-                        <img src={"/images/coins.png"} className={style.coins}/>
-                        <img src={`/images/p${globalContext.userData.image}.png`} className={style.sigmaIcon}
-                             alt={"logo"}
-                             onClick={openProfile}
-                        />
+                        <button className={"removeDefault"} onClick={buyCoins}>
+                            <img src={"/images/coins.png"} className={style.coins}/>
+                        </button>
+                        <button className={"removeDefault"} onClick={openProfile} style={{height: "100%", marginTop: "3px"}}>
+                            <img src={`/images/p${globalContext.userData.image}.png`} className={style.profileImage}
+                                 alt={"logo"}
+                            />
+                        </button>
+
                     </>
                 }
 
             </div>
 
             {mobileMenuOpen && <div className={style.mobileMenuContent}>
-                <span>Hello, {globalContext.username}</span>
+                <span>Hello, {globalContext.userData.displayName}</span>
                 <div>
                     <span>Home</span>
                 </div>
@@ -101,6 +124,8 @@ export default function NavigationBar() {
 
 
             {showProfile && <Profile close={() => setShowProfile(false)}/>}
+
+            {showCoinsShop && <BuyCoins close={() => setShowCoinsShop(false)}/>}
         </nav>
     );
 }

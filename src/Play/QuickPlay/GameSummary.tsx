@@ -1,5 +1,5 @@
 import {Bonus, QuickPlayGameData, QuickPlayGameFinished} from "../../DataTypes";
-import {useContext} from "react";
+import { useContext, useEffect, useState} from "react";
 import {GlobalContext} from "../../Global";
 import styles from "./quickPlay.module.scss";
 import {Trophy} from "../../init/Svg";
@@ -14,15 +14,31 @@ const BonusNameToDescription = {
     [Bonus.perfectMatch]: "Perfect Match",
     [Bonus.closeMatch]: "Close Match",
     [Bonus.fasterThan70Percent]: "Faster Than 70% of players",
-    [Bonus.significantAdvantage]: "Significant Advantage",
-}
+    [Bonus.significantAdvantage]: "Significant Advantage"
+};
+
 
 export function GameSummary(props: Props) {
     const globalContext = useContext(GlobalContext);
+    const [coinsCount, setCoinsCount] = useState(0);
+
+    useEffect(() => {
+        let counter = 0;
+        const interval = setInterval(() => {
+            if (counter < props.gameFinishedData?.coins) {
+                counter++;
+                setCoinsCount(counter);
+            } else {
+                clearInterval(interval);
+                return;
+            }
+        }, 0);
+    }, [props.gameFinishedData?.coins]);
+
 
     return <div className={styles.gameSummary}>
         <div className={styles.coins}>
-            <span className={styles.coinsAdded}>Coins:&nbsp;&nbsp;+{props.gameFinishedData?.coins}</span>
+            <span className={styles.coinsAdded}>Coins:&nbsp;&nbsp;+{coinsCount}</span>
             <img src={"/images/coin.png"}/>
         </div>
         <h3>{props.score[0] > props.score[1] ? "You won the game!" : "You lost the game!"}</h3>
@@ -34,7 +50,7 @@ export function GameSummary(props: Props) {
                     <img className={styles.crown} src={"/images/crown.png"} alt={"crown"}/>
                 </>}
                 <img src={`/images/p${globalContext.userData.image}.png`} alt={"Your profile"}/>
-                <span>{globalContext.username}</span>
+                <span>{globalContext.userData.displayName}</span>
             </div>
 
             <div className={styles.playerScoreContainer}>
@@ -43,7 +59,7 @@ export function GameSummary(props: Props) {
                     <img className={styles.crown} src={"/images/crown.png"} alt={"crown"}/>
                 </>}
                 <img src={`/images/p${props.gameData.opponent.image}.png`} alt={"Opponent profile"}/>
-                <span>{props.gameData.opponent.name}</span>
+                <span>{props.gameData.opponent.displayName}</span>
             </div>
         </div>
 
@@ -56,7 +72,7 @@ export function GameSummary(props: Props) {
                         <span className={styles.bonusAmount}>+{bonus.amount}</span>
                         <img src={"/images/coin.png"}/>
                     </div>
-                )
+                );
             })}
         </div>}
 

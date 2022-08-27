@@ -42,35 +42,13 @@ const ide = {
     'Line Numbering': [Svg.Numbering(), 'to help you track your code'],
 }
 
-let ui = null;
 
 export default function Home() {
-    const globalContext = useContext(GlobalContext)
     const navigate = useNavigate();
-
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "white");
-
-        let uiConfig = {
-            signInOptions: [
-                {
-                    provider: GoogleAuthProvider.PROVIDER_ID,
-                    clientId: '794637356909-eirm0bahjum0as2o0mrpjqipchiqp7fo.apps.googleusercontent.com',
-                    customParameters: {
-                        prompt: 'select_account',
-                    },
-                }
-            ],
-            credentialHelper: firebaseui.auth.CredentialHelper.GOOGLE_YOLO
-        };
-
-        if (globalContext.username === null && !ui) {
-            ui = new firebaseui.auth.AuthUI(getAuth());
-            ui.start("#helper-firebase-ui", uiConfig);
-        }
-
-    }, [globalContext.username])
+    }, [])
 
 
     const Box = (props: {title: string, children: string, icon?: string, viewBox?: string, fill?: boolean,
@@ -129,9 +107,6 @@ export default function Home() {
 
     return (
         <div className={'home-content'}>
-            <div style={{display: "none"}} id={"helper-firebase-ui"}></div>
-
-
             <div className={'home-upper'}>
                 <div className={'home-title'}>
                     <h1>Sigma - Code Wars!</h1>

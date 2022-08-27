@@ -19,3 +19,10 @@ $max-width: 750px;
 dialog::backdrop {
   background: rgba(black, 0.85);
 }
+
+.removeDefault {
+  border: 0;
+  background: inherit;
+  padding: 0;
+  margin: 0;
+}

@@ -160,7 +160,6 @@
     }
 }
 
-
 .coins {
     width: 55px;
     height: 55px;
@@ -169,5 +168,35 @@
 .coinsText {
     font-size: 18px;
     font-weight: bold;
+}
+
+.plusCoins {
+    margin-right: 18px;
+    font-weight: 900;
+    font-size: 22px;
+    animation: fadeOut 8s forwards;
+    color: #a69228;
+    text-shadow: 2px 2px 4px #000000;
 
 }
+
+
+@keyframes fadeOut {
+    0% {
+        opacity: 0;
+    }
+
+    35% {
+        opacity: 1;
+    }
+
+    65% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+
+}
+
