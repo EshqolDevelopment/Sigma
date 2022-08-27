@@ -50,7 +50,7 @@ export function ChooseGameMode() {
                         the first one to answer each question correct score a point,<br/>
                         Win the game by scoring 3 points first!
                     </span>
-                    <img src={"/images/singlePlayer.svg"}/>
+                    <img src={"/images/singlePlayer.svg"} alt={"player logo"}/>
                 </div>
 
                 <button onClick={quickPlay}>Play Now!</button>
@@ -65,7 +65,7 @@ export function ChooseGameMode() {
                         Unlike the quick play, here when a player answer a question correctly,
                         they move to the next one without disturbing the other ones.
                     </span>
-                    <img src={"/images/multiPlayer.svg"}/>
+                    <img src={"/images/multiPlayer.svg"} alt={"players logo"}/>
                 </div>
 
                 <button onClick={multiPlay}>Play Now!</button>

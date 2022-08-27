@@ -1,4 +1,4 @@
-import React, {createRef, useContext, useEffect, useRef, useState} from "react";
+import React, {createRef, useContext, useEffect, useState} from "react";
 import style from "./Navigation.module.css";
 import LoginModal from "../LoginModal";
 import {GlobalContext} from "../Global";
@@ -93,7 +93,7 @@ export default function NavigationBar() {
                         {!!lastCoinsDelta && lastCoinsDelta !== globalContext.userData.coins && <span className={style.plusCoins}>{lastCoinsDelta >= 0 ? "+" : ""}{lastCoinsDelta}</span>}
                         <span className={style.coinsText}>{globalContext.userData.coins}</span>
                         <button className={"removeDefault"} onClick={buyCoins}>
-                            <img src={"/images/coins.png"} className={style.coins}/>
+                            <img src={"/images/coins.png"} className={style.coins} alt={"coins"}/>
                         </button>
                         <button className={"removeDefault"} onClick={openProfile} style={{height: "100%", marginTop: "3px"}}>
                             <img src={`/images/p${globalContext.userData.image}.png`} className={style.profileImage}
@@ -111,7 +111,7 @@ export default function NavigationBar() {
                 {pages.map((page, index) => {
                     return (
                         <Link className={style.mobileLink} onClick={openMobileMenu} key={index} to={"/" + (page.toLowerCase() === "home" ? "" : page.toLowerCase())}>
-                            <img src={`/images/${page.toLowerCase()}.png`}/>
+                            <img src={`/images/${page.toLowerCase()}.png`} alt={"coins"}/>
                             <span>{page}</span>
                         </Link>
                     );

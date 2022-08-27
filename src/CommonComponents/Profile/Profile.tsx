@@ -43,7 +43,7 @@ export function Profile(props: Props) {
 
             <div className={style.profileTitleRow}>
                 <button className={style.x + " " + style.removeDefault} onClick={props.close}>
-                    <img src={"/images/x.png"}/>
+                    <img src={"/images/x.png"} alt={"close"}/>
                 </button>
                 <button className={style.signOut} onClick={signOut}>Sign Out</button>
             </div>
@@ -51,7 +51,7 @@ export function Profile(props: Props) {
             <span className={style.name}>{globalContext.userData.displayName}</span>
 
             <button className={style.removeDefault} onClick={() => setChooseProfile(true)}>
-                <img src={`/images/p${globalContext.userData.image}.png`} className={style.profileImage}/>
+                <img src={`/images/p${globalContext.userData.image}.png`} className={style.profileImage} alt={"profile"}/>
             </button>
 
             <div className={style.infoRow}>
@@ -83,7 +83,7 @@ export function Profile(props: Props) {
 
         {chooseProfile && <div className={style.chooseProfileContainer}>
             <button className={style.removeDefault + " " + style.back} onClick={() => setChooseProfile(false)}>
-                <img src={"/images/back.png"}/>
+                <img src={"/images/back.png"} alt={"go back"}/>
             </button>
 
             <h3>Choose a new profile picture</h3>

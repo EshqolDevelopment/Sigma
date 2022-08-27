@@ -39,7 +39,7 @@ export function GameSummary(props: Props) {
     return <div className={styles.gameSummary}>
         <div className={styles.coins}>
             <span className={styles.coinsAdded}>Coins:&nbsp;&nbsp;+{coinsCount}</span>
-            <img src={"/images/coin.png"}/>
+            <img src={"/images/coin.png"} alt={"coins"}/>
         </div>
         <h3>{props.score[0] > props.score[1] ? "You won the game!" : "You lost the game!"}</h3>
         <span>Score: {props.score[0]} - {props.score[1]}</span>
@@ -70,7 +70,7 @@ export function GameSummary(props: Props) {
                     <div key={index} className={styles.bonus}>
                         <span className={styles.bonusDesc}>{BonusNameToDescription[bonus.name]}:</span>
                         <span className={styles.bonusAmount}>+{bonus.amount}</span>
-                        <img src={"/images/coin.png"}/>
+                        <img src={"/images/coin.png"} alt={"coins"}/>
                     </div>
                 );
             })}

@@ -29,17 +29,17 @@ export default function BuyCoins(props: Props) {
                 <div className={styles.shopOptions}>
                     <div>
                         <span>1,000</span>
-                        <img src={"/images/coin.png"}/>
+                        <img src={"/images/coin.png"} alt={"coins"}/>
                         <button onClick={() => setAmount([0.99, "1,000"])}>$0.99</button>
                     </div>
                     <div>
                         <span>5,000</span>
-                        <img src={"/images/coins_1.png"}/>
+                        <img src={"/images/coins_1.png"} alt={"coins"}/>
                         <button onClick={() => setAmount([2.99, "5,000"])}>$2.99</button>
                     </div>
                     <div>
                         <span>10,000</span>
-                        <img src={"/images/coins_2.png"}/>
+                        <img src={"/images/coins_2.png"} alt={"coins"}/>
                         <button onClick={() => setAmount([4.99, "10,000"])}>$4.99</button>
                     </div>
                 </div>
@@ -47,7 +47,7 @@ export default function BuyCoins(props: Props) {
 
             {!!amount && <div className={styles.payContainer}>
                 <button className={"removeDefault " + styles.back} onClick={() => setAmount(null)}>
-                    <img src={"/images/back.png"}/>
+                    <img src={"/images/back.png"} alt={"coins"}/>
                 </button>
                 <h3>Buy {amount[1]} coins</h3>
                 <span>(Equal to {Math.floor(amount[1].replaceAll(",", "") / 300)} game in the medium level)</span>

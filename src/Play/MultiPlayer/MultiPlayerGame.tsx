@@ -119,7 +119,7 @@ export default function MultiPlayerGame(props: Props) {
                 <div className={styles.finishContainer}>
                     <div className={styles.coins}>
                         <span className={styles.coinsAdded}>Coins:&nbsp;&nbsp;+{coins}</span>
-                        <img src={"/images/coin.png"}/>
+                        <img src={"/images/coin.png"} alt={"coins"}/>
                     </div>
                     <h2>You finished the game in the {NumToWord[winners.map((player) => player.name).indexOf(globalContext.userData.name) + 1]} place!</h2>
 
@@ -128,7 +128,7 @@ export default function MultiPlayerGame(props: Props) {
                             return (
                                 <div key={index}>
                                     <div>
-                                        {player.image && <img src={`/images/p${player.image}.png`}/>}
+                                        {player.image && <img src={`/images/p${player.image}.png`} alt={"profile"}/>}
                                         {player.name && <span>{player.name.replaceAll("_", "")}</span>}
                                     </div>
                                     <span>{index + 1}</span>

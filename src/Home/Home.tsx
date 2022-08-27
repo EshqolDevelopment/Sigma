@@ -1,10 +1,7 @@
-import React, {useContext, useEffect} from "react";
+import React, {useEffect} from "react";
 import "./Home.scss";
 import {SampleQuestion} from "./SampleQuestion";
 import * as Svg from '../init/Svg'
-import {getAuth, GoogleAuthProvider} from "firebase/auth";
-import * as firebaseui from 'firebaseui'
-import {GlobalContext} from "../Global";
 import { useNavigate } from "react-router-dom";
 import Footer from "../CommonComponents/Footer/Footer";
 
