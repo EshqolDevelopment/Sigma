@@ -3,6 +3,8 @@ import ListOfQuestions from "./ListOfQuestions";
 import "./ListOfQuestions.css";
 import {postRequest} from "../Global";
 import {PracticeQuestionList} from "../DataTypes";
+import {useQuery} from "react-query";
+import Loading from "../CommonComponents/Loading/Loading";
 
 let questionDictGlobal: PracticeQuestionList = {Easy: [], Medium: [], Hard: []};
 
@@ -10,16 +12,18 @@ let questionDictGlobal: PracticeQuestionList = {Easy: [], Medium: [], Hard: []};
 export default function Practice() {
     const [questionDict, setQuestionDict] = useState<PracticeQuestionList>({Easy: [], Medium: [], Hard: []});
     const [questionIsFiltered, setQuestionIsFiltered] = useState(false);
+    const {isLoading} = useQuery(["question-list"], fetchQuestions);
+
 
     async function fetchQuestions() {
         const serverQuestionDict = await postRequest("/general/getQuestionList", {}) as PracticeQuestionList;
         setQuestionDict(serverQuestionDict)
         questionDictGlobal = serverQuestionDict;
+        return serverQuestionDict;
     }
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#f6f9fc");
-        fetchQuestions();
     }, []);
 
 
@@ -55,35 +59,39 @@ export default function Practice() {
     }
 
     return (
-        <div>
-            <h1 className={"practice-title"}>Practice any question in your level, supporting over 10 languages!</h1>
-            <div className={"filter-container"}>
-                <button className={"pickRandom"}>Pick Random</button>
-                <input className={"filter-question"} type={"text"} placeholder={"Search for a question"}
-                       onChange={filterQuestions}/>
-                <img alt={"search logo"} src={"/images/search.png"}/>
-            </div>
+        <>
+            {isLoading && <Loading/> }
+            {!isLoading && <div>
+                <h1 className={"practice-title"}>Practice any question in your level, supporting over 10 languages!</h1>
+                <div className={"filter-container"}>
+                    <button className={"pickRandom"}>Pick Random</button>
+                    <input className={"filter-question"} type={"text"} placeholder={"Search for a question"}
+                           onChange={filterQuestions}/>
+                    <img alt={"search logo"} src={"/images/search.png"}/>
+                </div>
 
-            <div className={"container"}>
-                <div className={"easyCont"}>
-                    <p>Easy - 0/25</p>
-                    <ListOfQuestions level={"easy"} questionList={questionDict["Easy"]}
-                                     aboveListLength={0}
-                                     questionIsFiltered={questionIsFiltered}/>
+                <div className={"container"}>
+                    <div className={"easyCont"}>
+                        <p>Easy - 0/25</p>
+                        <ListOfQuestions level={"easy"} questionList={questionDict["Easy"]}
+                                         aboveListLength={0}
+                                         questionIsFiltered={questionIsFiltered}/>
+                    </div>
+                    <div className={"mediumCont"}>
+                        <p>Medium - 0/25</p>
+                        <ListOfQuestions level={"medium"} questionList={questionDict["Medium"]}
+                                         aboveListLength={questionDict["Easy"].length}
+                                         questionIsFiltered={questionIsFiltered}/>
+                    </div>
+                    <div className={"hardCont"}>
+                        <p>Hard - 0/25</p>
+                        <ListOfQuestions level={"hard"} questionList={questionDict["Hard"]}
+                                         aboveListLength={questionDict["Easy"].length + questionDict["Medium"].length}
+                                         questionIsFiltered={questionIsFiltered}/>
+                    </div>
                 </div>
-                <div className={"mediumCont"}>
-                    <p>Medium - 0/25</p>
-                    <ListOfQuestions level={"medium"} questionList={questionDict["Medium"]}
-                                     aboveListLength={questionDict["Easy"].length}
-                                     questionIsFiltered={questionIsFiltered}/>
-                </div>
-                <div className={"hardCont"}>
-                    <p>Hard - 0/25</p>
-                    <ListOfQuestions level={"hard"} questionList={questionDict["Hard"]}
-                                     aboveListLength={questionDict["Easy"].length + questionDict["Medium"].length}
-                                     questionIsFiltered={questionIsFiltered}/>
-                </div>
-            </div>
-        </div>
+            </div>}
+        </>
+
     )
 }

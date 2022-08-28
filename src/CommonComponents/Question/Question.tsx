@@ -5,6 +5,7 @@ import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
 import {postRequest} from "../../Global";
 import ShowResult from "./ShowResult";
+import {useQuery} from "react-query";
 
 
 type Props = {
@@ -15,6 +16,7 @@ type Props = {
     showSolution?: boolean;
     suggestDrawAction?: () => void;
     alreadyOfferedDraw?: boolean;
+    practice?: boolean;
 }
 
 export default function Question(props: Props) {
@@ -33,45 +35,48 @@ export default function Question(props: Props) {
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
+    const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
 
+    async function getAndSetQuestionData(funcName: string) {
+        const response = await postRequest("/general/getClientQuestionData", {
+            funcName: funcName
+        }) as {question: QuestionData, languages: Language[]};
 
-    useEffect(() => {
-        async function getAndSetQuestionData(funcName: string) {
-            const response = await postRequest("/general/getClientQuestionData", {
-                funcName: funcName
-            }) as {question: QuestionData, languages: Language[]};
+        const serverQuestionData = response.question;
+        serverQuestionData.languages = response.languages;
 
-            const serverQuestionData = response.question;
-            serverQuestionData.languages = response.languages;
-
-            setQuestion(serverQuestionData);
+        setQuestion(serverQuestionData);
+        if (!props.practice) {
             setTimer(serverQuestionData.time);
-
-            const tempDefaultCode = {python: "", javascript: "", kotlin: "", java: ""};
-            tempDefaultCode.python = pythonDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
-            tempDefaultCode.javascript = javascriptDefaultCode(funcName, serverQuestionData.params);
-            tempDefaultCode.kotlin = kotlinDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
-            tempDefaultCode.java = javaDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
-            setDefaultCode(tempDefaultCode);
         }
 
+        const tempDefaultCode = {python: "", javascript: "", kotlin: "", java: ""};
+        tempDefaultCode.python = pythonDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+        tempDefaultCode.javascript = javascriptDefaultCode(funcName, serverQuestionData.params);
+        tempDefaultCode.kotlin = kotlinDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+        tempDefaultCode.java = javaDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+        setDefaultCode(tempDefaultCode);
+    }
+
+    useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
-        getAndSetQuestionData(props.funcName).then(() => {
-            console.log("Question data loaded");
-        });
     }, [props.funcName]);
 
 
     useEffect(() => {
-        if (timer === 0) return;
-
         const clear = setInterval(() => {
-            setTimer(timer - 1);
+            setTimer((timer) => {
+                if (props.practice) {
+                    return timer + 1;
+                } else if (timer > 0){
+                    return timer - 1
+                }
+                return 0;
+            });
         }, 1000);
 
         return () => clearInterval(clear);
-
-    }, [timer]);
+    }, [props.practice]);
 
 
     const pythonDefaultCode = (funcName, params: string, returnType: string) => {
@@ -196,6 +201,8 @@ export default function Question(props: Props) {
     return (
         <div className={styles.questionLayout}>
 
+            {isError && <p>An error occurred</p>}
+
             <div className={styles.container1}>
                 <div className={styles.languagePicker}>
                     {question.languages?.map((lang, i) => (
@@ -215,6 +222,7 @@ export default function Question(props: Props) {
                 <div className={styles.questionInfo}>
                     <div className={styles.actionsButtonsContainer}>
                         <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
+                        <span className={styles.timer}>{timer}</span>
                         { props.showSolution && <button className={styles.solutionBtn}>Solution</button> }
                         { props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
                             props.suggestDrawAction();
