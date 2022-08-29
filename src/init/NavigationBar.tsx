@@ -1,5 +1,5 @@
 import React, {createRef, useContext, useEffect, useState} from "react";
-import style from "./Navigation.module.scss";
+import style from "./Navigation.module.css";
 import LoginModal from "../LoginModal";
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
@@ -8,7 +8,6 @@ import BuyCoins from "../CommonComponents/BuyCoins/BuyCoins";
 
 
 let lastCoinsUpdate = 0;
-
 export default function NavigationBar() {
     const [showLogin, setShowLogin] = useState(false);
     const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
@@ -119,6 +118,7 @@ export default function NavigationBar() {
                 })}
 
             </div>}
+
 
             {showProfile && <Profile close={() => setShowProfile(false)}/>}
 

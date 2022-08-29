@@ -6,8 +6,6 @@ import {Language, QuestionData} from "../../DataTypes";
 import {postRequest} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
-import {LanguageDialog} from "../../init/LanguageDialog";
-import {Java, Javascript, Kotlin, Python} from "../../init/Svg";
 
 
 type Props = {
@@ -21,19 +19,6 @@ type Props = {
     practice?: boolean;
 }
 
-
-const languages = {
-    'python': Python(),
-    'javascript': Javascript(),
-    'kotlin': Kotlin(),
-    'java': Java(),
-}
-
-
-const getDefaultLanguage = (l) => ["python", "javascript", "java", "kotlin"].includes(l) ? l : "python";
-
-
-
 export default function Question(props: Props) {
     const [question, setQuestion] = useState({
         description: "",
@@ -44,35 +29,13 @@ export default function Question(props: Props) {
         subject: "",
         languages: [],
     } as QuestionData);
+
     const [timer, setTimer] = useState(0);
-    const [language, setLanguage] = useState(getDefaultLanguage(localStorage['language']));
+    const [language, setLanguage] = useState("python" as Language);
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
-    const [languageDialog, setLanguageDialog] = useState(false);
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
-
-
-    useEffect(() => {
-        document.documentElement.style.setProperty("--background", "#282c34");
-    }, [props.funcName]);
-
-
-    useEffect(() => {
-        const clear = setInterval(() => {
-            setTimer((timer) => {
-                if (props.practice) {
-                    return timer + 1;
-                } else if (timer > 0){
-                    return timer - 1
-                }
-                return 0;
-            });
-        }, 1000);
-
-        return () => clearInterval(clear);
-    }, [props.practice]);
-
 
     async function getAndSetQuestionData(funcName: string) {
         const response = await postRequest("/general/getClientQuestionData", {
@@ -94,6 +57,26 @@ export default function Question(props: Props) {
         tempDefaultCode.java = javaDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
         setDefaultCode(tempDefaultCode);
     }
+
+    useEffect(() => {
+        document.documentElement.style.setProperty("--background", "#282c34");
+    }, [props.funcName]);
+
+
+    useEffect(() => {
+        const clear = setInterval(() => {
+            setTimer((timer) => {
+                if (props.practice) {
+                    return timer + 1;
+                } else if (timer > 0){
+                    return timer - 1
+                }
+                return 0;
+            });
+        }, 1000);
+
+        return () => clearInterval(clear);
+    }, [props.practice]);
 
 
     const pythonDefaultCode = (funcName, params: string, returnType: string) => {
@@ -221,6 +204,15 @@ export default function Question(props: Props) {
             {isError && <p>An error occurred</p>}
 
             <div className={styles.container1}>
+                <div className={styles.languagePicker}>
+                    {question.languages?.map((lang, i) => (
+                        <button onClick={() => setLanguage(lang)} key={i}>
+                            <img
+                                src={`/images/${lang}.png`}
+                                alt={lang}/>
+                        </button>
+                    ))}
+                </div>
 
                 <div className={styles.codeEditor}>
                     <Editor language={language} code={code[language] || defaultCode[language]}
@@ -229,21 +221,19 @@ export default function Question(props: Props) {
 
                 <div className={styles.questionInfo}>
                     <div className={styles.actionsButtonsContainer}>
-
-                        <button onClick={submitQuestion}>Submit</button>
-                        <button onClick={() => {setLanguageDialog(true)}}>Language</button>
-
+                        <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
+                        <span className={styles.timer}>{timer}</span>
                         { props.showSolution && <button className={styles.solutionBtn}>Solution</button> }
                         { props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
                             props.suggestDrawAction();
                         }}>Suggest Draw</button> }
-
-                        <div>
-                            <span className={styles.timer}>{timer}</span>
-                            <div onClick={() => {setLanguageDialog(true)}}>
-                                {languages[language]}
-                            </div>
-                        </div>
+                        <select className={styles.languagePickerMobile}
+                                onChange={(e) => setLanguage(e.target.value as Language)}>
+                            {question.languages?.map((language, i) => (
+                                <option key={i}
+                                        value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
+                            ))}
+                        </select>
                     </div>
                     <div className={styles.questionJustInfo}>
                         <span className={styles.questionName}>{questionName()}</span>
@@ -273,8 +263,7 @@ export default function Question(props: Props) {
 
             {result !== null && <ShowResult close={() => setResult(null)} result={result}/>}
 
-            {languageDialog && <LanguageDialog setLanguage={setLanguage} languages={languages}
-                                               setShow={setLanguageDialog} show={languageDialog} editor={false}/>}
         </div>
     );
 }
+

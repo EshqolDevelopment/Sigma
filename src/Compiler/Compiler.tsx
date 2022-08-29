@@ -12,34 +12,33 @@ import Footer from "../CommonComponents/Footer/Footer";
 
 
 const LanguageToHelloCode = {
-    "python": "print('Hello World!')",
-    "javaScript": "console.log('Hello World!')",
-    "kotlin": "fun main() {\n    println('Hello World!')\n}",
-    "java": "Public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
-}
-
+    "Python": "print('Hello World!')",
+    "JavaScript": "console.log('Hello World!')",
+    "Kotlin": "fun main() {\n    println('Hello World!')\n}",
+    "Java": "Public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
+};
 
 export default function Compiler() {
     const [currentFile, setCurrentFile] = useState("main");
     const [darkMode, setDarkMode] = useState(false);
     const [languagesDialog, setLanguagesDialog] = useState(false);
-    const [language, setLanguage] = useState(localStorage["language"] || "python");
-    const [code, setCode] = useState(LanguageToHelloCode[localStorage["language"] || "python"]);
+    const [language, setLanguage] = useState(localStorage["language"] || "Python");
+    const [code, setCode] = useState(LanguageToHelloCode[localStorage["language"] || "Python"]);
 
     const [output, setOutput] = useState([]);
     const languages = {
-        "python": Svg.Python(),
-        "javascript": Svg.Javascript(),
-        "kotlin": Svg.Kotlin(),
-        "java": Svg.Java()
+        "Python": Svg.Python(),
+        "JavaScript": Svg.Javascript(),
+        "Kotlin": Svg.Kotlin(),
+        "Java": Svg.Java()
     };
     const extensions = {
-        "python": "py",
-        "javascript": "js",
-        "kotlin": "kt",
-        "java": "java",
-        "typescript": "ts",
-        "c#": "cs"
+        "Python": "py",
+        "JavaScript": "js",
+        "Kotlin": "kt",
+        "Java": "java",
+        "TypeScript": "ts",
+        "C#": "cs"
     };
 
 
@@ -135,6 +134,7 @@ export default function Compiler() {
             <LanguageDialog languages={languages} setLanguage={setLanguage} show={languagesDialog}
                             setShow={setLanguagesDialog} setCode={setCode} LanguageToHelloCode={LanguageToHelloCode}/>
             <Footer/>
+
         </div>
     );
 }

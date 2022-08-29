@@ -1,5 +1,4 @@
 
-
 .navigationBar {
     position: fixed;
     top: 0;
@@ -11,6 +10,7 @@
     justify-content: space-between;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
+
 
 .page {
     height: 75%;
@@ -24,17 +24,18 @@
     color: rgb(50, 50, 50);
     text-decoration: none !important;
     margin-right: 8px;
+}
 
-    &:hover:not(.active) {
-        border-bottom: rgb(50, 50, 50) solid 3px;
-        transform: scale(1.02);
-    }
+.page:hover:not(.active) {
+    border-bottom: rgb(50, 50, 50) solid 3px;
+    transform: scale(1.02);
 }
 
 .active {
     border-bottom: black solid 3px;
     color: black;
 }
+
 
 .profileImage, .sigmaIcon {
     height: 80%;
@@ -127,6 +128,7 @@
     color: rgb(0, 0, 0, 0.7);
 }
 
+
 @media (max-width: 960px) {
     .navMenu {
         display: none;
@@ -205,6 +207,7 @@
     left: 4px;
 }
 
+
 @keyframes fadeOut {
     0% {
         opacity: 0;
@@ -223,3 +226,4 @@
     }
 
 }
+
