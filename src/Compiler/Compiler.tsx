@@ -1,44 +1,45 @@
 import React, {useState} from "react";
-import Editor from "../../init/Editor";
+import Editor from "../init/Editor";
 import {FaSave, FaTrashAlt} from "react-icons/fa";
 import {BsFillSunFill, BsMoonFill} from "react-icons/bs";
 import {FiCopy} from "react-icons/fi";
 import {HiDownload} from "react-icons/hi";
-import {LanguageDialog} from "../../init/LanguageDialog";
-import * as Svg from "../../init/Svg";
+import {LanguageDialog} from "../init/LanguageDialog";
+import * as Svg from "../init/Svg";
 import "./Compiler.scss";
-import {postRequest} from "../../Global";
-import Footer from "../../CommonComponents/Footer/Footer";
+import {postRequest} from "../Global";
+import Footer from "../CommonComponents/Footer/Footer";
 
 
 const LanguageToHelloCode = {
-    "Python": "print('Hello World!')",
-    "JavaScript": "console.log('Hello World!')",
-    "Kotlin": "fun main() {\n    println('Hello World!')\n}",
-    "Java": "Public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
-};
+    "python": "print('Hello World!')",
+    "javaScript": "console.log('Hello World!')",
+    "kotlin": "fun main() {\n    println('Hello World!')\n}",
+    "java": "Public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
+}
+
 
 export default function Compiler() {
     const [currentFile, setCurrentFile] = useState("main");
     const [darkMode, setDarkMode] = useState(false);
     const [languagesDialog, setLanguagesDialog] = useState(false);
-    const [language, setLanguage] = useState(localStorage["language"] || "Python");
-    const [code, setCode] = useState(LanguageToHelloCode[localStorage["language"] || "Python"]);
+    const [language, setLanguage] = useState(localStorage["language"] || "python");
+    const [code, setCode] = useState(LanguageToHelloCode[localStorage["language"] || "python"]);
 
     const [output, setOutput] = useState([]);
     const languages = {
-        "Python": Svg.Python(),
-        "JavaScript": Svg.Javascript(),
-        "Kotlin": Svg.Kotlin(),
-        "Java": Svg.Java()
+        "python": Svg.Python(),
+        "javascript": Svg.Javascript(),
+        "kotlin": Svg.Kotlin(),
+        "java": Svg.Java()
     };
     const extensions = {
-        "Python": "py",
-        "JavaScript": "js",
-        "Kotlin": "kt",
-        "Java": "java",
-        "TypeScript": "ts",
-        "C#": "cs"
+        "python": "py",
+        "javascript": "js",
+        "kotlin": "kt",
+        "java": "java",
+        "typescript": "ts",
+        "c#": "cs"
     };
 
 
@@ -134,7 +135,6 @@ export default function Compiler() {
             <LanguageDialog languages={languages} setLanguage={setLanguage} show={languagesDialog}
                             setShow={setLanguagesDialog} setCode={setCode} LanguageToHelloCode={LanguageToHelloCode}/>
             <Footer/>
-
         </div>
     );
 }

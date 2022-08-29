@@ -6,6 +6,12 @@ $max-width: 750px;
   align-items: center;
 }
 
+@mixin center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @mixin mobile {
   @media (max-width: $max-width) {
     @content;

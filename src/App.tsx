@@ -4,7 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NavigationBar from "./init/NavigationBar";
 import Home from "./Home/Home";
 import Leaderboard from "./Leaderboard/Leaderboard";
-import Compiler from "./Compiler/Compiler/Compiler";
+import Compiler from "./Compiler/Compiler";
 import Practice from "./Practice/Practice";
 import PracticeQuestionWrapper from "./Practice/PracticeQuestionWrapper";
 import {GlobalContext} from "./Global";

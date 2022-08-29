@@ -12,6 +12,7 @@ export default function BuyCoins(props: Props) {
     const [amount, setAmount] = useState(null);
     const globalContext = useContext(GlobalContext);
 
+
     useEffect(() => {
         if (dialogRef.current && !dialogRef.current.open) {
             dialogRef.current.showModal();

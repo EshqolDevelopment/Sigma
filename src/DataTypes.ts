@@ -75,4 +75,4 @@ export type PracticeQuestionList = {
 }
 
 
-export type Language = "python" | "javascript" | "java" | "kotlin";
+export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";

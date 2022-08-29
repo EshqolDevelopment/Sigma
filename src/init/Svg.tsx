@@ -1,8 +1,6 @@
 import React from "react";
 
 
-const width = '50px'
-
 
 export const Python = () => (
     <svg viewBox="0 -0.5 256 256"
@@ -46,7 +44,6 @@ export const Python = () => (
 
 export const Javascript = () => (
     <svg
-        width={width}
         xmlns="http://www.w3.org/2000/svg"
         aria-label="JavaScript"
         role="img"
@@ -59,7 +56,6 @@ export const Javascript = () => (
 
 export const Kotlin = () => (
     <svg
-        width={width}
         viewBox="0 0 256 256"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -126,7 +122,6 @@ export const Kotlin = () => (
 
 export const Java = () => (
     <svg
-        width={width}
         viewBox="-45 0 346 346"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -171,7 +166,6 @@ export const Java = () => (
 
 export const Csharp = () => (
     <svg
-        width={width}
         viewBox="-16 0 288 288"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -203,7 +197,6 @@ export const Csharp = () => (
 
 export const Level = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -281,7 +274,6 @@ export const Level = () => (
 
 export const Trophy = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -403,7 +395,6 @@ export const Trophy = () => (
 
 export const Hourglass = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -515,7 +506,6 @@ export const Hourglass = () => (
 
 export const HandShake = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -558,7 +548,6 @@ export const HandShake = () => (
 
 export const Running = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -605,7 +594,6 @@ export const Running = () => (
 
 export const Settings = () => (
     <svg
-        width={width}
         viewBox="0 0 60 60"
         xmlns="http://www.w3.org/2000/svg">
         <rect fill="#fff" height={60} rx={10} width={60} />
@@ -657,7 +645,6 @@ export const Settings = () => (
 
 export const Coins = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -769,7 +756,6 @@ export const Coins = () => (
 
 export const Percentage = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -797,7 +783,6 @@ export const Percentage = () => (
 
 export const Medal = () => (
     <svg
-        width={width}
         viewBox="-7.72 0 76.029 76.029"
         xmlns="http://www.w3.org/2000/svg">
         <g
@@ -842,7 +827,6 @@ export const Medal = () => (
 
 export const Marker = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -898,7 +882,6 @@ export const Marker = () => (
 
 export const Numbering = () => (
     <svg
-        width={width}
         id="Layer_1"
         xmlns="http://www.w3.org/2000/svg"
         xmlnsXlink="http://www.w3.org/1999/xlink"

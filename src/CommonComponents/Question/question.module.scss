@@ -1,3 +1,4 @@
+@use "../../init/global" as *;
 
 
 .questionLayout {
@@ -80,31 +81,56 @@
     padding-bottom: 7px;
 }
 
+.timer {
+    font-weight: bold;
+    font-size: 22px;
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .actionsButtonsContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-inline: 40px;
+    margin-inline: 20px;
     gap: 20px;
-}
+    flex-wrap: wrap;
 
-.timer {
-    font-weight: bold;
-    font-size: 22px;
+    div {
+        @include center;
+        gap: 5px;
+    }
+
+    svg {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        cursor: pointer;
+    }
 }
 
 .actionsButtonsContainer button {
+    position: relative;
     background: #416ee1;
     border: none;
-    border-radius: 16px;
+    border-radius: 12px;
     color: white;
     font-family: inherit;
     font-size: 18px;
     overflow: hidden;
-    padding: 0.75em 0.8em;
-    min-width: 140px;
+    padding: 0.7em 0.5em;
+    min-width: 125px;
     font-weight: 600;
+    transition: 0.2s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.actionsButtonsContainer button:hover {
+    background: #315ed0;
 }
 
 .actionsButtonsContainer button:disabled {

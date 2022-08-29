@@ -1,13 +1,35 @@
 import React, { useEffect, useRef } from "react";
+import {Language} from "../DataTypes";
+
 
 type Props = {
     languages: { [key: string]: any };
     show: boolean;
-    setLanguage: (language: string) => void;
-    setShow: (show: boolean) => void;
-    setCode: (code: string) => void;
-    LanguageToHelloCode: { [key: string]: string };
+    setLanguage: (language: Language) => void;
+    editor?: boolean;
+    setShow?: (show: boolean) => void;
+    setCode?: (code: string) => void;
+    LanguageToHelloCode?: { [key: string]: string };
 }
+
+
+const toDisplayName = {
+    "python": "Python",
+    "javascript": "JavaScript",
+    "typescript": "TypeScript",
+    "java": "Java",
+    "kotlin": "Kotlin",
+    "csharp": "C#",
+    "c": "C",
+    "cpp": "C++",
+    "Python": "Python",
+    "JavaScript": "JavaScript",
+    "TypeScript": "TypeScript",
+    "Java": "Java",
+    "C#": "C#",
+    "Kotlin": "Kotlin",
+}
+
 
 export function LanguageDialog(props: Props) {
 
@@ -23,10 +45,11 @@ export function LanguageDialog(props: Props) {
     }, [props.show]);
 
 
-    const changeLanguage = (language) => {
+    const changeLanguage = (l) => {
+        const language = l.toLowerCase()
         localStorage['language'] = language;
+        if (props.editor) props.setCode(props.LanguageToHelloCode[language]);
         props.setLanguage(language);
-        props.setCode(props.LanguageToHelloCode[language]);
         props.setShow(false);
     }
 
@@ -44,7 +67,7 @@ export function LanguageDialog(props: Props) {
                         Object.keys(languages).map((language, index) => (
                             <div key={index} onClick={() => changeLanguage(language)}>
                                 {languages[language]}
-                                <h3>{language}</h3>
+                                <h3>{toDisplayName[language]}</h3>
                             </div>
                         ))
                     }
