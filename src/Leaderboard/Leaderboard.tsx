@@ -25,11 +25,43 @@ export default function Leaderboard() {
         console.log("aaa");
     }
 
+    const getEmoji = (c: string) => {
+        let country = c.toLowerCase();
+        if (c === "") return "🌎";
+        if (c === "uk") return "🇬🇧"
+
+        try {
+            return countryCodeEmoji(country)
+        } catch (e) {
+            return "🌎";
+        }
+    }
+
+    const getImage = (c: string) => {
+        if (c === "undefined") return "guest"
+        return c
+    }
+
+    const split = (data: string) => {
+        const arr = data.split(".")
+        const len = arr.length;
+
+        if (len === 4) return arr
+
+        if (len > 4) {
+            const image = arr[len - 1];
+            const score = arr[len - 2];
+            const country = arr[len - 3];
+            let name = arr[0];
+            for (let i = 1; i < len - 3; i++) name += "." + arr[i];
+            return [name, country, score, image]
+        }
+        return ["user", "", "0", "undefined"]
+    }
+
     return (
         <>
-
-            {isLoading && <Loading/> }
-
+            {isLoading && <Loading/>}
 
             <div className={"leaderboard-content"}>
                 {data?.length > 0 && <div className={"title-row"}>
@@ -39,14 +71,15 @@ export default function Leaderboard() {
                 </div>}
 
                 {data?.map((item, index) => {
-                        const [name, country, score, image] = item.split(".");
+                        const [name, country, score, image] = split(item);
+
                         return (
                             <div key={index}>
                                 <div className={"leftSide"}>
                                     <span className={"num"}>#{index + 1}</span>
-                                    <span className={"flag"}>{countryCodeEmoji(country === "" ? "us" : country)}</span>
-                                    <img className={"person"} src={`/images/p${image === "undefined" ? "guest" : image}.png`}
-                                         alt={name} onClick={openProfile}/>
+                                    <span className={"flag"}>{getEmoji(country)}</span>
+                                    <img className={"person"} src={`/images/p${getImage(image)}.png`} alt={name}
+                                         onClick={openProfile}/>
                                 </div>
 
                                 <span className={"itemName"}>{name.replaceAll("_", "")}</span>
@@ -56,7 +89,6 @@ export default function Leaderboard() {
                     }
                 )}
             </div>
-
 
             <Footer/>
         </>
