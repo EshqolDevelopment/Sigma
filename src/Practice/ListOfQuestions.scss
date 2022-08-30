@@ -185,7 +185,7 @@
         margin-bottom: 72px;
 
         @include mobile {
-            width: 90%;
+            width: 85%;
         }
     }
 
@@ -205,6 +205,10 @@
     & > span {
         font-size: 28px;
         font-weight: 460;
+
+        @include mobile {
+            font-size: 24px;
+        }
     }
 
     & > div {
@@ -237,7 +241,7 @@
         }
 
         @include mobile {
-            width: 95%;
+            width: 91%;
         }
     }
 
@@ -250,6 +254,10 @@
         margin-top: 42px;
         font-weight: bold;
         font-size: 22px;
+
+        @include mobile {
+            font-size: 21px;
+        }
 
     }
 }
