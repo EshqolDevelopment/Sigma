@@ -45,8 +45,7 @@ export function LanguageDialog(props: Props) {
     }, [props.show]);
 
 
-    const changeLanguage = (l) => {
-        const language = l.toLowerCase()
+    const changeLanguage = (language: Language) => {
         localStorage['language'] = language;
         if (props.editor) props.setCode(props.LanguageToHelloCode[language]);
         props.setLanguage(language);
@@ -57,14 +56,14 @@ export function LanguageDialog(props: Props) {
         <dialog className={"modal"} ref={LanguageDialog}>
             <div className={"container-modal"}>
                 <div className={"modal-header"}>
-                    <img src={"https://static.thenounproject.com/png/57781-200.png"}
+                    <img src={"/images/x.png"}
                          onClick={() => props.setShow(false)} alt={'Close'}/>
                     <h3>Choose a language</h3>
                 </div>
 
                 <div className={'languages-list'}>
                     {
-                        Object.keys(languages).map((language, index) => (
+                        Object.keys(languages).map((language: Language, index) => (
                             <div key={index} onClick={() => changeLanguage(language)}>
                                 {languages[language]}
                                 <h3>{toDisplayName[language]}</h3>

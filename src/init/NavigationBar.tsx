@@ -5,6 +5,7 @@ import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
 import {Profile} from "../CommonComponents/Profile/Profile";
 import BuyCoins from "../CommonComponents/BuyCoins/BuyCoins";
+import { useLocation } from "react-router";
 
 
 let lastCoinsUpdate = 0;
@@ -18,6 +19,12 @@ export default function NavigationBar() {
     const [showProfile, setShowProfile] = useState(false);
     const [showCoinsShop, setShowCoinsShop] = useState(false);
     const [lastCoinsDelta, setLastCoinsDelta] = useState(0);
+    const location = useLocation();
+
+    useEffect(() => {
+        setActivePage(location.pathname.split("/")[1].toLocaleLowerCase());
+    }, [location]);
+
 
     useEffect(() => {
         if (globalContext.userData && globalContext.userData.coins - lastCoinsUpdate !== 0) {
@@ -49,10 +56,6 @@ export default function NavigationBar() {
         return false;
     };
 
-    const onPageChange = (page) => {
-        setActivePage(page);
-    }
-
     const openProfile = () => {
         setShowProfile(true);
     }
@@ -66,7 +69,7 @@ export default function NavigationBar() {
             <div className={style.navMenu}>
                 {pages.map((page, index) => {
                     return (
-                        <Link key={index} onClick={() => onPageChange(page)}
+                        <Link key={index}
                               className={[style.page, isActive(activePage.toLocaleLowerCase(), page.toLocaleLowerCase()) ? style.active : ""].join(" ")}
                               to={"/" + (page.toLowerCase() === "home" ? "" : page.toLowerCase())}>
                             {page}
