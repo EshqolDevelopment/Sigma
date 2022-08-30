@@ -1,4 +1,8 @@
 $max-width: 750px;
+:root {
+  --accomplished-percentage: 0%;
+}
+
 
 @mixin center-flex {
   display: flex;

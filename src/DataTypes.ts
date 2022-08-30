@@ -63,6 +63,15 @@ export type UserData = {
     displayName: string;
 }
 
+export type Solutions = {
+    [question: string]: {
+        java: string;
+        javascript: string;
+        python: string;
+        kotlin: string;
+    }
+}
+
 export type PracticeQuestionItem = {
     name: string;
     subject: string;

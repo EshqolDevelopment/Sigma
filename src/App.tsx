@@ -13,7 +13,7 @@ import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
 import {UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
-import {doc, getFirestore, onSnapshot} from "firebase/firestore";
+import {doc, getFirestore, onSnapshot, collection} from "firebase/firestore";
 import {app} from "./init/firebase";
 import * as firebaseui from "firebaseui";
 
@@ -46,6 +46,7 @@ let ui = null;
 export default function App() {
     const [userName, setUserName] = React.useState<string>(undefined);
     const [userData, setUserData] = React.useState<UserData>(undefined);
+    const [solutions, setSolutions] = React.useState<any>(undefined);
     const queryClient = new QueryClient()
 
     useEffect(() => {
@@ -80,10 +81,30 @@ export default function App() {
         }
     });
 
+    const formatSolutions = (solutionsDB: {[language: string]: {[question: string]: string}}) => {
+        const solutions = {};
+        for (const language in solutionsDB) {
+            for (const question in solutionsDB[language]) {
+                // console.log(language, question);
+                if (!solutions[question]) solutions[question] = {[language]: solutionsDB[language][question]}
+                else {
+                    solutions[question][language] = solutionsDB[language][question];
+                }
+            }
+        }
+        return solutions;
+    }
+
     const getUserData = async (username: string) => {
         onSnapshot(doc(getFirestore(app), `root/${username}`), (doc) => {
             const formattedData = formatDBUserData(username, doc.data());
             setUserData(formattedData);
+        });
+
+        onSnapshot(collection(getFirestore(app), `root/${username}/solutions`), (doc) => {
+            const solutions = {}
+            doc.docs.map((doc) => solutions[doc.id] = doc.data());
+            setSolutions(formatSolutions(solutions));
         });
     }
 
@@ -100,6 +121,7 @@ export default function App() {
             <GlobalContext.Provider value={{
                 username: userName,
                 userData: userData,
+                solutions: solutions,
             }}>
                 <div>
                     <div style={{display: "none"}} id={"helper-firebase-ui"}/>

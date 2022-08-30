@@ -1,9 +1,9 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
-import {postRequest} from "../../Global";
+import {GlobalContext, postRequest} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
 
@@ -36,6 +36,8 @@ export default function Question(props: Props) {
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
+    const globalContext = useContext(GlobalContext);
+
 
     async function getAndSetQuestionData(funcName: string) {
         const response = await postRequest("/general/getClientQuestionData", {
@@ -172,7 +174,16 @@ export default function Question(props: Props) {
                 code: code[language]
         }) as {result: string}
 
-        if (response.result === "success" || code[language].includes("eshqol")) {
+        if (response.result === "success") {
+            if (globalContext.username) {
+                postRequest("/general/onCorrectAnswer", {
+                    questionName: props.funcName,
+                    language: language,
+                    solution: code[language],
+                    name: globalContext.userData.name
+                })
+            }
+
             if (props.onCorrectAnswer) props.onCorrectAnswer();
         }
         setResult(response.result);

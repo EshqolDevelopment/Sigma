@@ -43,7 +43,7 @@ export function ChooseGameMode() {
 
         <div className={styles.container}>
             <div>
-                <h2>Quick Play</h2>
+                <h2>Quick Play (1 vs 1)</h2>
                 <div className={styles.modeBody}>
                     <span>
                         Play a game a against a random opponent, with a certain time limit for each question,

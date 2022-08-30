@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ListOfQuestions from "./ListOfQuestions";
-import "./ListOfQuestions.css";
-import {postRequest} from "../Global";
+import "./ListOfQuestions.scss";
+import {GlobalContext, postRequest} from "../Global";
 import {PracticeQuestionList} from "../DataTypes";
 import {useQuery} from "react-query";
 import Loading from "../CommonComponents/Loading/Loading";
+import {useNavigate} from "react-router-dom";
 
 let questionDictGlobal: PracticeQuestionList = {Easy: [], Medium: [], Hard: []};
 
@@ -13,7 +14,8 @@ export default function Practice() {
     const [questionDict, setQuestionDict] = useState<PracticeQuestionList>({Easy: [], Medium: [], Hard: []});
     const [questionIsFiltered, setQuestionIsFiltered] = useState(false);
     const {isLoading} = useQuery(["question-list"], fetchQuestions);
-
+    const navigate = useNavigate();
+    const globalContext = useContext(GlobalContext);
 
     async function fetchQuestions() {
         const serverQuestionDict = await postRequest("/general/getQuestionList", {}) as PracticeQuestionList;
@@ -58,33 +60,55 @@ export default function Practice() {
         setQuestionDict(copyData);
     }
 
+    const pickRandom = () => {
+        const levels = ["Easy", "Medium", "Hard"];
+        const level = levels[Math.floor(Math.random() * levels.length)];
+        const questions = questionDict[level];
+        const index = Math.floor(Math.random() * questions.length);
+        const question = questions[index];
+        navigate(`/practice/${question.name}`)
+    }
+
+    const sum = questionDictGlobal["Easy"].length + questionDictGlobal["Medium"].length + questionDictGlobal["Hard"].length;
+    const solutions = globalContext.solutions ? globalContext.solutions : {};
+    const accomplishedPercentage = Math.round(Object.keys(solutions).length / sum * 100);
+
     return (
         <>
             {isLoading && <Loading/> }
             {!isLoading && <div>
-                <h1 className={"practice-title"}>Practice any question in your level, supporting over 10 languages!</h1>
-                <div className={"filter-container"}>
-                    <button className={"pickRandom"}>Pick Random</button>
-                    <input className={"filter-question"} type={"text"} placeholder={"Search for a question"}
-                           onChange={filterQuestions}/>
-                    <img alt={"search logo"} src={"/images/search.png"}/>
+
+                <div className={"practice-title-container"}>
+                    <h1 className={"practice-title"}>200+ Coding Practice Challenges</h1>
+                    <h2>The practice you need to become a professional programmer</h2>
+                    <input className={"filter-question"} type={"text"} placeholder={"Search for a question"} onChange={filterQuestions}/>
                 </div>
+
+                <div className={`accomplishment-container`}>
+                    <span>{Object.keys(solutions).length} Questions Completed out of {sum}</span>
+                    {/*@ts-ignore*/}
+                    <div style={{"--accomplished-percentage": accomplishedPercentage + "%"}}>
+                        <span>{accomplishedPercentage}%</span>
+                    </div>
+                    <button onClick={pickRandom}>Pick random question</button>
+                </div>
+
 
                 <div className={"container"}>
                     <div className={"easyCont"}>
-                        <p>Easy - 0/25</p>
+                        <p>Easy - 0/{questionDict["Easy"].length}</p>
                         <ListOfQuestions level={"easy"} questionList={questionDict["Easy"]}
                                          aboveListLength={0}
                                          questionIsFiltered={questionIsFiltered}/>
                     </div>
                     <div className={"mediumCont"}>
-                        <p>Medium - 0/25</p>
+                        <p>Medium - 0/{questionDict["Medium"].length}</p>
                         <ListOfQuestions level={"medium"} questionList={questionDict["Medium"]}
                                          aboveListLength={questionDict["Easy"].length}
                                          questionIsFiltered={questionIsFiltered}/>
                     </div>
                     <div className={"hardCont"}>
-                        <p>Hard - 0/25</p>
+                        <p>Hard - 0/{questionDict["Hard"].length}</p>
                         <ListOfQuestions level={"hard"} questionList={questionDict["Hard"]}
                                          aboveListLength={questionDict["Easy"].length + questionDict["Medium"].length}
                                          questionIsFiltered={questionIsFiltered}/>

@@ -1,9 +1,10 @@
 import {createContext} from "react";
-import {UserData} from "./DataTypes";
+import {Solutions, UserData} from "./DataTypes";
 
 type GlobalContextType = {
     username: string;
     userData: UserData;
+    solutions: Solutions;
 }
 
 export const GlobalContext = createContext<GlobalContextType>(null);

@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import "./ListOfQuestions.css";
+import React, {useContext, useState} from "react";
+import "./ListOfQuestions.scss";
 import {useNavigate} from "react-router-dom";
 import {PracticeQuestionItem} from "../DataTypes";
+import {GlobalContext} from "../Global";
 
 let lastStyleUpdate = Date.now();
 let itemOnMouseIndex = null;
@@ -22,6 +23,8 @@ export default function ListOfQuestions(props: Props) {
     const ItemHeight = 56;
     const questionList = props.questionList;
     const navigate = useNavigate();
+    const globalContext = useContext(GlobalContext);
+
 
     function onMouseDown(i) {
         const top = document.getElementById(i + level).style.top as any;
@@ -174,15 +177,14 @@ export default function ListOfQuestions(props: Props) {
     return (
         <div onMouseUp={onMouseUp} onMouseMove={(e) => onMouseMove(e.pageY)} onTouchEnd={onTouchEnd}
              onTouchMove={(e) => onMouseMove(e.touches[0].pageY)}>
-            {
-                questionList.map((data, i) => {
+            {questionList.map((data, i) => {
                     return (
                         [<div key={i + level}
                              className={["question-item", currentDragItemIndex === i ? "on-drag" : "not-on-drag"].join(" ")}
                              style={{top: i * ItemHeight}} id={i + level}>
 
                             <div>
-                                <div className={"circle"}/>
+                                <div className={"circle " + ((globalContext.solutions && globalContext.solutions[data.name]) ? "circle-mark" : "")}/>
                                 <button onClick={() => navigate(`/practice/${data.name}`)}
                                       className={"nameText"}>{formatFuncName(data.name)}</button>
                             </div>
