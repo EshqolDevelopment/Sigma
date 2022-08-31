@@ -42,9 +42,9 @@ export default function Question(props: Props) {
     async function getAndSetQuestionData(funcName: string) {
         const response = await postRequest("/general/getClientQuestionData", {
             funcName: funcName
-        }) as {question: QuestionData, languages: Language[]};
+        }) as {question: string, languages: Language[]};
 
-        const serverQuestionData = response.question;
+        const serverQuestionData = JSON.parse(response.question) as QuestionData;
         serverQuestionData.languages = response.languages;
 
         setQuestion(serverQuestionData);
@@ -83,11 +83,15 @@ export default function Question(props: Props) {
 
     const pythonDefaultCode = (funcName, params: string, returnType: string) => {
         let code = "def " + funcName + "(";
-        for (let param of params) {
+        for (let i=0; i<params.length; i++) {
+            let param = params[i];
             param = JSON.parse(param);
-            code += `${param[0]}: ${param[1]}, `;
+            if (i === param.length - 1) {
+                code += `${param[0]}: ${param[1]}`;
+            } else {
+                code += `${param[0]}: ${param[1]}, `;
+            }
         }
-        code = code.slice(0, -2);
         code += `) -> ${returnType}:\n\t`;
         return code;
     };
