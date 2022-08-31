@@ -85,7 +85,6 @@ export default function App() {
         const solutions = {};
         for (const language in solutionsDB) {
             for (const question in solutionsDB[language]) {
-                // console.log(language, question);
                 if (!solutions[question]) solutions[question] = {[language]: solutionsDB[language][question]}
                 else {
                     solutions[question][language] = solutionsDB[language][question];

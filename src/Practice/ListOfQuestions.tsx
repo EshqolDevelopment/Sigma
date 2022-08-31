@@ -44,6 +44,8 @@ export default function ListOfQuestions(props: Props) {
     }
 
     function arranAndSaveList() {
+        if (questionList.length === 0) return;
+
         const topsList = new Set();
         const duplicates = new Map();
         for (let i = 0; i < questionList.length; i++) {
@@ -74,14 +76,13 @@ export default function ListOfQuestions(props: Props) {
             const top = i * ItemHeight + "px";
             for (let j = 0; j < questionList.length; j++) {
                 if (document.getElementById(j + level).style.top === top) {
-                    saveListIndexes.push(questionList[j]);
+                    saveListIndexes.push(questionList[j].name);
                     break;
                 }
             }
         }
 
-        localStorage.setItem("ListIndexes" + level, JSON.stringify(saveListIndexes));
-        // console.log(saveListIndexes)
+        localStorage.setItem("ListIndexes" + level[0].toUpperCase() + level.slice(1), JSON.stringify(saveListIndexes));
     }
 
     function onMouseMove(y) {

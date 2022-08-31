@@ -19,9 +19,31 @@ export default function Practice() {
 
     async function fetchQuestions() {
         const serverQuestionDict = await postRequest("/general/getQuestionList", {}) as PracticeQuestionList;
-        setQuestionDict(serverQuestionDict)
-        questionDictGlobal = serverQuestionDict;
-        return serverQuestionDict;
+        const temp = {Easy: [], Medium: [], Hard: []};
+
+        for (let level of ["Easy", "Medium", "Hard"]) {
+            const orderArray: string[] = localStorage.getItem("ListIndexes" + level) ? JSON.parse(localStorage.getItem("ListIndexes" + level)) : [];
+
+            if (orderArray.length > 0) {
+                for (let i = 0; i < orderArray.length; i++) {
+                    const match = serverQuestionDict[level].find((x) => x.name === orderArray[i]);
+                    if (match) {
+                        temp[level][i] = match;
+                    }
+                }
+                for (const question of serverQuestionDict[level]) {
+                    if (!orderArray.includes(question.name)) {
+                        temp[level].push(question);
+                    }
+                }
+            } else {
+                temp[level] = serverQuestionDict[level];
+            }
+        }
+
+        setQuestionDict(temp)
+        questionDictGlobal = temp;
+        return temp;
     }
 
     useEffect(() => {
