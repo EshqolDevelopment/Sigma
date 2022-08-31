@@ -3,7 +3,7 @@ import {getDatabase} from "firebase/database";
 
 const config = {
     apiKey: "AIzaSyA8E2bTRs949U6XZQTlfByJAzrRT8qoPw4",
-    authDomain: "omega-ad1ba.firebaseapp.com",
+    authDomain: "sigmawars.com",
     databaseURL: "https://omega-ad1ba-default-rtdb.firebaseio.com",
     projectId: "omega-ad1ba",
     storageBucket: "omega-ad1ba.appspot.com",
