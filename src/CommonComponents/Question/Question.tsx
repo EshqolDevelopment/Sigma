@@ -86,7 +86,8 @@ export default function Question(props: Props) {
         for (let i=0; i<params.length; i++) {
             let param = params[i];
             param = JSON.parse(param);
-            if (i === param.length - 1) {
+            if (i === params.length - 1) {
+                console.log("last param")
                 code += `${param[0]}: ${param[1]}`;
             } else {
                 code += `${param[0]}: ${param[1]}, `;
