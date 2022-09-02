@@ -15,6 +15,7 @@ export function QuickPlayConfig() {
 
         <Helmet>
             <title>Sigma Code Wars | Quick Play</title>
+            <meta name={"description"} content={"Play Sigma Code Wars against a random opponent in quick play mode."}/>
         </Helmet>
 
         <main>

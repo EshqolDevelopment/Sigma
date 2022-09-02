@@ -65,6 +65,7 @@ export default function Leaderboard() {
 
             <Helmet>
                 <title>Sigma Code Wars | Leaderboard</title>
+                <meta name={"description"} content={"See your rank on the Sigma Code Wars leaderboard"}/>
             </Helmet>
 
             <main className={"leaderboard-content"}>

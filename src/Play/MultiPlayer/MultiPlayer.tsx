@@ -44,6 +44,7 @@ export default function MultiPlayer() {
 
         <Helmet>
             <title>Sigma Code Wars | Multi Player</title>
+            <meta name={"description"} content={"Play Sigma Code Wars with your friends"}/>
         </Helmet>
 
         <main>

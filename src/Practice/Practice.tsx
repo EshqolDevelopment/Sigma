@@ -100,6 +100,7 @@ export default function Practice() {
         <div>
             <Helmet>
                 <title>200+ Coding Question | Sigma Code Wars</title>
+                <meta name={"description"} content={"Solve 200+ coding questions in 3 difficulty levels. Practice your coding skills and prepare for interviews."}/>
             </Helmet>
 
 

@@ -24,6 +24,7 @@ export function ChooseGameMode() {
 
         <Helmet>
             <title>Sigma Code Wars | Select Game Mode</title>
+            <meta name={"description"} content={"Select the game mode you want to play in - quick play (1 vs 1) or multi-player."}/>
         </Helmet>
 
         <main>

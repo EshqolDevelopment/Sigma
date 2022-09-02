@@ -108,6 +108,7 @@ export default function Home() {
 
             <Helmet>
                 <title>Sigma - Code Wars</title>
+                <meta name={"description"} content={"Sigma is a platform that helps you to improve your coding skills by competing with your friends and other players in coding questions in real-time"}/>
             </Helmet>
 
             <main>
@@ -127,7 +128,7 @@ export default function Home() {
 
                     <h2 className={'what-is-sigma'}>Why choose sigma?</h2>
 
-                    <div className={'about-sigma'}>
+                    <section className={'about-sigma'}>
                         <Box id={'realtime'} title={'Real-time Competition'} strokeLine={"round"} icon={"M17 20v-1m0-4v-1M7 4v16m0 0-3-3m3 3 3-3m7-7V4m0 0-3 3m3-3 3 3"}>
                             Our main expertise is to provide real-time competition between players.
                             Rules are easy: whoever solves the question first wins!
@@ -156,35 +157,45 @@ export default function Home() {
                         <Box id={'leaderboard'} title={'Compare Yourself to Others'} viewBox="0 0 512 512"  fill={true} icon={"M256 25c-11.594 0-23 12.8-23 31s11.406 31 23 31 23-12.8 23-31-11.406-31-23-31zm-103.951 2.975l-16.098 8.05c15.092 30.185 51.37 56.81 82.188 74.442L232.334 295H247V192h18v103h14.666l14.195-184.533c30.818-17.632 67.096-44.257 82.188-74.442l-16.098-8.05c-19.91 29.9-44.891 49.148-71.334 57.77C281.311 97.28 269.75 105 256 105c-13.75 0-25.31-7.72-32.617-19.256-26.443-8.62-51.424-27.87-71.334-57.77zM169 313v96H25v78h462v-30H343V313H169z"}>
                             Our leaderboard to compare your performance to others, so you can challenge yourself to be the best!
                         </Box>
-                    </div>
+                    </section>
 
-                    <ReadMore id={'language'} title={`We Support ${languagesList.length} Different Languages.`} list={languages} seperator={', for '}>
-                        There's nothing more frustrating than finding the perfect question,
-                        and them find out it only support a programming language that you don't know.
-                        That's why all of our questions come with complete written solutions in {languagesList.length} popular languages.
-                    </ReadMore>
+                    <section>
+                        <ReadMore id={'language'} title={`We Support ${languagesList.length} Different Languages.`} list={languages} seperator={', for '}>
+                            There's nothing more frustrating than finding the perfect question,
+                            and them find out it only support a programming language that you don't know.
+                            That's why all of our questions come with complete written solutions in {languagesList.length} popular languages.
+                        </ReadMore>
+                    </section>
 
-                    <ReadMore id={'realtime'} title={'Play and Compete in Real Time.'} list={realtime}>
-                        Choose the difficulty level that fits you, and start playing right away.
-                        In each game, you'll be competing against other players and the first one to solve 3 questions wins the game!
-                    </ReadMore>
+                    <section>
+                        <ReadMore id={'realtime'} title={'Play and Compete in Real Time.'} list={realtime}>
+                            Choose the difficulty level that fits you, and start playing right away.
+                            In each game, you'll be competing against other players and the first one to solve 3 questions wins the game!
+                        </ReadMore>
+                    </section>
 
-                    <ReadMore id={'friends'} title={'Play With your Friends.'} list={friends}>
-                        Do you think you can beat your friends? We have a multiplayer mode, where you can challenge up to 5 of
-                        your friends and customize your game settings, to fit your needs.
-                    </ReadMore>
+                    <section>
+                        <ReadMore id={'friends'} title={'Play With your Friends.'} list={friends}>
+                            Do you think you can beat your friends? We have a multiplayer mode, where you can challenge up to 5 of
+                            your friends and customize your game settings, to fit your needs.
+                        </ReadMore>
+                    </section>
 
-                    <ReadMore id={'leaderboard'} title={'Leaderboard and Scoring.'} list={leaderboard}>
-                        If you are as competitive as we are, then you'll like our leaderboard.<br/>
-                        Our leaderboard is calculated based on each player's performance, and the top 100 players will be displayed there!<br/>
-                        How are points calculated?
-                    </ReadMore>
+                    <section>
+                        <ReadMore id={'leaderboard'} title={'Leaderboard and Scoring.'} list={leaderboard}>
+                            If you are as competitive as we are, then you'll like our leaderboard.<br/>
+                            Our leaderboard is calculated based on each player's performance, and the top 100 players will be displayed there!<br/>
+                            How are points calculated?
+                        </ReadMore>
+                    </section>
 
-                    <ReadMore id={'ide'} title={'The Perfect Development Environment.'} list={ide}>
-                        Have you ever programmed in notepad? or even worse, with a pen and paper?<br/>
-                        If so then you know how it feels to be stuck in a maze of code, where everything is a mass and looks the same.<br/>
-                        To avoid this, we have a user-friendly IDE that make your experience much more enjoyable.
-                    </ReadMore>
+                    <section>
+                        <ReadMore id={'ide'} title={'The Perfect Development Environment.'} list={ide}>
+                            Have you ever programmed in notepad? or even worse, with a pen and paper?<br/>
+                            If so then you know how it feels to be stuck in a maze of code, where everything is a mass and looks the same.<br/>
+                            To avoid this, we have a user-friendly IDE that make your experience much more enjoyable.
+                        </ReadMore>
+                    </section>
 
                     <Footer/>
                 </div>
