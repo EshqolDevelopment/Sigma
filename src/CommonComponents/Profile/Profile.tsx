@@ -2,9 +2,11 @@ import {useContext, useEffect, useRef, useState} from "react";
 import style from "./profile.module.scss";
 import {GlobalContext, postRequest, winRate} from "../../Global";
 import {getAuth} from "firebase/auth";
+import {UserData} from "../../DataTypes";
 
 type Props = {
     close: () => void;
+    userData: UserData;
 }
 
 export function Profile(props: Props) {
@@ -27,9 +29,15 @@ export function Profile(props: Props) {
     const setNewProfileImage = async (image: number) => {
         await postRequest("/general/changeProfileImage", {
             image: image,
-            name: globalContext.userData.name
+            name: props.userData.name
         })
         setChooseProfile(false);
+    }
+
+    const openChooseProfileDialog = () => {
+        if (props.userData.name === globalContext.userData.name) {
+            setChooseProfile(true)
+        }
     }
 
     const profileImages = []
@@ -49,35 +57,35 @@ export function Profile(props: Props) {
                 <button className={style.signOut} onClick={signOut}>Sign Out</button>
             </div>
 
-            <span className={style.name}>{globalContext.userData.displayName}</span>
+            <span className={style.name}>{props.userData.displayName}</span>
 
-            <button className={style.removeDefault} onClick={() => setChooseProfile(true)}>
-                <img src={`/images/p${globalContext.userData.image}.png`} className={style.profileImage} alt={"profile"}/>
+            <button className={style.removeDefault} onClick={openChooseProfileDialog}>
+                <img src={`/images/p${props.userData.image}.png`} className={style.profileImage} alt={"profile"}/>
             </button>
 
             <div className={style.infoRow}>
                 <span>Victories</span>
-                <span>{globalContext.userData.wins}</span>
+                <span>{props.userData.wins}</span>
             </div>
 
             <div className={style.infoRow}>
                 <span>Defeats</span>
-                <span>{globalContext.userData.losses}</span>
+                <span>{props.userData.losses}</span>
             </div>
 
             <div className={style.infoRow}>
                 <span>Winning rate</span>
-                <span>{winRate(globalContext.userData)} %</span>
+                <span>{winRate(props.userData)} %</span>
             </div>
 
             <div className={style.infoRow}>
                 <span>Coins</span>
-                <span>{globalContext.userData.coins}</span>
+                <span>{props.userData.coins}</span>
             </div>
 
             <div className={style.infoRow}>
                 <span>Points</span>
-                <span>{globalContext.userData.points}</span>
+                <span>{props.userData.points}</span>
             </div>
         </div>}
 

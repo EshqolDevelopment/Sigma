@@ -123,7 +123,7 @@ export default function NavigationBar() {
             </div>}
 
 
-            {showProfile && <Profile close={() => setShowProfile(false)}/>}
+            {showProfile && <Profile close={() => setShowProfile(false)} userData={globalContext.userData}/>}
 
             {showCoinsShop && <BuyCoins close={() => setShowCoinsShop(false)}/>}
         </nav>

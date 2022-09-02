@@ -50,7 +50,6 @@ export default function App() {
     const [userData, setUserData] = React.useState<UserData>(undefined);
     const [solutions, setSolutions] = React.useState<any>(undefined);
     const queryClient = new QueryClient()
-    const globalContext = React.useContext(GlobalContext);
 
     useEffect(() => {
         let uiConfig = {

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {app} from "../init/firebase";
 import {doc, getDoc, getFirestore} from "firebase/firestore";
 import "./Leaderboard.scss";
@@ -7,9 +7,13 @@ import {useQuery} from "react-query";
 import Footer from "../CommonComponents/Footer/Footer";
 import Loading from "../CommonComponents/Loading/Loading";
 import {Helmet} from "react-helmet";
+import {Profile} from "../CommonComponents/Profile/Profile";
+import {UserData} from "../DataTypes";
+import {postRequest} from "../Global";
 
 export default function Leaderboard() {
     const {data, isLoading} = useQuery(["leaderboard"], getLeaderboardData);
+    const [chosenProfileData, setChosenProfileData] = useState<UserData>(null);
 
     async function getLeaderboardData() {
         const ref = doc(getFirestore(app), "leaderboard/leaderboard");
@@ -21,8 +25,10 @@ export default function Leaderboard() {
         document.documentElement.style.setProperty("--background", "#d0d6e0");
     }, []);
 
-    function openProfile() {
-        console.log("aaa");
+    const openProfile = async (username: string) => {
+        setChosenProfileData({} as any);
+        const userData = await postRequest("/general/getUserData", {name: username}) as UserData;
+        setChosenProfileData(userData);
     }
 
     const getEmoji = (c: string) => {
@@ -84,7 +90,7 @@ export default function Leaderboard() {
                                     <span className={"num"}>#{index + 1}</span>
                                     <span className={"flag"}>{getEmoji(country)}</span>
                                     <img className={"person"} src={`/images/p${getImage(image)}.png`} alt={name}
-                                         onClick={openProfile}/>
+                                         onClick={() => openProfile(name)}/>
                                 </div>
 
                                 <span className={"itemName"}>{name.replaceAll("_", "")}</span>
@@ -94,6 +100,8 @@ export default function Leaderboard() {
                     }
                 )}
             </main>
+
+            {chosenProfileData && <Profile close={() => setChosenProfileData(null)} userData={chosenProfileData}/>}
 
             <Footer/>
         </>
