@@ -16,7 +16,7 @@ export default function PracticeQuestionWrapper() {
     return (
         <div>
             <Helmet>
-                <title>Sigma Code Wars | {questionName(funcName)}</title>
+                <title>{questionName(funcName)} | Sigma Code Wars</title>
                 <meta name={"description"} content={"Practice the Sigma Code Wars question " + questionName(funcName)}/>
             </Helmet>
 

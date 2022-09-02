@@ -16,7 +16,7 @@ export default function Test(props: Props) {
         <div className={styles.container}>
 
             <Helmet>
-                <title>Sigma Code Wars | Test 1121</title>
+                <title>Test 1121 | Sigma Code Wars</title>
             </Helmet>
 
 

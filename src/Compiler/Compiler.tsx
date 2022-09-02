@@ -58,7 +58,7 @@ export default function Compiler() {
         <div className={`compiler-body ${darkMode && "dark-mode"}`}>
 
             <Helmet>
-                <title>Sigma Code Wars | Code Editor</title>
+                <title>Code Editor | Sigma Code Wars</title>
                 <meta name={"description"} content={"Write code and run it in the Sigma Code Wars code editor"}/>
             </Helmet>
 
