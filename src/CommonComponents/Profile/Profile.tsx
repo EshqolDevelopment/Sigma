@@ -19,6 +19,7 @@ export function Profile(props: Props) {
     }, [])
 
     const signOut = () => {
+        globalContext.showToast("Signed out successfully", "info");
         getAuth().signOut();
         props.close();
     }

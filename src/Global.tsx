@@ -5,6 +5,7 @@ type GlobalContextType = {
     username: string;
     userData: UserData;
     solutions: Solutions;
+    showToast: (message: string, type: "info" | "success" | "error") => void;
 }
 
 export const GlobalContext = createContext<GlobalContextType>(null);

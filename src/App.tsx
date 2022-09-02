@@ -7,7 +7,7 @@ import Leaderboard from "./Leaderboard/Leaderboard";
 import Compiler from "./Compiler/Compiler";
 import Practice from "./Practice/Practice";
 import PracticeQuestionWrapper from "./Practice/PracticeQuestionWrapper";
-import {GlobalContext} from "./Global";
+import {GlobalContext, postRequest} from "./Global";
 import {QuickPlayConfig} from "./Play/QuickPlay/QuickPlayConfig";
 import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
@@ -17,6 +17,7 @@ import {doc, getFirestore, onSnapshot, collection} from "firebase/firestore";
 import {app} from "./init/firebase";
 import * as firebaseui from "firebaseui";
 import Test from "./Test/Test";
+import {toast, ToastContainer, Zoom} from "react-toastify";
 
 
 const getDisplayName = (username: string): string => {
@@ -49,6 +50,7 @@ export default function App() {
     const [userData, setUserData] = React.useState<UserData>(undefined);
     const [solutions, setSolutions] = React.useState<any>(undefined);
     const queryClient = new QueryClient()
+    const globalContext = React.useContext(GlobalContext);
 
     useEffect(() => {
         let uiConfig = {
@@ -70,17 +72,36 @@ export default function App() {
         }
     }, [userName])
 
+    const showToast = (message: string, type: "info" | "success" | "error") => {
+        const options = {pauseOnHover: false, pauseOnFocusLoss: false, transition: Zoom, draggable: false, closeOnClick: false};
+        if (type === "info") toast.info(message, options);
+        else if (type === "success") toast.success(message, options);
+        else toast.error(message, options);
+    }
 
-    getAuth().onAuthStateChanged(user => {
-        if (user) {
-            const userEmail = user.email;
-            const [name, email] = userEmail.split("@");
-            const userName = email !== "sigma.com" ? name + "_" : name;
-            setUserName(userName);
-        } else {
-            setUserName(null);
-        }
-    });
+    useEffect(() => {
+        getAuth().onAuthStateChanged(async (user) => {
+            if (user) {
+                const userEmail = user.email;
+                const [name, email] = userEmail.split("@");
+                const userName = email !== "sigma.com" ? name + "_" : name;
+                setUserName(userName);
+
+                const serverResult = await postRequest("/general/onUserCreated", {email: user.email}) as {result: string};
+                if (serverResult.result === "OK") {
+                    if (user.metadata.creationTime === user.metadata.lastSignInTime) {
+                        showToast("Welcome to Sigma!", "success");
+                    }
+                } else {
+                    showToast("An unexpected error occurred. Please try again later.", "error");
+                    await getAuth().signOut();
+                }
+            } else {
+                setUserName(null);
+            }
+        });
+    }, [])
+
 
     const formatSolutions = (solutionsDB: {[language: string]: {[question: string]: string}}) => {
         const solutions = {};
@@ -122,6 +143,7 @@ export default function App() {
                 username: userName,
                 userData: userData,
                 solutions: solutions,
+                showToast: showToast
             }}>
                 <div>
                     <div style={{display: "none"}} id={"helper-firebase-ui"}/>
@@ -129,6 +151,7 @@ export default function App() {
                     <div className={"content"}>
                         <BrowserRouter>
                             <NavigationBar/>
+                            <ToastContainer position={"top-center"}/>
 
                             <Routes>
                                 <Route path={"/"} element={<Home/>}/>
