@@ -38,12 +38,10 @@
 
 
 .profileImage, .sigmaIcon {
-    height: 80%;
+    height: calc(var(--navigation-height) * 0.8);
+    width: calc(var(--navigation-height) * 0.8);
     cursor: pointer;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: 10px;
-    margin-left: 20px;
+    margin: auto 10px auto 20px;
 }
 
 .sigmaIcon {
@@ -74,7 +72,7 @@
     border-radius: 100%;
 }
 
-.leftSide {
+.rightSide {
     display: flex;
     align-items: center;
     margin-right: 20px;

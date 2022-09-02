@@ -64,7 +64,7 @@ export default function Leaderboard() {
             {isLoading && <Loading/>}
 
             <Helmet>
-                <title>Leaderboard | Sigma Code Wars</title>
+                <title>Leaderboard | Sigma Code Warsw</title>
                 <meta name={"description"} content={"See your rank on the Sigma Code Wars leaderboard"}/>
             </Helmet>
 
@@ -80,7 +80,7 @@ export default function Leaderboard() {
 
                         return (
                             <div key={index}>
-                                <div className={"leftSide"}>
+                                <div className={"rightSide"}>
                                     <span className={"num"}>#{index + 1}</span>
                                     <span className={"flag"}>{getEmoji(country)}</span>
                                     <img className={"person"} src={`/images/p${getImage(image)}.png`} alt={name}

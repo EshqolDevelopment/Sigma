@@ -84,7 +84,7 @@ export default function NavigationBar() {
                 <div/>
             </button>
 
-            <div className={style.leftSide}>
+            <div className={style.rightSide}>
                 {globalContext.username === null && <>
                     <button className={style.loginBtn} onClick={openLoginModal}>Login</button>
                     <LoginModal show={showLogin} setShow={setShowLogin}/>
