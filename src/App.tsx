@@ -87,11 +87,9 @@ export default function App() {
                 const userName = email !== "sigma.com" ? name + "_" : name;
                 setUserName(userName);
 
-                const serverResult = await postRequest("/general/onUserCreated", {email: user.email}) as {result: string};
-                if (serverResult.result === "OK") {
-                    if (user.metadata.creationTime === user.metadata.lastSignInTime) {
-                        showToast("Welcome to Sigma!", "success");
-                    }
+                const serverResult = await postRequest("/general/onUserCreated", {email: user.email}) as {isNewUser: boolean};
+                if (serverResult.isNewUser) {
+                    showToast("Welcome to Sigma!", "success");
                 } else {
                     showToast("An unexpected error occurred. Please try again later.", "error");
                     await getAuth().signOut();
