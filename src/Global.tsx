@@ -35,3 +35,7 @@ export const winRate = (userData: UserData) => {
     const losses = userData.losses;
     return Math.round((wins / (wins + losses)) * 100 || 0);
 }
+
+export const questionName = (funcName) => {
+    return funcName ? funcName[0].toUpperCase() + funcName.slice(1).replaceAll("_", " ") : "";
+}

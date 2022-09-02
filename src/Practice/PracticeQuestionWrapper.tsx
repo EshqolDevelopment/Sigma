@@ -1,5 +1,8 @@
 import {useEffect, useState} from "react";
 import Question from "../CommonComponents/Question/Question";
+import {Helmet} from "react-helmet";
+import {questionName} from "../Global";
+
 
 export default function PracticeQuestionWrapper() {
     const [funcName, setFuncName] = useState<string>(null);
@@ -12,10 +15,19 @@ export default function PracticeQuestionWrapper() {
 
     return (
         <div>
-            {funcName && <Question funcName={funcName}
-                                   numberOfQuestions={1}
-                                   practice={true}
-            />}
+            <Helmet>
+                <title>Sigma Code Wars | {questionName(funcName)}</title>
+            </Helmet>
+
+            <main>
+                <div>
+                    {funcName && <Question funcName={funcName}
+                                           practice={true}
+                    />}
+                </div>
+            </main>
+
         </div>
+
     )
 }

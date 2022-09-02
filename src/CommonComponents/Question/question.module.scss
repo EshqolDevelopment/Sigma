@@ -37,6 +37,10 @@
     height: calc(100vh - 140px);
 }
 
+.codeEditorWithSeekBar {
+    height: calc(100vh - 200px) !important;
+}
+
 .container1 {
     display: flex;
     flex-direction: row;

@@ -6,7 +6,7 @@ import {countryCodeEmoji} from "country-code-emoji";
 import {useQuery} from "react-query";
 import Footer from "../CommonComponents/Footer/Footer";
 import Loading from "../CommonComponents/Loading/Loading";
-
+import {Helmet} from "react-helmet";
 
 export default function Leaderboard() {
     const {data, isLoading} = useQuery(["leaderboard"], getLeaderboardData);
@@ -63,7 +63,11 @@ export default function Leaderboard() {
         <>
             {isLoading && <Loading/>}
 
-            <div className={"leaderboard-content"}>
+            <Helmet>
+                <title>Sigma Code Wars | Leaderboard</title>
+            </Helmet>
+
+            <main className={"leaderboard-content"}>
                 {data?.length > 0 && <div className={"title-row"}>
                     <span>Rank</span>
                     <span>Name</span>
@@ -88,7 +92,7 @@ export default function Leaderboard() {
                         );
                     }
                 )}
-            </div>
+            </main>
 
             <Footer/>
         </>

@@ -98,8 +98,6 @@ export default function MultiPlayerGame(props: Props) {
         <div>
             {props.numberOfQuestions > playersData[globalContext.userData.name].currentQuestion ? <>
                 {!inTransition && <Question funcName={props.questions[playersData[globalContext.username].currentQuestion]}
-                                            numberOfQuestions={props.questions.length}
-                                            currentQuestionNum={playersData[globalContext.username].currentQuestion}
                                             onCorrectAnswer={onCorrectAnswer}
                 />}
 

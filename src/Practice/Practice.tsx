@@ -6,6 +6,7 @@ import {PracticeQuestionList} from "../DataTypes";
 import {useQuery} from "react-query";
 import Loading from "../CommonComponents/Loading/Loading";
 import {useNavigate} from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 let questionDictGlobal: PracticeQuestionList = {Easy: [], Medium: [], Hard: []};
 
@@ -96,9 +97,14 @@ export default function Practice() {
     const accomplishedPercentage = Math.round(Object.keys(solutions).length / sum * 100);
 
     return (
-        <>
+        <div>
+            <Helmet>
+                <title>200+ Coding Question | Sigma Code Wars</title>
+            </Helmet>
+
+
             {isLoading && <Loading/> }
-            {!isLoading && <div>
+            {!isLoading && <main>
 
                 <div className={"practice-title-container"}>
                     <h1 className={"practice-title"}>200+ Coding Practice Challenges</h1>
@@ -136,8 +142,8 @@ export default function Practice() {
                                          questionIsFiltered={questionIsFiltered}/>
                     </div>
                 </div>
-            </div>}
-        </>
+            </main>}
+        </div>
 
     )
 }

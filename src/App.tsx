@@ -16,6 +16,7 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {doc, getFirestore, onSnapshot, collection} from "firebase/firestore";
 import {app} from "./init/firebase";
 import * as firebaseui from "firebaseui";
+import Test from "./Test/Test";
 
 
 const getDisplayName = (username: string): string => {
@@ -142,6 +143,7 @@ export default function App() {
                                 <Route path={"/play"} element={<ChooseGameMode/>}/>
                                 <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
                                 <Route path={"/multi-player"} element={<MultiPlayer/>}/>
+                                <Route path={"/test/*"} element={<Test/>}/>
                             </Routes>
                         </BrowserRouter>
                     </div>

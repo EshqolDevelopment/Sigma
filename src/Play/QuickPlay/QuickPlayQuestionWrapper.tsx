@@ -119,8 +119,6 @@ export default function QuickPlayQuestionWrapper(props: Props) {
     return (
         <div>
             <Question funcName={props.gameData.questions[props.questionNumber]}
-                      numberOfQuestions={props.gameData.questions.length}
-                      currentQuestionNum={props.questionNumber}
                       onCorrectAnswer={onCorrectAnswer}
                       suggestDrawAction={suggestDraw}
                       alreadyOfferedDraw={alreadyOfferedDraw}

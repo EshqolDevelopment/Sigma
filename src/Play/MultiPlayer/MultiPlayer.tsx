@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {GlobalContext, postRequest} from "../../Global";
 import MultiPlayerGame from "./MultiPlayerGame";
 import {PlayersData} from "../../DataTypes";
+import {Helmet} from "react-helmet";
 
 
 export default function MultiPlayer() {
@@ -40,30 +41,37 @@ export default function MultiPlayer() {
     };
 
     return <div>
-        {!code && !gameStart && <InviteOrJoin onSubmit={onEnterWaitingRoom} setAdmin={setAdmin}/>}
 
-        {code && !gameStart &&
-            <WaitingRoom
-                setGameStart={setGameStart}
-                code={code}
-                admin={admin}
-                level={level}
-                setLevel={setLevel}
-                players={players}
-                setPlayers={setPlayers}
-                questions={questions}
-                setQuestions={setQuestions}
-                setNumberOfQuestions={setNumberOfQuestions}
-        />}
+        <Helmet>
+            <title>Sigma Code Wars | Multi Player</title>
+        </Helmet>
 
-        {gameStart &&
-            <MultiPlayerGame
-                code={code}
-                level={level}
-                questions={questions}
-                players={players}
-                numberOfQuestions={numberOfQuestions}
-        />}
+        <main>
+            {!code && !gameStart && <InviteOrJoin onSubmit={onEnterWaitingRoom} setAdmin={setAdmin}/>}
+
+            {code && !gameStart &&
+                <WaitingRoom
+                    setGameStart={setGameStart}
+                    code={code}
+                    admin={admin}
+                    level={level}
+                    setLevel={setLevel}
+                    players={players}
+                    setPlayers={setPlayers}
+                    questions={questions}
+                    setQuestions={setQuestions}
+                    setNumberOfQuestions={setNumberOfQuestions}
+                />}
+
+            {gameStart &&
+                <MultiPlayerGame
+                    code={code}
+                    level={level}
+                    questions={questions}
+                    players={players}
+                    numberOfQuestions={numberOfQuestions}
+                />}
+        </main>
 
     </div>;
 }

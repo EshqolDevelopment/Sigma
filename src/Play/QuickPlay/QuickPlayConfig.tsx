@@ -4,7 +4,7 @@ import { Levels } from "../Setup/Levels";
 import SearchForMatch from "../../Home/SearchForMatch";
 import {Level, QuickPlayGameData} from "../../DataTypes";
 import QuickPlayGame from "./QuickPlayGame";
-
+import {Helmet} from "react-helmet";
 
 
 export function QuickPlayConfig() {
@@ -12,27 +12,34 @@ export function QuickPlayConfig() {
     const [gameData, setGameData] = useState<QuickPlayGameData | null>(null);
 
     return (<>
-        {!gameData && <div className={styles.chooseLevelContainer}>
 
-            <div className={styles.upper}>
-                <div className={[styles.title, styles.chooseStepTitle].join(" ")}>
-                    <h1>Choose the difficulty mode you want to play in</h1>
-                    <p>
-                        Choose the difficulty mode you want to play in.
-                        <br/>
-                        The leve differ in the time limit of each question and the difficulty of each question.
-                    </p>
+        <Helmet>
+            <title>Sigma Code Wars | Quick Play</title>
+        </Helmet>
+
+        <main>
+            {!gameData && <div className={styles.chooseLevelContainer}>
+
+                <div className={styles.upper}>
+                    <div className={[styles.title, styles.chooseStepTitle].join(" ")}>
+                        <h1>Choose the difficulty mode you want to play in</h1>
+                        <p>
+                            Choose the difficulty mode you want to play in.
+                            <br/>
+                            The leve differ in the time limit of each question and the difficulty of each question.
+                        </p>
+                    </div>
                 </div>
-            </div>
 
-            <div className={styles.levelsContainer}>
-                <Levels onClick={setLevel}/>
-            </div>
+                <div className={styles.levelsContainer}>
+                    <Levels onClick={setLevel}/>
+                </div>
 
-            {level && <SearchForMatch level={level} setLevel={setLevel} setGameData={setGameData}/>}
-        </div>}
+                {level && <SearchForMatch level={level} setLevel={setLevel} setGameData={setGameData}/>}
+            </div>}
 
-        {gameData && <QuickPlayGame gameData={gameData}/>}
+            {gameData && <QuickPlayGame gameData={gameData}/>}
+        </main>
 
     </>)
 }

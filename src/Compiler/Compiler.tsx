@@ -9,6 +9,7 @@ import * as Svg from "../init/Svg";
 import "./Compiler.scss";
 import {postRequest} from "../Global";
 import Footer from "../CommonComponents/Footer/Footer";
+import {Helmet} from "react-helmet";
 
 
 const LanguageToHelloCode = {
@@ -55,7 +56,13 @@ export default function Compiler() {
 
     return (
         <div className={`compiler-body ${darkMode && "dark-mode"}`}>
-            <div className={"compiler-content"}>
+
+            <Helmet>
+                <title>Sigma Code Wars | Code Editor</title>
+            </Helmet>
+
+
+            <main className={"compiler-content"}>
                 <div className={`compiler-top-buttons`}>
                     <div className={"buttons"}>
                         <button>
@@ -129,7 +136,7 @@ export default function Compiler() {
                         ))}
                     </div>
                 </div>
-            </div>
+            </main>
 
             <LanguageDialog languages={languages} setLanguage={setLanguage} show={languagesDialog}
                             setShow={setLanguagesDialog} setCode={setCode} LanguageToHelloCode={LanguageToHelloCode}/>

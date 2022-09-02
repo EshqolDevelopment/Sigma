@@ -3,15 +3,13 @@ import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
-import {GlobalContext, postRequest} from "../../Global";
+import {GlobalContext, postRequest, questionName} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
 
 
 type Props = {
     funcName: string;
-    numberOfQuestions?: number;
-    currentQuestionNum?: number;
     onCorrectAnswer?: () => void;
     showSolution?: boolean;
     suggestDrawAction?: () => void;
@@ -63,7 +61,6 @@ export default function Question(props: Props) {
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
     }, [props.funcName]);
-
 
     useEffect(() => {
         const clear = setInterval(() => {
@@ -163,12 +160,6 @@ export default function Question(props: Props) {
         return code;
     };
 
-
-    function questionName() {
-        return props.funcName ? props.funcName[0].toUpperCase() + props.funcName.slice(1).replaceAll("_", " ") : "";
-    }
-
-
     async function submitQuestion() {
         setResult("loading");
 
@@ -208,8 +199,6 @@ export default function Question(props: Props) {
                 <span><span style={{color: "orange", fontWeight: "bold"}}>{name}</span> = {inp}</span>
             </div>
         })
-
-
     }
 
 
@@ -229,7 +218,7 @@ export default function Question(props: Props) {
                     ))}
                 </div>
 
-                <div className={styles.codeEditor}>
+                <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
                     <Editor language={language} code={code[language] || defaultCode[language]}
                             setCode={(currentCode) => setCode({...code, [language]: currentCode})}/>
                 </div>
@@ -251,7 +240,7 @@ export default function Question(props: Props) {
                         </select>
                     </div>
                     <div className={styles.questionJustInfo}>
-                        <span className={styles.questionName}>{questionName()}</span>
+                        <span className={styles.questionName}>{questionName(props.funcName)}</span>
                         <span className={styles.questionDescription}>{question.description}</span>
                         <div className={styles.exampleContainer}>
                             <div>
