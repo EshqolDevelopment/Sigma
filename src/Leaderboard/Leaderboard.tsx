@@ -85,12 +85,13 @@ export default function Leaderboard() {
                         const [name, country, score, image] = split(item);
 
                         return (
-                            <div key={index}>
+                            <div key={index} onClick={() => openProfile(name)}>
                                 <div className={"rightSide"}>
                                     <span className={"num"}>#{index + 1}</span>
                                     <span className={"flag"}>{getEmoji(country)}</span>
-                                    <img className={"person"} src={`/images/p${getImage(image)}.png`} alt={name}
-                                         onClick={() => openProfile(name)}/>
+                                    <button className={"removeDefault personProfileContainer"}>
+                                        <img className={"person"} src={`/images/p${getImage(image)}.png`} alt={name}/>
+                                    </button>
                                 </div>
 
                                 <span className={"itemName"}>{name.replaceAll("_", "")}</span>
