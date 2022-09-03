@@ -34,8 +34,10 @@ export function Profile(props: Props) {
         setChooseProfile(false);
     }
 
+    const isCurrentUser = props.userData.name === globalContext.userData.name;
+
     const openChooseProfileDialog = () => {
-        if (props.userData.name === globalContext.userData.name) {
+        if (isCurrentUser) {
             setChooseProfile(true)
         }
     }
@@ -54,7 +56,7 @@ export function Profile(props: Props) {
                 <button className={style.x + " " + style.removeDefault} onClick={props.close}>
                     <img src={"/images/x.png"} alt={"close"}/>
                 </button>
-                <button className={style.signOut} onClick={signOut}>Sign Out</button>
+                {isCurrentUser && <button className={style.signOut} onClick={signOut}>Sign Out</button>}
             </div>
 
             <span className={style.name}>{props.userData.displayName}</span>
