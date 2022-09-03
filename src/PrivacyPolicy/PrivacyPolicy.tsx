@@ -1,6 +1,7 @@
 import styles from "./privacyPolicy.module.scss";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import Footer from "../CommonComponents/Footer/Footer";
+import {Helmet} from "react-helmet";
 
 
 export default function PrivacyPolicy() {
@@ -10,8 +11,13 @@ export default function PrivacyPolicy() {
     }, [])
 
     return (
-        <>
-            <div className={styles.container}>
+        <div>
+            <Helmet>
+                <title>Privacy Policy | Sigma Code Wars</title>
+                <meta name={"description"} content={"Privacy policy page of Sigma Code Wars"}/>
+            </Helmet>
+
+            <main className={styles.container}>
                 <h1>Privacy Policy</h1>
 
                 <p>
@@ -37,10 +43,10 @@ export default function PrivacyPolicy() {
                     <br/><br/>
                     (II) make the software available for simultaneous use by multiple users over a network, install the software on a server and allow users to access it remotely.
                 </p>
-            </div>
+            </main>
 
             <Footer/>
-        </>
+        </div>
 
     )
 }

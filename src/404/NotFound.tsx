@@ -1,6 +1,7 @@
 import styles from "./notFound.module.scss";
 import {Link} from "react-router-dom";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
+import {Helmet} from "react-helmet";
 
 export default function NotFound() {
 
@@ -10,6 +11,11 @@ export default function NotFound() {
 
     return (
         <div className={styles.notFoundContainer}>
+
+            <Helmet>
+                <title>404 | Sigma Code Wars</title>
+            </Helmet>
+
             <div>
                 <img src={"/images/404.png"}/>
                 <div>
