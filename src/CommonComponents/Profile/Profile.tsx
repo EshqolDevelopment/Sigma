@@ -34,7 +34,7 @@ export function Profile(props: Props) {
         setChooseProfile(false);
     }
 
-    const isCurrentUser = props.userData.name === globalContext.userData.name;
+    const isCurrentUser = (props.userData?.name) && (props.userData?.name === globalContext?.userData?.name);
 
     const openChooseProfileDialog = () => {
         if (isCurrentUser) {
