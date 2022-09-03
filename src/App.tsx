@@ -18,6 +18,8 @@ import {app} from "./init/firebase";
 import * as firebaseui from "firebaseui";
 import Test from "./Test/Test";
 import {toast, ToastContainer, Zoom} from "react-toastify";
+import NotFound from "./404/NotFound";
+import ContactUs from "./ContactUs/ContactUs";
 
 
 const getDisplayName = (username: string): string => {
@@ -155,17 +157,17 @@ export default function App() {
                             <Routes>
                                 <Route path={"/"} element={<Home/>}/>
                                 <Route path={"/home"} element={<Home/>}/>
-
                                 <Route path={"/leaderboard"} element={<Leaderboard/>}/>
                                 <Route path={"/compiler"} element={<Compiler/>}/>
-
                                 <Route path={"/practice"} element={<Practice/>}/>
                                 <Route path={"/practice/*"} element={<PracticeQuestionWrapper/>}/>
-
                                 <Route path={"/play"} element={<ChooseGameMode/>}/>
                                 <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
                                 <Route path={"/multi-player"} element={<MultiPlayer/>}/>
                                 <Route path={"/test/*"} element={<Test/>}/>
+                                <Route path={"/contact-us"} element={<ContactUs/>}/>
+
+                                <Route path={"*"} element={<NotFound/>}/>
                             </Routes>
                         </BrowserRouter>
                     </div>

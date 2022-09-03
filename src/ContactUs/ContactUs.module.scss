@@ -1,0 +1,175 @@
+@use "../init/global" as *;
+
+.contactBox {
+    padding: 64px;
+    position: relative;
+    width: 60%;
+    background: white;
+    box-shadow: var(--box-shadow);
+    border-radius: 30px;
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-top: 50px;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    color: black;
+}
+
+.smallTitle {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: black;
+    margin-top: 55px;
+    margin-bottom: 48px;
+}
+
+.subTitle {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--mini-label);
+    line-height: 17px;
+    margin-bottom: 8px;
+}
+
+.container {
+    padding-top: 64px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    input {
+        width: calc(100% - 40px);
+
+        @include mobile {
+            width: calc(100% - 24px);
+        }
+    }
+
+}
+
+.input{
+    width: calc(100% - 32px);
+    height: 56px;
+    background: white;
+    border: 1px solid #c2c2c2;
+    border-radius: 4px;
+    margin-bottom: 32px;
+    padding-left: 32px;
+}
+
+.message {
+    resize: vertical;
+    height: 148px;
+    min-height: 60px;
+    padding-top: 10px;
+}
+
+.sendBtn {
+    height: 56px;
+    padding: 0px 32px 0px 24px;
+    background: dodgerblue;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border: 0;
+    border-radius: 20px;
+    transition: 0.2s ease-in-out;
+}
+
+.sendBtn::before {
+    content: url("../../public/images/whiteMail.svg");
+    zoom: 1.20;
+    margin-right: 11px;
+    position: relative;
+    top: 1px;
+}
+
+.sendBtn:disabled {
+    opacity: 0.4;
+}
+
+.sendBtn:hover {
+    background: #076bce;
+    transform: scale(1.05);
+}
+
+.sendContainer {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+}
+
+.recaptcha {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.topic {
+    width: 100%;
+}
+
+
+
+@include mobile{
+    .container {
+        padding-top: 24px;
+    }
+    .smallTitle {
+        display: none;
+    }
+
+    .title {
+        font-size: 20px;
+        margin-bottom: 40px;
+
+    }
+
+    .contactBox {
+        padding: 32px 16px;
+        width: 85%;
+    }
+
+    .input {
+        width: calc(100% - 16px);
+        padding-left: 16px;
+        margin-bottom: 16px;
+    }
+
+    .topic {
+        width: calc(100% + 3px);
+    }
+
+
+    .sendContainer {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .message {
+        height: 90px;
+
+    }
+
+    .sendBtn {
+        width: 95%;
+        height: 42px;
+    }
+
+    .sendBtn::before {
+        position: relative;
+        top: -0px;
+        margin-right: 13px;
+    }
+}
+

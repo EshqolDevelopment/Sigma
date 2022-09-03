@@ -1,0 +1,60 @@
+@use "../init/global" as *;
+
+.notFoundContainer {
+    display: flex;
+    margin-top: 200px;
+
+    & > div {
+        margin-inline: auto;
+        display: flex;
+        gap: 70px;
+
+        & > img {
+            width: 300px;
+            height: 230px;
+        }
+    }
+
+    h2 {
+        font-size: 37px;
+        font-weight: 800;
+        color: #413c3c;
+    }
+
+    p {
+        width: 340px;
+        font-size: 21px;
+        margin-bottom: 50px;
+        color: #484444;
+    }
+
+    @include mobile {
+        margin-top: 180px;
+
+        & > div {
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+        }
+
+        img {
+            margin-inline: auto;
+            width: 250px !important;
+            height: 180px !important;
+        }
+    }
+}
+
+
+
+.homeLink {
+    background: #e85656;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    font-weight: bold;
+    padding-block: 12px;
+    padding-inline: 16px;
+    text-decoration: none;
+}
+

@@ -62,7 +62,6 @@ export default function Compiler() {
                 <meta name={"description"} content={"Write code and run it in the Sigma Code Wars code editor"}/>
             </Helmet>
 
-
             <main className={"compiler-content"}>
                 <div className={`compiler-top-buttons`}>
                     <div className={"buttons"}>
