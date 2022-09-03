@@ -1,12 +1,13 @@
-
+@use "../init/global" as *;
 
 .container {
     background: white;
     margin-top: 110px;
-    width: 60%;
+    width: 67%;
     margin-inline: auto;
     padding: 32px;
     border-radius: 30px;
+    box-sizing: border-box;
 
     h1 {
         text-align: center;
@@ -16,6 +17,14 @@
     p {
         margin-top: 30px;
         font-size: 18px;
+    }
+
+    @include mobile {
+        width: 95%;
+
+        h1 {
+            font-size: 38px;
+        }
     }
 }
 
