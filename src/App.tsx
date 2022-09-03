@@ -20,6 +20,7 @@ import Test from "./Test/Test";
 import {toast, ToastContainer, Zoom} from "react-toastify";
 import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
+import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 
 
 const getDisplayName = (username: string): string => {
@@ -166,6 +167,7 @@ export default function App() {
                                 <Route path={"/multi-player"} element={<MultiPlayer/>}/>
                                 <Route path={"/test/*"} element={<Test/>}/>
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
+                                <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>
