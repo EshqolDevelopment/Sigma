@@ -1,8 +1,71 @@
 
 
 .questionLayout {
-    margin-top: 100px;
+    margin-top: var(--navigation-height);
 }
+
+.topRow {
+    box-sizing: border-box;
+    width: 94%;
+    height: 50px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: flex-start;
+    margin-inline: auto;
+    gap: 25px;
+
+    @include mobile {
+        width: 98%;
+    }
+}
+
+.topRow > * {
+    border: 0;
+    padding: 0;
+    height: 47px;
+    padding-inline: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(black, 0.5);
+    transition: 0.3s ease-in-out;
+    background: #295986;
+    user-select: none;
+
+    @include mobile {
+        padding-inline: 10px;
+        gap: 5px;
+    }
+
+    &:hover {
+        background: rgb(60, 115, 250);
+    }
+
+}
+
+.topRow > div {
+    background: $main-color;
+
+    img {
+        height: 70%;
+        width: auto;
+        border-radius: 10px;
+    }
+}
+
+.topRow > button {
+    img {
+        height: 65%;
+        width: auto;
+    }
+}
+
 
 .languagePicker {
     display: flex;

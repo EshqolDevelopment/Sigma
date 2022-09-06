@@ -40,3 +40,16 @@ dialog::backdrop {
   padding: 0;
   margin: 0;
 }
+
+
+.hideMobile {
+  @include mobile {
+    display: none;
+  }
+}
+
+.hideComputer {
+    @media (min-width: $max-width) {
+        display: none;
+    }
+}

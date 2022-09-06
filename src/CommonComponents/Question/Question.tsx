@@ -36,7 +36,12 @@ export default function Question(props: Props) {
     const [quickTestText, setQuickTestText] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [quickTestResult, setQuickTestResult] = useState(null);
     const [quickTestLoading, setQuickTestLoading] = useState(false);
-    const [statistics, setStatistics] = useState({execTimePercentile: 0, questionTimePercentile: 0, execTime: 0, questionTime: 0});
+    const [statistics, setStatistics] = useState({
+        execTimePercentile: 0,
+        questionTimePercentile: 0,
+        execTime: 0,
+        questionTime: 0
+    });
 
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
     const globalContext = useContext(GlobalContext);
@@ -187,7 +192,7 @@ export default function Question(props: Props) {
             questionTimePercentile: response.questionTimePercentile,
             execTime: response.execTime,
             questionTime: response.questionTime
-        })
+        });
         setResult(response.result);
     }
 
@@ -286,6 +291,19 @@ export default function Question(props: Props) {
         setQuickTestLoading(false);
     };
 
+    const formatTime = (seconds: number): string => {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor(seconds / 60) % 60;
+        const secs = seconds % 60;
+
+        const hoursStr = hours < 10 ? "0" + hours : hours;
+        const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+        const secsStr = secs < 10 ? "0" + secs : secs;
+
+        if (hours >= 1) return `${hoursStr}:${minutesStr}:${secsStr}`;
+        return `${minutesStr}:${secsStr}`;
+    };
+
     return (
         <div className={styles.questionLayout}>
 
@@ -323,7 +341,6 @@ export default function Question(props: Props) {
                 <div className={styles.questionInfo}>
                     <div className={styles.actionsButtonsContainer}>
                         <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
-                        <span className={styles.timer}>{props.practice ? timer : timer - question.time}</span>
                         {props.showSolution && <button className={styles.solutionBtn}>Solution</button>}
                         {props.suggestDrawAction &&
                             <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
