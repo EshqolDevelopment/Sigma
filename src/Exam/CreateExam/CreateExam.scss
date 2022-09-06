@@ -1,0 +1,104 @@
+@use "../../init/global" as *;
+
+
+
+.create-exam {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #368bb0;
+  padding-bottom: 20px;
+  margin-top: var(--navigation-height);
+  padding-top: 25px;
+
+  & > div {
+    color: white;
+    width: 50%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    padding-block: 20px;
+  }
+}
+
+
+.create-exam-form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 55px;
+  padding-block: 20px;
+  color: black;
+  margin-top: var(--navigation-height);
+  padding-top: 15px;
+  margin-inline: auto;
+
+
+  input[type="text"] {
+    width: 160px;
+    height: 35px;
+    border: 2px solid dodgerblue;
+    border-radius: 5px;
+    padding-inline: 10px;
+    outline: none;
+    transition: 0.2s ease-in-out;
+
+    &:focus {
+      border: 2px solid $main-color;
+    }
+  }
+
+  .row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .column {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+
+    & > div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        transition: 0.2s ease-in-out;
+        cursor: pointer;
+
+        &:checked {
+          background-color: $main-color;
+        }
+      }
+
+      label {
+        font-size: 16px;
+        font-weight: bold;
+        user-select: none;
+      }
+    }
+  }
+
+  & > div {
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+  }
+
+  .visible {
+    opacity: 1;
+  }
+
+}

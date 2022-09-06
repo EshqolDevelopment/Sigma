@@ -21,6 +21,8 @@ import {toast, ToastContainer, Zoom} from "react-toastify";
 import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
+import CreateExam from "./Exam/CreateExam/CreateExam";
+
 
 
 const getDisplayName = (username: string): string => {
@@ -168,6 +170,7 @@ export default function App() {
                                 <Route path={"/test/*"} element={<Test/>}/>
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
+                                <Route path={"/create-exam"} element={<CreateExam/>}/>
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>
