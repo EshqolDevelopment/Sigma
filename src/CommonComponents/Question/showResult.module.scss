@@ -154,16 +154,16 @@
     text-underline-offset: 6px;
 }
 
-.loadingError span {
+.loadingError > span {
     text-align: center;
     font-size: 18px;
 }
 
-.loadingError div {
+.loadingError > div:nth-of-type(1) {
     @include loading-state(red);
 }
 
-.loadingError div:after {
+.loadingError > div:nth-of-type(1):after {
     @include loading-sign;
     content: "x";
     color: red;
@@ -234,4 +234,29 @@
     100% {
         transform: scaleY(-1) rotate(-135deg);
     }
+}
+
+
+.testCaseContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.testCaseContainer > div {
+    display: flex;
+    gap: 15px;
+}
+
+.testCaseTitle {
+    font-weight: bold;
+    width: 100px;
+}
+
+.testCaseValue {
+    box-sizing: border-box;
+    padding-left: 10px;
+    font-weight: bold;
+    width: 150px;
+    border: 2px solid #0a1859;
 }

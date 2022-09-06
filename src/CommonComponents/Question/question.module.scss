@@ -32,9 +32,9 @@
 }
 
 .codeEditor {
-    width: calc(50% - 200px);
+    width: calc(50% - 150px);
     min-width: 400px;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 250px);
 }
 
 .codeEditorWithSeekBar {
@@ -244,4 +244,64 @@
         font-size: 17px;
     }
 
+}
+
+
+.quickTestContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    color: white;
+    background: #0a0d3d;
+    border-radius: 10px;
+
+    input[type="text"] {
+        margin-top: 20px;
+        width: 90%;
+        margin-left: 2.5%;
+        border: initial;
+        border-radius: 4px;
+    }
+}
+
+.quickTestTitle {
+    background: #2a5273;
+    display: flex;
+    justify-content: space-between;
+
+
+    span {
+        background: #04243f;
+        padding: 6px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    button {
+        background: green;
+        color: white;
+        border: 0;
+        font-weight: bold;
+        padding-inline: 30px;
+        font-size: 20px;
+    }
+}
+
+
+.quickTestOutput {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+
+    span:nth-of-type(1) {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    span:nth-of-type(2) {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 10px;
+        color: #04e517;
+    }
 }

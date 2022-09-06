@@ -25,7 +25,7 @@ export default function Question(props: Props) {
         params: {},
         return: "",
         subject: "",
-        languages: [],
+        languages: []
     } as QuestionData);
 
     const [timer, setTimer] = useState(0);
@@ -33,6 +33,11 @@ export default function Question(props: Props) {
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
+    const [quickTestText, setQuickTestText] = useState({python: "", javascript: "", kotlin: "", java: ""});
+    const [quickTestResult, setQuickTestResult] = useState(null);
+    const [quickTestLoading, setQuickTestLoading] = useState(false);
+    const [statistics, setStatistics] = useState({execTimePercentile: 0, questionTimePercentile: 0, execTime: 0, questionTime: 0});
+
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
     const globalContext = useContext(GlobalContext);
 
@@ -40,21 +45,21 @@ export default function Question(props: Props) {
     async function getAndSetQuestionData(funcName: string) {
         const response = await postRequest("/general/getClientQuestionData", {
             funcName: funcName
-        }) as {question: string, languages: Language[]};
+        }) as { question: string, languages: Language[] };
 
         const serverQuestionData = JSON.parse(response.question) as QuestionData;
         serverQuestionData.languages = response.languages;
 
         setQuestion(serverQuestionData);
-        if (!props.practice) {
-            setTimer(serverQuestionData.time);
-        }
 
         const tempDefaultCode = {python: "", javascript: "", kotlin: "", java: ""};
         tempDefaultCode.python = pythonDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
         tempDefaultCode.javascript = javascriptDefaultCode(funcName, serverQuestionData.params);
         tempDefaultCode.kotlin = kotlinDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
         tempDefaultCode.java = javaDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+        if (!quickTestText.python) {
+            setQuickTestText(quickTestDefaultCode(funcName, serverQuestionData));
+        }
         setDefaultCode(tempDefaultCode);
     }
 
@@ -65,12 +70,7 @@ export default function Question(props: Props) {
     useEffect(() => {
         const clear = setInterval(() => {
             setTimer((timer) => {
-                if (props.practice) {
-                    return timer + 1;
-                } else if (timer > 0){
-                    return timer - 1
-                }
-                return 0;
+                return timer + 1;
             });
         }, 1000);
 
@@ -80,7 +80,7 @@ export default function Question(props: Props) {
 
     const pythonDefaultCode = (funcName, params: string, returnType: string) => {
         let code = "def " + funcName + "(";
-        for (let i=0; i<params.length; i++) {
+        for (let i = 0; i < params.length; i++) {
             let param = params[i];
             param = JSON.parse(param);
             if (i === params.length - 1) {
@@ -119,8 +119,8 @@ export default function Question(props: Props) {
             "list[float]": "Array<Double>",
             "list[bool]": "Array<Boolean>",
             "list[object]": "Array<Any>",
-            "dict": "Map<String, Any>",
-        }
+            "dict": "Map<String, Any>"
+        };
 
 
         let code = "fun " + funcName + "(";
@@ -129,7 +129,7 @@ export default function Question(props: Props) {
             code += `${param[0]}: ${pythonToKotlinType[param[1]] || "Any"}, `;
         }
         code = code.slice(0, -2);
-        code += `): ${pythonToKotlinType[returnType]  || "Any"} {\n\t\n}`;
+        code += `): ${pythonToKotlinType[returnType] || "Any"} {\n\t\n}`;
         return code;
     };
 
@@ -147,8 +147,8 @@ export default function Question(props: Props) {
             "list[float]": "double[]",
             "list[bool]": "boolean[]",
             "list[object]": "Object[]",
-            "dict": "Map<String, Object>",
-        }
+            "dict": "Map<String, Object>"
+        };
 
         let code = `static ${pythonToJavaType[returnType] || "Object"} ${funcName}(`;
         for (let param of params) {
@@ -165,9 +165,10 @@ export default function Question(props: Props) {
 
         const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
         const response = await postRequest(`${serverURL}/${language}`, {
-                funcName: props.funcName,
-                code: code[language]
-        }) as {result: string}
+            funcName: props.funcName,
+            code: code[language],
+            questionTime: timer
+        }) as { result: string, execTimePercentile: null, questionTimePercentile: number, execTime: number, questionTime: number };
 
         if (response.result === "success") {
             if (globalContext.username) {
@@ -176,11 +177,17 @@ export default function Question(props: Props) {
                     language: language,
                     solution: code[language],
                     name: globalContext.userData.name
-                })
+                });
             }
-
             if (props.onCorrectAnswer) props.onCorrectAnswer();
         }
+
+        setStatistics({
+            execTimePercentile: response.execTimePercentile,
+            questionTimePercentile: response.questionTimePercentile,
+            execTime: response.execTime,
+            questionTime: response.questionTime
+        })
         setResult(response.result);
     }
 
@@ -188,6 +195,7 @@ export default function Question(props: Props) {
     const formatInput = (input: string[]): JSX.Element[] => {
         if (input.length === 0) return null;
         const temp = [];
+
         for (const i in input) {
             const inp = input[i];
             const name = JSON.parse(question.params[i])[0];
@@ -197,10 +205,86 @@ export default function Question(props: Props) {
         return temp.map(([name, inp]) => {
             return <div key={name}>
                 <span><span style={{color: "orange", fontWeight: "bold"}}>{name}</span> = {inp}</span>
-            </div>
-        })
-    }
+            </div>;
+        });
+    };
 
+    const formatKotlinInput = (input: string): string => {
+        return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " to ");
+    };
+
+    const formatJavaInput = (input: string): string => {
+        return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " , ");
+    };
+
+
+    const quickTestPythonCode = (funcName: string, question: QuestionData): string => {
+        const params = question.params;
+        let code = funcName + "(";
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i];
+            const input = question.example.input[i];
+            param = JSON.parse(param);
+            code += `${param[0]} = ${input}, `;
+        }
+        code = code.slice(0, -2);
+        code += ")";
+
+        return code;
+    };
+
+    const quickTestKotlinCode = (funcName: string, question: QuestionData): string => {
+        const params = question.params;
+        let code = funcName + "(";
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i];
+            const input = question.example.input[i];
+            param = JSON.parse(param);
+            code += `${param[0]} = ${formatKotlinInput(input)}, `;
+        }
+        code = code.slice(0, -2);
+        code += ")";
+
+        return code;
+    };
+
+    const quickTestJavaCode = (funcName: string, question: QuestionData): string => {
+        const params = question.params;
+        let code = funcName + "(";
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i];
+            const input = question.example.input[i];
+            param = JSON.parse(param);
+            code += `${formatJavaInput(input)}, `;
+        }
+        code = code.slice(0, -2);
+        code += ")";
+
+        return code;
+    };
+
+    const quickTestDefaultCode = (funcName: string, question: QuestionData) => {
+        return {
+            python: quickTestPythonCode(funcName, question),
+            kotlin: quickTestKotlinCode(funcName, question),
+            java: quickTestJavaCode(funcName, question),
+            javascript: quickTestPythonCode(funcName, question)
+        };
+    };
+
+    const runQuickTest = async () => {
+        const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
+        setQuickTestLoading(true);
+
+        const res = await postRequest(`${serverURL}/${language}/quick-test`, {
+            funcName: props.funcName,
+            code: code[language],
+            quickTestCode: quickTestText[language]
+        }) as { result: string };
+        setQuickTestResult(res.result);
+
+        setQuickTestLoading(false);
+    };
 
     return (
         <div className={styles.questionLayout}>
@@ -221,16 +305,30 @@ export default function Question(props: Props) {
                 <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
                     <Editor language={language} code={code[language] || defaultCode[language]}
                             setCode={(currentCode) => setCode({...code, [language]: currentCode})}/>
+
+                    <div className={styles.quickTestContainer}>
+                        <div className={styles.quickTestTitle}>
+                            <span>Quick Test</span>
+                            <button onClick={runQuickTest}>Run</button>
+                        </div>
+                        <input value={quickTestText[language]} type={"text"}
+                               onChange={(e) => setQuickTestText({...quickTestText, [language]: e.target.value})}/>
+                        <div className={styles.quickTestOutput}>
+                            <span>Output: </span>
+                            <span>{quickTestLoading ? "Loading..." : quickTestResult}</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className={styles.questionInfo}>
                     <div className={styles.actionsButtonsContainer}>
                         <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
-                        <span className={styles.timer}>{timer}</span>
-                        { props.showSolution && <button className={styles.solutionBtn}>Solution</button> }
-                        { props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
-                            props.suggestDrawAction();
-                        }}>Suggest Draw</button> }
+                        <span className={styles.timer}>{props.practice ? timer : timer - question.time}</span>
+                        {props.showSolution && <button className={styles.solutionBtn}>Solution</button>}
+                        {props.suggestDrawAction &&
+                            <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
+                                props.suggestDrawAction();
+                            }}>Suggest Draw</button>}
                         <select className={styles.languagePickerMobile}
                                 onChange={(e) => setLanguage(e.target.value as Language)}>
                             {question.languages?.map((language, i) => (
@@ -265,7 +363,11 @@ export default function Question(props: Props) {
                 </div>
             </div>
 
-            {result !== null && <ShowResult close={() => setResult(null)} result={result}/>}
+            {result !== null && <ShowResult close={() => setResult(null)}
+                                            result={result}
+                                            funcName={questionName(props.funcName)}
+                                            formatInput={formatInput}
+                                            statistics={statistics}/>}
 
         </div>
     );
