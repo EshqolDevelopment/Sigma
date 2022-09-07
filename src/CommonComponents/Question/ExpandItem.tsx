@@ -7,21 +7,36 @@ type Props = {
 }
 
 export function ExpandItem(props: Props) {
-    const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState<boolean | "loading">(false);
+    const contentContainerRef = React.useRef<HTMLDivElement>();
 
     function openDescription() {
-        setExpanded(!expanded);
+        if (!expanded) {
+            setExpanded(true);
+        } else {
+            setExpanded("loading");
+            contentContainerRef.current.animate([
+                {height: contentContainerRef.current.scrollHeight + "px"},
+                {height: "0px"}
+            ], {
+                duration: 200,
+            }).onfinish = () => {
+                setExpanded(false);
+            }
+            contentContainerRef.current.style.height = "0px";
+            contentContainerRef.current.innerText = "";
+        }
     }
 
     return <div className={styles.expandItem}>
-        <div className={styles.expandItemTitle}>
+        <div className={styles.expandItemTitle} onClick={openDescription}>
             <span>Optimal Space & Time Complexity</span>
-            <img src={"/images/arrow.svg"} onClick={openDescription} alt={"open and close description"}
-                 className={["arrow", expanded ? "arrowOpen" : ""].join(" ")}/>
+            <img src={"/images/arrow.svg"} alt={"open and close description"}
+                 className={[styles.arrow, (expanded && expanded !== "loading") ? styles.arrowOpen : ""].join(" ")}/>
         </div>
 
         {expanded &&
-            <div className={styles.contentContainer}>
+            <div className={styles.contentContainer} ref={contentContainerRef}>
                 {props.content}
             </div>
         }

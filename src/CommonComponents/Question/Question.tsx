@@ -310,37 +310,17 @@ export default function Question(props: Props) {
             {isError && <p>An error occurred</p>}
 
             <div className={styles.container1}>
-                <div className={styles.languagePicker}>
-                    {question.languages?.map((lang, i) => (
-                        <button onClick={() => setLanguage(lang)} key={i}>
-                            <img
-                                src={`/images/${lang}.png`}
-                                alt={lang}/>
-                        </button>
-                    ))}
-                </div>
-
                 <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
                     <Editor language={language} code={code[language] || defaultCode[language]}
                             setCode={(currentCode) => setCode({...code, [language]: currentCode})}/>
 
-                    <div className={styles.quickTestContainer}>
-                        <div className={styles.quickTestTitle}>
-                            <span>Quick Test</span>
-                            <button onClick={runQuickTest}>Run</button>
-                        </div>
-                        <input value={quickTestText[language]} type={"text"}
-                               onChange={(e) => setQuickTestText({...quickTestText, [language]: e.target.value})}/>
-                        <div className={styles.quickTestOutput}>
-                            <span>Output: </span>
-                            <span>{quickTestLoading ? "Loading..." : quickTestResult}</span>
-                        </div>
-                    </div>
+                    {/*<button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>*/}
+
                 </div>
+
 
                 <div className={styles.questionInfo}>
                     <div className={styles.actionsButtonsContainer}>
-                        <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
                         {props.showSolution && <button className={styles.solutionBtn}>Solution</button>}
                         {props.suggestDrawAction &&
                             <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
@@ -374,6 +354,20 @@ export default function Question(props: Props) {
                                 <span>General Info</span>
                                 <ExpandItem title={"Optimal Space & Time Complexity"}
                                             content={<span>Not Available</span>}/>
+                            </div>
+                        </div>
+
+
+                        <div className={styles.quickTestContainer}>
+                            <div className={styles.quickTestTitle}>
+                                <span>Quick Test</span>
+                                <button onClick={runQuickTest}>Run</button>
+                            </div>
+                            <input value={quickTestText[language]} type={"text"}
+                                   onChange={(e) => setQuickTestText({...quickTestText, [language]: e.target.value})}/>
+                            <div className={styles.quickTestOutput}>
+                                <span>Output: </span>
+                                <span>{quickTestLoading ? "Loading..." : quickTestResult}</span>
                             </div>
                         </div>
                     </div>
