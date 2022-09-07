@@ -6,6 +6,7 @@ import {Language, QuestionData} from "../../DataTypes";
 import {GlobalContext, postRequest, questionName} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
+import {useNavigate} from "react-router-dom";
 
 
 type Props = {
@@ -42,6 +43,7 @@ export default function Question(props: Props) {
         execTime: 0,
         questionTime: 0
     });
+    const navigate = useNavigate();
 
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
     const globalContext = useContext(GlobalContext);
@@ -311,25 +313,39 @@ export default function Question(props: Props) {
                 <span>Sigma Wars</span>
             </div>
 
-            <button className={styles.questionList}>
-                <img src={"/images/list.svg"} alt={'List'}/>
-            </button>
+            {props.practice && <>
+                <button className={styles.questionList} onClick={() => navigate("/practice")}>
+                    <img src={"/images/list.svg"} alt={'List'}/>
 
-            <button className={styles.nextQuestion}>
-                <img src={"/images/next.svg"} alt={'Next Question'}/>
-            </button>
+                    <div className={styles.toolTip}>Questions List</div>
+                </button>
 
-            <select className={styles.languageSelector}
-                    onChange={(e) => setLanguage(e.target.value as Language)}>
-                {question.languages?.map((language, i) => (
-                    <option key={i}
-                            value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
-                ))}
-            </select>
+                <button className={styles.nextQuestion}>
+                    <img src={"/images/next.svg"} alt={'Next Question'}/>
+
+                    <div className={styles.toolTip}>Next Question</div>
+                </button>
+            </>}
+
+
+            <div className={styles.selectBox}>
+                <select className={styles.languageSelector}
+                        onChange={(e) => setLanguage(e.target.value as Language)}>
+                    {question.languages?.map((language, i) => (
+                        <option key={i}
+                                value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
+                    ))}
+
+                </select>
+                <div className={styles.toolTip}>Programming Language</div>
+            </div>
+
 
             <button className={styles.watch}>
                 <img src={"/images/watch.svg"} alt={'Timer'}/>
                 <span>{formatTime(props.practice ? timer : timer - question.time)}</span>
+
+                <div className={styles.toolTip}>Timer</div>
             </button>
 
             <button className={styles.submit} onClick={submitQuestion}>

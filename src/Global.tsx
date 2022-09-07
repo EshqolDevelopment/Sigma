@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {Solutions, UserData} from "./DataTypes";
+import {QuestionList, Solutions, UserData} from "./DataTypes";
 
 type GlobalContextType = {
     username: string;

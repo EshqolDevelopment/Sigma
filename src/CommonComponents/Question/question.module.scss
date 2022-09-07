@@ -64,6 +64,7 @@
     background: #295986;
     user-select: none;
     cursor: pointer;
+    position: relative;
 
     @include mobile {
         padding-inline: 10px;
@@ -95,6 +96,9 @@
 
 }
 
+.selectBox {
+    position: relative;
+}
 
 .languagePicker {
     display: flex;
@@ -391,5 +395,42 @@
         font-weight: bold;
         margin-left: 10px;
         color: #04e517;
+    }
+}
+
+.topRow > *:hover .toolTip {
+    visibility: visible;
+}
+
+.toolTip {
+    position: absolute;
+    background: white;
+    color: black;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 12px);
+    z-index: 100;
+    border-radius: 8px;
+    padding: 12px;
+    visibility: hidden;
+    padding-inline: 16px;
+    white-space: nowrap;
+    width: fit-content;
+    text-align: center;
+    cursor: initial;
+    user-select: none;
+    font-size: 16px;
+    font-weight: bold;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: white;
+        z-index: -1;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%) translateY(-10%) rotate(45deg);
     }
 }

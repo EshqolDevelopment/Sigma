@@ -11,7 +11,7 @@ import {GlobalContext, postRequest} from "./Global";
 import {QuickPlayConfig} from "./Play/QuickPlay/QuickPlayConfig";
 import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
-import {UserData} from "./DataTypes";
+import { QuestionList, UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
 import {doc, getFirestore, onSnapshot, collection} from "firebase/firestore";
 import {app} from "./init/firebase";
@@ -55,6 +55,7 @@ export default function App() {
     const [userData, setUserData] = React.useState<UserData>(undefined);
     const [solutions, setSolutions] = React.useState<any>(undefined);
     const queryClient = new QueryClient()
+
 
     useEffect(() => {
         let uiConfig = {
@@ -147,7 +148,7 @@ export default function App() {
                 username: userName,
                 userData: userData,
                 solutions: solutions,
-                showToast: showToast
+                showToast: showToast,
             }}>
                 <div>
                     <div style={{display: "none"}} id={"helper-firebase-ui"}/>

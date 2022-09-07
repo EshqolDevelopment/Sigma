@@ -83,5 +83,8 @@ export type PracticeQuestionList = {
     Hard: PracticeQuestionItem[]
 }
 
+export type QuestionList = string[];
+
+
 
 export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";
