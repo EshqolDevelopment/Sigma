@@ -309,6 +309,39 @@ export default function Question(props: Props) {
 
             {isError && <p>An error occurred</p>}
 
+            <div className={styles.topRow}>
+                <div>
+                    <img src={"/images/logo.png"} alt={"sigma logo"}/>
+                    <span className={"hideMobile"}>Sigma Wars</span>
+                    <span className={"hideComputer"}>Sigma</span>
+                </div>
+
+                <button>
+                    <img src={"/images/list.svg"} alt={'List'}/>
+                </button>
+
+                <button>
+                    <img src={"/images/next.svg"} alt={'Next Question'}/>
+                </button>
+
+                <select
+                    onChange={(e) => setLanguage(e.target.value as Language)}>
+                    {question.languages?.map((language, i) => (
+                        <option key={i}
+                                value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
+                    ))}
+                </select>
+
+                <button>
+                    <img src={"/images/watch.svg"} alt={'Timer'}/>
+                    <span>{formatTime(props.practice ? timer : timer - question.time)}</span>
+                </button>
+
+                <button className={styles.submit}>
+                    <span>Submit</span>
+                </button>
+            </div>
+
             <div className={styles.container1}>
                 <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
                     <Editor language={language} code={code[language] || defaultCode[language]}
