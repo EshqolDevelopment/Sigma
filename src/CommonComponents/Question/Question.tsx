@@ -304,51 +304,53 @@ export default function Question(props: Props) {
         return `${minutesStr}:${secsStr}`;
     };
 
+    const TopRow = (mobile: boolean) => (
+        <div className={(styles.topRow) + " " + (mobile ? styles.topRowMobile : styles.topRowComputer)}>
+            <div className={styles.topRowLogo}>
+                <img src={"/images/logo.png"} alt={"sigma logo"}/>
+                <span>Sigma Wars</span>
+            </div>
+
+            <button className={styles.questionList}>
+                <img src={"/images/list.svg"} alt={'List'}/>
+            </button>
+
+            <button className={styles.nextQuestion}>
+                <img src={"/images/next.svg"} alt={'Next Question'}/>
+            </button>
+
+            <select className={styles.languageSelector}
+                    onChange={(e) => setLanguage(e.target.value as Language)}>
+                {question.languages?.map((language, i) => (
+                    <option key={i}
+                            value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
+                ))}
+            </select>
+
+            <button className={styles.watch}>
+                <img src={"/images/watch.svg"} alt={'Timer'}/>
+                <span>{formatTime(props.practice ? timer : timer - question.time)}</span>
+            </button>
+
+            <button className={styles.submit} onClick={submitQuestion}>
+                <span>Submit Code</span>
+            </button>
+        </div>
+    )
+
     return (
         <div className={styles.questionLayout}>
 
             {isError && <p>An error occurred</p>}
 
-            <div className={styles.topRow}>
-                <div>
-                    <img src={"/images/logo.png"} alt={"sigma logo"}/>
-                    <span className={"hideMobile"}>Sigma Wars</span>
-                    <span className={"hideComputer"}>Sigma</span>
-                </div>
-
-                <button>
-                    <img src={"/images/list.svg"} alt={'List'}/>
-                </button>
-
-                <button>
-                    <img src={"/images/next.svg"} alt={'Next Question'}/>
-                </button>
-
-                <select
-                    onChange={(e) => setLanguage(e.target.value as Language)}>
-                    {question.languages?.map((language, i) => (
-                        <option key={i}
-                                value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
-                    ))}
-                </select>
-
-                <button>
-                    <img src={"/images/watch.svg"} alt={'Timer'}/>
-                    <span>{formatTime(props.practice ? timer : timer - question.time)}</span>
-                </button>
-
-                <button className={styles.submit}>
-                    <span>Submit</span>
-                </button>
-            </div>
+            {TopRow(false)}
 
             <div className={styles.container1}>
                 <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
+                    {TopRow(true)}
+
                     <Editor language={language} code={code[language] || defaultCode[language]}
                             setCode={(currentCode) => setCode({...code, [language]: currentCode})}/>
-
-                    {/*<button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>*/}
-
                 </div>
 
 
@@ -359,13 +361,6 @@ export default function Question(props: Props) {
                             <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
                                 props.suggestDrawAction();
                             }}>Suggest Draw</button>}
-                        <select className={styles.languagePickerMobile}
-                                onChange={(e) => setLanguage(e.target.value as Language)}>
-                            {question.languages?.map((language, i) => (
-                                <option key={i}
-                                        value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
-                            ))}
-                        </select>
                     </div>
                     <div className={styles.questionJustInfo}>
                         <span className={styles.questionName}>{questionName(props.funcName)}</span>

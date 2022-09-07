@@ -17,10 +17,35 @@
 
     @include mobile {
         width: 98%;
+
+        .topRowLogo {
+            display: none;
+        }
+
+        .nextQuestion {
+            display: none;
+        }
+
+        .questionList {
+            display: none;
+        }
     }
 }
 
-.topRow > * {
+.topRowMobile {
+    gap: 14px;
+    display: none;
+
+    @include mobile {
+        display: flex;
+    }
+}
+
+.topRowMobile .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit {
+    border-radius: 5px;
+}
+
+.questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit {
     border: 0;
     padding: 0;
     height: 47px;
@@ -38,6 +63,7 @@
     transition: 0.3s ease-in-out;
     background: #295986;
     user-select: none;
+    cursor: pointer;
 
     @include mobile {
         padding-inline: 10px;
@@ -60,12 +86,13 @@
     }
 }
 
-.topRow > button, .topRow > select {
+.questionList, .nextQuestion, .watch {
     cursor: pointer;
     img {
         height: 65%;
         width: auto;
     }
+
 }
 
 
@@ -100,7 +127,7 @@
 .codeEditor {
     width: calc(50% - 150px);
     min-width: 400px;
-    height: calc(100vh - 250px);
+    height: calc(100vh - 170px);
 }
 
 .codeEditorWithSeekBar {
@@ -110,18 +137,15 @@
 .container1 {
     display: flex;
     flex-direction: row;
+    gap: 80px;
 }
 
 .container1 > div:first-child {
     margin-left: auto;
-    padding-left: 20px;
-    margin-right: 35px;
 }
 
 .container1 > div:last-child {
     margin-right: auto;
-    padding-right: 20px;
-    margin-left: 47px;
 }
 
 .questionInfo {
@@ -154,6 +178,10 @@
     border-bottom: 1px solid white;
     text-align: center;
     padding-bottom: 7px;
+
+    @include mobile {
+        margin-top: 70px;
+    }
 }
 
 .actionsButtonsContainer {
@@ -218,11 +246,15 @@
     margin-top: 0;
 }
 
-@media (max-width: 960px) {
+@include mobile{
     .container1 {
         flex-direction: column;
         align-items: center;
         padding-inline: 10px;
+    }
+
+    .topRowComputer {
+        display: none;
     }
 
     .languagePicker {
@@ -240,6 +272,7 @@
 
     .codeEditor {
         order: 3;
+        margin-top: -130px;
     }
 
     .actionsButtonsContainer {
