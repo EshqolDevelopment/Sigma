@@ -18,7 +18,9 @@ type Props = {
     practice?: boolean;
 }
 
+
 export default function Question(props: Props) {
+
     const [question, setQuestion] = useState({
         description: "",
         example: {input: [], output: ""},
@@ -28,7 +30,6 @@ export default function Question(props: Props) {
         subject: "",
         languages: []
     } as QuestionData);
-
     const [timer, setTimer] = useState(0);
     const [language, setLanguage] = useState("python" as Language);
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
@@ -167,6 +168,7 @@ export default function Question(props: Props) {
         return code;
     };
 
+
     async function submitQuestion() {
         setResult("loading");
 
@@ -216,9 +218,11 @@ export default function Question(props: Props) {
         });
     };
 
+
     const formatKotlinInput = (input: string): string => {
         return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " to ");
     };
+
 
     const formatJavaInput = (input: string): string => {
         return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " , ");
@@ -240,6 +244,7 @@ export default function Question(props: Props) {
         return code;
     };
 
+
     const quickTestKotlinCode = (funcName: string, question: QuestionData): string => {
         const params = question.params;
         let code = funcName + "(";
@@ -254,6 +259,7 @@ export default function Question(props: Props) {
 
         return code;
     };
+
 
     const quickTestJavaCode = (funcName: string, question: QuestionData): string => {
         const params = question.params;
@@ -270,6 +276,7 @@ export default function Question(props: Props) {
         return code;
     };
 
+
     const quickTestDefaultCode = (funcName: string, question: QuestionData) => {
         return {
             python: quickTestPythonCode(funcName, question),
@@ -278,6 +285,7 @@ export default function Question(props: Props) {
             javascript: quickTestPythonCode(funcName, question)
         };
     };
+
 
     const runQuickTest = async () => {
         const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
@@ -293,6 +301,7 @@ export default function Question(props: Props) {
         setQuickTestLoading(false);
     };
 
+
     const formatTime = (seconds: number): string => {
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor(seconds / 60) % 60;
@@ -305,6 +314,7 @@ export default function Question(props: Props) {
         if (hours >= 1) return `${hoursStr}:${minutesStr}:${secsStr}`;
         return `${minutesStr}:${secsStr}`;
     };
+
 
     const TopRow = (mobile: boolean) => (
         <div className={(styles.topRow) + " " + (mobile ? styles.topRowMobile : styles.topRowComputer)}>
@@ -354,6 +364,7 @@ export default function Question(props: Props) {
         </div>
     )
 
+
     return (
         <div className={styles.questionLayout}>
 
@@ -370,7 +381,6 @@ export default function Question(props: Props) {
                             fontSize={16.5}/>
                 </div>
 
-
                 <div className={styles.questionInfo}>
                     <div className={styles.actionsButtonsContainer}>
                         {props.showSolution && <button className={styles.solutionBtn}>Solution</button>}
@@ -379,6 +389,7 @@ export default function Question(props: Props) {
                                 props.suggestDrawAction();
                             }}>Suggest Draw</button>}
                     </div>
+
                     <div className={styles.questionJustInfo}>
                         <span className={styles.questionName}>{questionName(props.funcName)}</span>
                         <span className={styles.questionDescription}>{question.description}</span>
@@ -401,8 +412,6 @@ export default function Question(props: Props) {
                                             content={<span>Not Available</span>}/>
                             </div>
                         </div>
-
-
                         <div className={styles.quickTestContainer}>
                             <div className={styles.quickTestTitle}>
                                 <span>Quick Test</span>
@@ -430,4 +439,3 @@ export default function Question(props: Props) {
         </div>
     );
 }
-

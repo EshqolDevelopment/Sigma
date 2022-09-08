@@ -22,31 +22,32 @@ type Props = {
     fontSize?: number,
     theme?: string,
     lineNumbers?: boolean,
+    borderRadius?: number,
+    showPrintMargin?: boolean,
+    highlightActiveLine?: boolean,
 }
 
 
 export default function Editor(props: Props) {
 
-    return (
-        <AceEditor
-            mode={props.language || 'python'}
-            fontSize={props.fontSize || 16}
-            theme={props.theme || 'monokai'}
-            style={{width: '100%', height: '100%'}}
-            showPrintMargin={true}
-            highlightActiveLine={true}
-            value={props.code}
+    return <AceEditor
+                mode={props.language || 'python'}
+                fontSize={props.fontSize || 16}
+                theme={props.theme || 'monokai'}
+                style={{width: '100%', height: '100%', borderRadius: `${props.borderRadius || 0}px`}}
+                showPrintMargin={props.showPrintMargin || true}
+                highlightActiveLine={props.highlightActiveLine || true}
+                value={props.code}
 
-            setOptions={{
-                showLineNumbers: true,
-                behavioursEnabled: true,
-                showGutter: props.lineNumbers ?? true,
-                tabSize: 2
-            }}
+                setOptions={{
+                    showLineNumbers: true,
+                    behavioursEnabled: true,
+                    showGutter: props.lineNumbers ?? true,
+                    tabSize: 2
+                }}
 
-            onChange={(value) => {
-                props.setCode(value)
-            }}
-        />
-    )
+                onChange={(value) => {
+                    props.setCode(value)
+                }}
+            />
 }

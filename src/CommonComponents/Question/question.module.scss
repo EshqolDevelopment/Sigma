@@ -8,7 +8,7 @@
 .topRow {
     box-sizing: border-box;
     width: 94%;
-    height: 50px;
+    height: 48px;
     margin-bottom: 30px;
     display: flex;
     justify-content: flex-start;
@@ -48,16 +48,16 @@
 .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit {
     border: 0;
     padding: 0;
-    height: 47px;
-    padding-inline: 14px;
+    height: 45px;
+    padding-inline: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
     color: white;
-    font-size: 17px;
+    font-size: 16.5px;
     font-weight: bold;
     box-shadow: 0 0 10px rgba(black, 0.5);
     transition: 0.3s ease-in-out;
@@ -67,8 +67,8 @@
     position: relative;
 
     @include mobile {
-        padding-inline: 10px;
-        gap: 5px;
+        padding-inline: 9px;
+        gap: 4.5px;
     }
 
     &:hover {
@@ -90,10 +90,9 @@
 .questionList, .nextQuestion, .watch {
     cursor: pointer;
     img {
-        height: 65%;
+        height: 60%;
         width: auto;
     }
-
 }
 
 .selectBox {
@@ -129,7 +128,7 @@
 }
 
 .codeEditor {
-    width: calc(50% - 150px);
+    width: calc(50% - 0px);
     min-width: 400px;
     height: calc(100vh - 170px);
 }
@@ -141,7 +140,11 @@
 .container1 {
     display: flex;
     flex-direction: row;
-    gap: 80px;
+    gap: 50px;
+
+    @include mobile {
+        gap: 78px;
+    }
 }
 
 .container1 > div:first-child {
@@ -251,6 +254,7 @@
 }
 
 @include mobile{
+
     .container1 {
         flex-direction: column;
         align-items: center;
@@ -340,34 +344,51 @@
 }
 
 
+$quickTestRadius: 8px;
+
 .quickTestContainer {
     display: flex;
     flex-direction: column;
     margin-top: 10px;
     color: white;
-    background: #0a0d3d;
-    border-radius: 10px;
+    background: #2a5273;
+    border-radius: $quickTestRadius;
+
 
     input[type="text"] {
         margin-top: 20px;
         width: 90%;
+        min-height: 40px;
         margin-left: 2.5%;
-        border: initial;
-        border-radius: 4px;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        //background: #2c2b33;
+        background: rgba(39,40,32,255);
+        color: white;
+        letter-spacing: 0.52px;
+
+        &:focus-visible {
+            outline: 2px solid $main-color;
+        }
     }
 }
 
 .quickTestTitle {
-    background: #2a5273;
+    background: #2a465a;
     display: flex;
     justify-content: space-between;
+    border-top-left-radius: $quickTestRadius;
+    border-top-right-radius: $quickTestRadius;
 
 
     span {
-        background: #04243f;
+        background: $main-color;
         padding: 6px;
         font-size: 18px;
         font-weight: bold;
+        border-top-left-radius: $quickTestRadius;
     }
 
     button {
@@ -377,6 +398,7 @@
         font-weight: bold;
         padding-inline: 30px;
         font-size: 20px;
+        border-top-right-radius: $quickTestRadius;
     }
 }
 
@@ -411,16 +433,17 @@
     top: calc(100% + 12px);
     z-index: 100;
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px;
     visibility: hidden;
-    padding-inline: 16px;
+    padding-inline: 14px;
     white-space: nowrap;
     width: fit-content;
     text-align: center;
     cursor: initial;
     user-select: none;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
+    box-shadow: 0 0 8px 5px rgba(black, 0.8);
 
     &::before {
         content: "";
