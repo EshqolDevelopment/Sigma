@@ -6,6 +6,11 @@ type GlobalContextType = {
     userData: UserData;
     solutions: Solutions;
     showToast: (message: string, type: "info" | "success" | "error") => void;
+    questionNames?: {
+        easy: string[],
+        medium: string[],
+        hard: string[]
+    }
 }
 
 export const GlobalContext = createContext<GlobalContextType>(null);

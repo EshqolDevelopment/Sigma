@@ -11,9 +11,9 @@ import {GlobalContext, postRequest} from "./Global";
 import {QuickPlayConfig} from "./Play/QuickPlay/QuickPlayConfig";
 import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
-import { QuestionList, UserData} from "./DataTypes";
+import {QuestionList, UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
-import {doc, getFirestore, onSnapshot, collection} from "firebase/firestore";
+import {collection, doc, getFirestore, onSnapshot} from "firebase/firestore";
 import {app} from "./init/firebase";
 import * as firebaseui from "firebaseui";
 import Test from "./Test/Test";
@@ -22,7 +22,6 @@ import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import CreateExam from "./Exam/CreateExam/CreateExam";
-
 
 
 const getDisplayName = (username: string): string => {
@@ -54,6 +53,7 @@ export default function App() {
     const [userName, setUserName] = React.useState<string>(undefined);
     const [userData, setUserData] = React.useState<UserData>(undefined);
     const [solutions, setSolutions] = React.useState<any>(undefined);
+    const [questionNames, setQuestionNames] = React.useState<any>(undefined);
     const queryClient = new QueryClient()
 
 
@@ -134,6 +134,14 @@ export default function App() {
         });
     }
 
+    const getQuestionNames = async () => {
+        return await postRequest("/general/getQuestionList", {}) as QuestionList;
+    }
+
+    useEffect(() => {
+        getQuestionNames();
+    }, [])
+
     useEffect(() => {
         if (userName) {
             getUserData(userName);
@@ -149,6 +157,7 @@ export default function App() {
                 userData: userData,
                 solutions: solutions,
                 showToast: showToast,
+                // questionNames: await getQuestionNames()
             }}>
                 <div>
                     <div style={{display: "none"}} id={"helper-firebase-ui"}/>

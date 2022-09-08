@@ -365,8 +365,9 @@ export default function Question(props: Props) {
                 <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
                     {TopRow(true)}
 
-                    <Editor language={language} code={code[language] || defaultCode[language]}
-                            setCode={(currentCode) => setCode({...code, [language]: currentCode})}/>
+                    <Editor language={language} code={code[language] || defaultCode[language]} borderRadius={8}
+                            setCode={(currentCode) => setCode({...code, [language]: currentCode})}
+                            fontSize={16.5}/>
                 </div>
 
 
@@ -407,8 +408,10 @@ export default function Question(props: Props) {
                                 <span>Quick Test</span>
                                 <button onClick={runQuickTest}>Run</button>
                             </div>
+
                             <input value={quickTestText[language]} type={"text"}
                                    onChange={(e) => setQuickTestText({...quickTestText, [language]: e.target.value})}/>
+
                             <div className={styles.quickTestOutput}>
                                 <span>Output: </span>
                                 <span>{quickTestLoading ? "Loading..." : quickTestResult}</span>
