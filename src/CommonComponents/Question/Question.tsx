@@ -360,13 +360,19 @@ export default function Question(props: Props) {
                 <div className={styles.toolTip}>Programming Language</div>
             </div>
 
-
             <button className={styles.watch}>
                 <img src={"/images/watch.svg"} alt={'Timer'}/>
-                <span>{formatTime(props.practice ? timer : timer - question.time)}</span>
+                <span>{formatTime(props.practice ? timer : (question.time - timer))}</span>
 
                 <div className={styles.toolTip}>Timer</div>
             </button>
+
+            {props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.draw} onClick={() => {
+                props.suggestDrawAction();
+            }}>
+                <img src={"/images/white_flag.png"}/>
+                <span>Suggest Draw</span>
+            </button>}
 
             <button className={styles.submit} onClick={submitQuestion}>
                 <span>Submit Code</span>
@@ -392,14 +398,6 @@ export default function Question(props: Props) {
                 </div>
 
                 <div className={styles.questionInfo}>
-                    <div className={styles.actionsButtonsContainer}>
-                        {props.showSolution && <button className={styles.solutionBtn}>Solution</button>}
-                        {props.suggestDrawAction &&
-                            <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
-                                props.suggestDrawAction();
-                            }}>Suggest Draw</button>}
-                    </div>
-
                     <div className={styles.questionJustInfo}>
                         <span className={styles.questionName}>{questionName(props.funcName)}</span>
                         <span className={styles.questionDescription}>{question.description}</span>

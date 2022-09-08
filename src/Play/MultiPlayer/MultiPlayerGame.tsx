@@ -111,7 +111,6 @@ export default function MultiPlayerGame(props: Props) {
                                     currentStep={playersData[globalContext.username].currentQuestion}
                                     playersData={playersData}/>
 
-                <ToastContainer />
             </> :
 
                 <div className={styles.finishContainer}>

@@ -9,7 +9,7 @@
     box-sizing: border-box;
     width: 94%;
     height: 48px;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     display: flex;
     justify-content: flex-start;
     margin-inline: auto;
@@ -17,6 +17,8 @@
 
     @include mobile {
         width: 98%;
+        margin-top: 100px;
+        margin-bottom: 30px;
 
         .topRowLogo {
             display: none;
@@ -41,11 +43,11 @@
     }
 }
 
-.topRowMobile .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit {
+.topRowMobile .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw {
     border-radius: 5px;
 }
 
-.questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit {
+.questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw {
     border: 0;
     padding: 0;
     height: 45px;
@@ -87,7 +89,7 @@
     }
 }
 
-.questionList, .nextQuestion, .watch {
+.questionList, .nextQuestion, .watch, .draw {
     cursor: pointer;
     img {
         height: 60%;
