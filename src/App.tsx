@@ -84,6 +84,14 @@ export default function App() {
         else toast.error(message, options);
     }
 
+    const getQuestionNames = async () => {
+        return await postRequest("/general/getQuestionNames", {}) as QuestionList;
+    }
+
+    useEffect(() => {
+        getQuestionNames().then((questionNames) => setQuestionNames(questionNames));
+    }, [])
+
     useEffect(() => {
         getAuth().onAuthStateChanged(async (user) => {
             if (user) {
@@ -134,14 +142,6 @@ export default function App() {
         });
     }
 
-    const getQuestionNames = async () => {
-        return await postRequest("/general/getQuestionList", {}) as QuestionList;
-    }
-
-    useEffect(() => {
-        getQuestionNames();
-    }, [])
-
     useEffect(() => {
         if (userName) {
             getUserData(userName);
@@ -157,7 +157,7 @@ export default function App() {
                 userData: userData,
                 solutions: solutions,
                 showToast: showToast,
-                // questionNames: await getQuestionNames()
+                questionNames: questionNames
             }}>
                 <div>
                     <div style={{display: "none"}} id={"helper-firebase-ui"}/>

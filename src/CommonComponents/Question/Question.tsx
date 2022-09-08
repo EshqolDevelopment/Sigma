@@ -315,6 +315,16 @@ export default function Question(props: Props) {
         return `${minutesStr}:${secsStr}`;
     };
 
+    const nextQuestion = () => {
+        console.log(globalContext.questionNames)
+        const questionList = globalContext.questionNames.easy.concat(globalContext.questionNames.medium, globalContext.questionNames.hard);
+        const index = questionList.indexOf(props.funcName);
+        if (index === questionList.length - 1) {
+            window.location.href = "/practice";
+        } else {
+            window.location.href = `/practice/${questionList[index + 1]}`;
+        }
+    }
 
     const TopRow = (mobile: boolean) => (
         <div className={(styles.topRow) + " " + (mobile ? styles.topRowMobile : styles.topRowComputer)}>
@@ -330,7 +340,7 @@ export default function Question(props: Props) {
                     <div className={styles.toolTip}>Questions List</div>
                 </button>
 
-                <button className={styles.nextQuestion}>
+                <button className={styles.nextQuestion} onClick={nextQuestion}>
                     <img src={"/images/next.svg"} alt={'Next Question'}/>
 
                     <div className={styles.toolTip}>Next Question</div>
