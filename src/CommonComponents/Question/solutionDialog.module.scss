@@ -26,6 +26,11 @@
     height: 180px;
     margin-top: 15px;
     margin-bottom: 50px;
+    transition: filter 0.7s;
+}
+
+.increaseBrightness {
+    filter: brightness(2);
 }
 
 
