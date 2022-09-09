@@ -3,7 +3,7 @@ import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
-import {getLocalStorageItemWithExpiry, GlobalContext, postRequest, questionName} from "../../Global";
+import {getLocalStorageItemWithExpiry, getServerUrl, GlobalContext, postRequest, questionName} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
 import {useNavigate} from "react-router-dom";
@@ -21,7 +21,6 @@ type Props = {
 
 
 export default function Question(props: Props) {
-
     const [question, setQuestion] = useState({
         description: "",
         example: {input: [], output: ""},
@@ -30,7 +29,7 @@ export default function Question(props: Props) {
         return: "",
         subject: "",
         languages: [],
-        hasSolution: false,
+        hasSolution: [],
     } as QuestionData);
     const [timer, setTimer] = useState(0);
     const [language, setLanguage] = useState("python" as Language);
@@ -175,7 +174,8 @@ export default function Question(props: Props) {
     async function submitQuestion() {
         setResult("loading");
 
-        const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
+        const serverURL = getServerUrl(language);
+
         const response = await postRequest(`${serverURL}/${language}`, {
             funcName: props.funcName,
             code: code[language],
@@ -291,7 +291,7 @@ export default function Question(props: Props) {
 
 
     const runQuickTest = async () => {
-        const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
+        const serverURL = getServerUrl(language);
         setQuickTestLoading(true);
 
         const res = await postRequest(`${serverURL}/${language}/quick-test`, {
@@ -389,7 +389,7 @@ export default function Question(props: Props) {
                 <span>Submit Code</span>
             </button>
 
-            {props.showSolution && language === "python" && question?.hasSolution && <button className={styles.solutionBtn} onClick={openShowSolutionDialog}>
+            {props.showSolution && question?.hasSolution && question.hasSolution.includes(language) && <button className={styles.solutionBtn} onClick={openShowSolutionDialog}>
                 <img src={"/images/solution.png"}/>
                 <span>Show Solution</span>
             </button>}

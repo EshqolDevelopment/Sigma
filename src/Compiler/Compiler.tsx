@@ -7,7 +7,7 @@ import {HiDownload} from "react-icons/hi";
 import {LanguageDialog} from "../init/LanguageDialog";
 import * as Svg from "../init/Svg";
 import "./Compiler.scss";
-import {postRequest} from "../Global";
+import {getServerUrl, postRequest} from "../Global";
 import Footer from "../CommonComponents/Footer/Footer";
 import {Helmet} from "react-helmet";
 
@@ -44,7 +44,7 @@ export default function Compiler() {
 
 
     const runCode = async () => {
-        const serverURL = language.toLowerCase() === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
+        const serverURL = getServerUrl(language.toLowerCase())
 
         const res = await postRequest(`${serverURL}/${language.toLowerCase()}/run`, {
             code: code

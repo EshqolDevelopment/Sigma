@@ -8,7 +8,7 @@ export type QuestionData = {
     subject: string;
     time: number;
     languages: Language[];
-    hasSolution: boolean;
+    hasSolution: Language[];
 }
 
 export type Level = "easy" | "medium" | "hard" | "";
