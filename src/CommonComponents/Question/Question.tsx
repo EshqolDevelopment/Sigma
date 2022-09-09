@@ -405,7 +405,7 @@ export default function Question(props: Props) {
     const onSolution = (solution: string) => {
         setCode({
           ...code,
-            python: solution
+            [language]: solution
         })
     }
 
