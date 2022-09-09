@@ -41,7 +41,7 @@ export default function ShowSolutionDialog(props: Props) {
         const solution = await postRequest("/general/getSolution", {
             funcName: props.funcName,
             name: globalContext.userData.name,
-            language: "python"
+            language: props.language
         }) as {result: string};
         setLoading(false);
 
