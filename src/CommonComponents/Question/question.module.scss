@@ -43,11 +43,11 @@
     }
 }
 
-.topRowMobile .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw {
+.topRowMobile .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw, .solutionBtn {
     border-radius: 5px;
 }
 
-.questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw {
+.questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw, .solutionBtn {
     border: 0;
     padding: 0;
     height: 45px;
@@ -89,7 +89,7 @@
     }
 }
 
-.questionList, .nextQuestion, .watch, .draw {
+.questionList, .nextQuestion, .watch, .draw, .solutionBtn {
     cursor: pointer;
     img {
         height: 60%;

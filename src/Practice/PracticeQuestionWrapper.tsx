@@ -24,6 +24,7 @@ export default function PracticeQuestionWrapper() {
                 <div>
                     {funcName && <Question funcName={funcName}
                                            practice={true}
+                                           showSolution={true}
                     />}
                 </div>
             </main>

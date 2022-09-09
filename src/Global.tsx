@@ -45,3 +45,26 @@ export const winRate = (userData: UserData) => {
 export const questionName = (funcName) => {
     return funcName ? funcName[0].toUpperCase() + funcName.slice(1).replaceAll("_", " ") : "";
 }
+
+export function setLocalStorageItemWithExpiry(key, value, expiryTimeInMs) {
+    const now = new Date()
+    const item = {
+        value: value,
+        expiry: now.getTime() + expiryTimeInMs,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+}
+
+export function getLocalStorageItemWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+    if (!itemStr) {
+        return null
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+    if (now.getTime() > item.expiry) {
+        localStorage.removeItem(key)
+        return null
+    }
+    return item.value
+}

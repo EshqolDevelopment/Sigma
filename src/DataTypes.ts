@@ -2,15 +2,16 @@
 export type QuestionData = {
     description: string;
     example: { input: string[], output: string };
-    level: string;
+    level: Level;
     params: string;
     return: string;
     subject: string;
     time: number;
     languages: Language[];
+    hasSolution: boolean;
 }
 
-export type Level = "easy" | "medium" | "hard";
+export type Level = "easy" | "medium" | "hard" | "";
 
 
 export type QuickPlayGameData = {

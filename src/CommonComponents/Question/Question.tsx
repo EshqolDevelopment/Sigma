@@ -3,10 +3,11 @@ import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
-import {GlobalContext, postRequest, questionName} from "../../Global";
+import {getLocalStorageItemWithExpiry, GlobalContext, postRequest, questionName} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
 import {useNavigate} from "react-router-dom";
+import ShowSolutionDialog from "./ShowSolutionDialog";
 
 
 type Props = {
@@ -28,7 +29,8 @@ export default function Question(props: Props) {
         params: {},
         return: "",
         subject: "",
-        languages: []
+        languages: [],
+        hasSolution: false,
     } as QuestionData);
     const [timer, setTimer] = useState(0);
     const [language, setLanguage] = useState("python" as Language);
@@ -44,8 +46,9 @@ export default function Question(props: Props) {
         execTime: 0,
         questionTime: 0
     });
-    const navigate = useNavigate();
+    const [showSolution, setShowSolution] = useState(false);
 
+    const navigate = useNavigate();
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
     const globalContext = useContext(GlobalContext);
 
@@ -316,13 +319,21 @@ export default function Question(props: Props) {
     };
 
     const nextQuestion = () => {
-        console.log(globalContext.questionNames)
         const questionList = globalContext.questionNames.easy.concat(globalContext.questionNames.medium, globalContext.questionNames.hard);
         const index = questionList.indexOf(props.funcName);
         if (index === questionList.length - 1) {
             window.location.href = "/practice";
         } else {
             window.location.href = `/practice/${questionList[index + 1]}`;
+        }
+    }
+
+    const openShowSolutionDialog = () => {
+        const solution = getLocalStorageItemWithExpiry(`solution@${language}@${props.funcName}`);
+        if (solution) {
+            onSolution(solution);
+        } else {
+            setShowSolution(true);
         }
     }
 
@@ -377,9 +388,20 @@ export default function Question(props: Props) {
             <button className={styles.submit} onClick={submitQuestion}>
                 <span>Submit Code</span>
             </button>
+
+            {props.showSolution && language === "python" && question?.hasSolution && <button className={styles.solutionBtn} onClick={openShowSolutionDialog}>
+                <img src={"/images/solution.png"}/>
+                <span>Show Solution</span>
+            </button>}
         </div>
     )
 
+    const onSolution = (solution: string) => {
+        setCode({
+          ...code,
+            python: solution
+        })
+    }
 
     return (
         <div className={styles.questionLayout}>
@@ -405,8 +427,7 @@ export default function Question(props: Props) {
                             <div>
                                 <span>Sample Input</span>
                                 <div>
-                                    <span
-                                        className={styles.letterSpacing}>{formatInput(question.example.input) || "Not available"}</span>
+                                    <span className={styles.letterSpacing}>{formatInput(question.example.input) || "Not available"}</span>
                                 </div>
                             </div>
                             <div>
@@ -438,11 +459,22 @@ export default function Question(props: Props) {
                 </div>
             </div>
 
-            {result !== null && <ShowResult close={() => setResult(null)}
-                                            result={result}
-                                            funcName={questionName(props.funcName)}
-                                            formatInput={formatInput}
-                                            statistics={statistics}/>}
+            {result !== null &&
+                <ShowResult
+                    close={() => setResult(null)}
+                    result={result}
+                    funcName={questionName(props.funcName)}
+                    formatInput={formatInput}
+                    statistics={statistics}/>}
+
+            {showSolution &&
+                <ShowSolutionDialog
+                    funcName={props.funcName}
+                    language={language}
+                    level={question.level}
+                    show={showSolution}
+                    setShow={setShowSolution}
+                    onSolution={onSolution}/>}
 
         </div>
     );
