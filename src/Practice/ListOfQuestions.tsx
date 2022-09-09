@@ -175,6 +175,8 @@ export default function ListOfQuestions(props: Props) {
             if (res.result !== "OK") {
                 globalContext.showToast("An error occurred please try again later", "error");
             }
+        } else {
+            globalContext.showToast("You must be logged in to mark a question as liked", "error");
         }
     }
 

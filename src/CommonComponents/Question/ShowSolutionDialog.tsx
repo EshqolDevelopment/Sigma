@@ -46,7 +46,7 @@ export default function ShowSolutionDialog(props: Props) {
         setLoading(false);
 
         if (solution.result) {
-            setLocalStorageItemWithExpiry(`solution@${props.language}@${props.funcName}`, solution.result, 1000 * 3600);
+            setLocalStorageItemWithExpiry(`solution@${globalContext.userData.name}@${props.language}@${props.funcName}`, solution.result, 1000 * 3600);
             props.onSolution(solution.result);
             props.setShow(false);
         } else {

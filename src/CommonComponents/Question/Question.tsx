@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
@@ -8,6 +8,7 @@ import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
 import {useNavigate} from "react-router-dom";
 import ShowSolutionDialog from "./ShowSolutionDialog";
+import LoginModal from "../../LoginModal";
 
 
 type Props = {
@@ -46,6 +47,7 @@ export default function Question(props: Props) {
         questionTime: 0
     });
     const [showSolution, setShowSolution] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
 
     const navigate = useNavigate();
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
@@ -329,11 +331,15 @@ export default function Question(props: Props) {
     }
 
     const openShowSolutionDialog = () => {
-        const solution = getLocalStorageItemWithExpiry(`solution@${language}@${props.funcName}`);
-        if (solution) {
-            onSolution(solution);
+        if (globalContext.userData?.name) {
+            const solution = getLocalStorageItemWithExpiry(`solution@${globalContext.userData.name}@${language}@${props.funcName}`);
+            if (solution) {
+                onSolution(solution);
+            } else {
+                setShowSolution(true);
+            }
         } else {
-            setShowSolution(true);
+            setShowLogin(true);
         }
     }
 
@@ -475,6 +481,8 @@ export default function Question(props: Props) {
                     show={showSolution}
                     setShow={setShowSolution}
                     onSolution={onSolution}/>}
+
+            <LoginModal show={showLogin} setShow={setShowLogin} onLogin={() => setShowSolution(true)}/>
 
         </div>
     );
