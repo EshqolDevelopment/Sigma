@@ -33,22 +33,25 @@ export default function ShowSolutionDialog(props: Props) {
     }
 
     const cancel = () => {
-        dialog.current.close();
         props.setShow(false);
     }
 
     const buySolution = async () => {
-        dialog.current.close();
+        setLoading(true);
         const solution = await postRequest("/general/getSolution", {
             funcName: props.funcName,
             name: globalContext.userData.name,
             language: "python"
         }) as {result: string};
+        setLoading(false);
 
-        setLocalStorageItemWithExpiry(`solution@${props.language}@${props.funcName}`, solution.result, 1000 * 3600);
-
-        props.onSolution(solution.result);
-        props.setShow(false);
+        if (solution.result) {
+            setLocalStorageItemWithExpiry(`solution@${props.language}@${props.funcName}`, solution.result, 1000 * 3600);
+            props.onSolution(solution.result);
+            props.setShow(false);
+        } else {
+            globalContext.showToast("An error occurred", "error");
+        }
     }
 
     return (

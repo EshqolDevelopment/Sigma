@@ -42,7 +42,8 @@ const formatDBUserData = (name: string, userData: any): UserData => {
         mediumRecord: userData["medium_record"],
         hardRecord: userData["hard_record"],
         image: userData["p"].toString(),
-        displayName: getDisplayName(name)
+        displayName: getDisplayName(name),
+        likes: userData["likes"] || [],
     };
 };
 

@@ -62,6 +62,7 @@ export type UserData = {
     hardRecord: number;
     image: string;
     displayName: string;
+    likes: string[];
 }
 
 export type Solutions = {

@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import "./ListOfQuestions.scss";
 import {useNavigate} from "react-router-dom";
 import {PracticeQuestionItem} from "../DataTypes";
-import {GlobalContext} from "../Global";
+import {GlobalContext, postRequest} from "../Global";
 
 let lastStyleUpdate = Date.now();
 let itemOnMouseIndex = null;
@@ -160,12 +160,21 @@ export default function ListOfQuestions(props: Props) {
         onMouseUp();
     }
 
-    function like(id) {
+    async function like(funcName: string) {
+        const id = "like_" + funcName;
         const like = document.getElementById(id) as HTMLImageElement;
-        if (like.src.includes("star2")) {
-            like.src = "/images/star1.svg";
-        } else {
-            like.src = "/images/star2.svg";
+        let isLike = like.src.includes("star1");
+
+        if (globalContext.userData?.name) {
+            const res = await postRequest("/general/addLike", {
+                name: globalContext.userData.name,
+                funcName: funcName,
+                isLike: isLike
+            }) as {result: string};
+
+            if (res.result !== "OK") {
+                globalContext.showToast("An error occurred please try again later", "error");
+            }
         }
     }
 
@@ -173,6 +182,10 @@ export default function ListOfQuestions(props: Props) {
         let questionName = funcName.replaceAll("_", " ");
         questionName = questionName[0].toUpperCase() + questionName.slice(1).toLowerCase();
         return questionName;
+    }
+
+    function initialLike(funcName: string) {
+        return globalContext.userData?.likes?.includes(funcName);
     }
 
     return (
@@ -193,8 +206,8 @@ export default function ListOfQuestions(props: Props) {
 
                             <div className={"rightContainer"}>
                                 <div>
-                                    <img className={"likeImg"} src={"/images/star1.svg"} id={"like" + level + i}
-                                         onClick={() => like("like" + level + i)} alt={"Like"}/>
+                                    <img className={"likeImg"} src={initialLike(data.name) ? "/images/star2.svg" : "/images/star1.svg"} id={"like_" + data.name}
+                                         onClick={() => like(data.name)} alt={"Like"}/>
                                 </div>
 
                                 <div className={`grab-color color-${level.toLowerCase()}`}
