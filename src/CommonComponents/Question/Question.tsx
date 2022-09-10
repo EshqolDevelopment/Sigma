@@ -181,12 +181,13 @@ export default function Question(props: Props) {
         const response = await postRequest(`${serverURL}/${language}`, {
             funcName: props.funcName,
             code: code[language],
-            questionTime: timer
+            questionTime: timer,
+            practice: props.practice ?? false
         }) as { result: string, execTimePercentile: null, questionTimePercentile: number, execTime: number, questionTime: number };
 
         if (response.result === "success") {
             if (globalContext.username) {
-                postRequest("/general/onCorrectAnswer", {
+                postRequest("/general/saveSolution", {
                     questionName: props.funcName,
                     language: language,
                     solution: code[language],
@@ -480,7 +481,9 @@ export default function Question(props: Props) {
                     result={result}
                     funcName={questionName(props.funcName)}
                     formatInput={formatInput}
-                    statistics={statistics}/>}
+                    statistics={statistics}
+                    practice={props.practice}
+                />}
 
             {showSolution &&
                 <ShowSolutionDialog
