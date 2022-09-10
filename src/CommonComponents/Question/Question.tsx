@@ -3,7 +3,7 @@ import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
-import {getLocalStorageItemWithExpiry, getServerUrl, GlobalContext, postRequest, questionName} from "../../Global";
+import {getLocalStorageItemWithExpiry, GlobalContext, postRequest, questionName} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
 import {useNavigate} from "react-router-dom";
@@ -176,9 +176,7 @@ export default function Question(props: Props) {
     async function submitQuestion() {
         setResult("loading");
 
-        const serverURL = getServerUrl(language);
-
-        const response = await postRequest(`${serverURL}/${language}`, {
+        const response = await postRequest(`/${language}`, {
             funcName: props.funcName,
             code: code[language],
             questionTime: timer,
@@ -303,10 +301,9 @@ export default function Question(props: Props) {
 
 
     const runQuickTest = async () => {
-        const serverURL = getServerUrl(language);
         setQuickTestLoading(true);
 
-        const res = await postRequest(`${serverURL}/${language}/quick-test`, {
+        const res = await postRequest(`/${language}/quick-test`, {
             funcName: props.funcName,
             code: code[language],
             quickTestCode: quickTestText[language]

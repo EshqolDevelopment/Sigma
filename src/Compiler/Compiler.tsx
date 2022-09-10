@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import Editor from "../init/Editor";
 import {FaSave, FaTrashAlt} from "react-icons/fa";
 import {BsFillSunFill, BsMoonFill} from "react-icons/bs";
@@ -7,7 +7,7 @@ import {HiDownload} from "react-icons/hi";
 import {LanguageDialog} from "../init/LanguageDialog";
 import * as Svg from "../init/Svg";
 import "./Compiler.scss";
-import {getServerUrl, GlobalContext, postRequest} from "../Global";
+import {GlobalContext, postRequest} from "../Global";
 import Footer from "../CommonComponents/Footer/Footer";
 import {Helmet} from "react-helmet";
 
@@ -49,9 +49,7 @@ export default function Compiler() {
     }
 
     const runCode = async () => {
-        const serverURL = getServerUrl(language.toLowerCase());
-
-        const res = await postRequest(`${serverURL}/${language.toLowerCase()}/run`, {
+        const res = await postRequest(`/${language.toLowerCase()}/run`, {
             code: code[language]
         }) as { result: string };
 

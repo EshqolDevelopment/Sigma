@@ -18,7 +18,7 @@ export const GlobalContext = createContext<GlobalContextType>(null);
 
 export const postRequest = async (url: string = "", data: any): Promise<object> => {
     if (!url.includes("http")) {
-        const serverUrl = getServerUrl();
+        const serverUrl = process.env.NODE_ENV === "production" ? process.env["REACT_APP_JS_PROD_SERVER_URL"] : process.env["REACT_APP_JS_DEV_SERVER_URL"];
         url = serverUrl + url;
     }
     try {
@@ -68,14 +68,4 @@ export function getLocalStorageItemWithExpiry(key) {
         return null;
     }
     return item.value;
-}
-
-export function getServerUrl(language?: Language) {
-    let serverURL: string;
-    if (process.env.NODE_ENV === "production") {
-        serverURL = language === "kotlin" ? process.env["REACT_APP_PY_DEV_SERVER_URL"] : process.env["REACT_APP_JS_PROD_SERVER_URL"];
-    } else {
-        serverURL = language === "kotlin" ? process.env["REACT_APP_PY_DEV_SERVER_URL"] : process.env["REACT_APP_JS_DEV_SERVER_URL"];
-    }
-    return serverURL;
 }
