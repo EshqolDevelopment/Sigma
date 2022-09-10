@@ -16,18 +16,8 @@ type Props = {
 const toDisplayName = {
     "python": "Python",
     "javascript": "JavaScript",
-    "typescript": "TypeScript",
     "java": "Java",
     "kotlin": "Kotlin",
-    "csharp": "C#",
-    "c": "C",
-    "cpp": "C++",
-    "Python": "Python",
-    "JavaScript": "JavaScript",
-    "TypeScript": "TypeScript",
-    "Java": "Java",
-    "C#": "C#",
-    "Kotlin": "Kotlin",
 }
 
 

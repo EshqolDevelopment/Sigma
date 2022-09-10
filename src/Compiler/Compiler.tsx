@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Editor from "../init/Editor";
 import {FaSave, FaTrashAlt} from "react-icons/fa";
 import {BsFillSunFill, BsMoonFill} from "react-icons/bs";
@@ -7,51 +7,78 @@ import {HiDownload} from "react-icons/hi";
 import {LanguageDialog} from "../init/LanguageDialog";
 import * as Svg from "../init/Svg";
 import "./Compiler.scss";
-import {getServerUrl, postRequest} from "../Global";
+import {getServerUrl, GlobalContext, postRequest} from "../Global";
 import Footer from "../CommonComponents/Footer/Footer";
 import {Helmet} from "react-helmet";
 
 
 const LanguageToHelloCode = {
-    "Python": "print('Hello World!')",
-    "JavaScript": "console.log('Hello World!')",
-    "Kotlin": "fun main() {\n    println('Hello World!')\n}",
-    "Java": "Public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
+    python: "print('Hello World!')",
+    javascript: "console.log('Hello World!')",
+    kotlin: "fun main() {\n    println('Hello World!')\n}",
+    java: "public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
 };
+
 
 export default function Compiler() {
     const [currentFile, setCurrentFile] = useState("main");
     const [darkMode, setDarkMode] = useState(false);
     const [languagesDialog, setLanguagesDialog] = useState(false);
-    const [language, setLanguage] = useState(localStorage["language"] || "Python");
-    const [code, setCode] = useState(LanguageToHelloCode[localStorage["language"] || "Python"]);
+    const [language, setLanguage] = useState(localStorage["language"] || "python");
+    const [code, setCode] = useState({
+        python: localStorage["python"] || LanguageToHelloCode.python,
+        javascript: localStorage["javascript"] || LanguageToHelloCode.javascript,
+        kotlin: localStorage["kotlin"] || LanguageToHelloCode.kotlin,
+        java: localStorage["java"] || LanguageToHelloCode.java
+    });
 
+    const globalContext = useContext(GlobalContext);
     const [output, setOutput] = useState([]);
     const languages = {
-        "Python": Svg.Python(),
-        "JavaScript": Svg.Javascript(),
-        "Kotlin": Svg.Kotlin(),
-        "Java": Svg.Java()
+        python: Svg.Python(),
+        javascript: Svg.Javascript(),
+        kotlin: Svg.Kotlin(),
+        java: Svg.Java()
     };
     const extensions = {
-        "Python": "py",
-        "JavaScript": "js",
-        "Kotlin": "kt",
-        "Java": "java",
-        "TypeScript": "ts",
-        "C#": "cs"
-    };
-
+        python: "py",
+        javascript: "js",
+        kotlin: "kt",
+        java: "java",
+        typescript: "ts",
+    }
 
     const runCode = async () => {
-        const serverURL = getServerUrl(language.toLowerCase())
+        const serverURL = getServerUrl(language.toLowerCase());
 
         const res = await postRequest(`${serverURL}/${language.toLowerCase()}/run`, {
-            code: code
+            code: code[language]
         }) as { result: string };
 
         setOutput(res.result.split("\n"));
     };
+
+    const save = () => {
+        for (const language of Object.keys(code)) {
+            localStorage[language.toLowerCase()] = code[language];
+        }
+        globalContext.showToast("The code has been saved in your local browser", "success");
+    };
+
+    const copyOutput = () => {
+        navigator.clipboard.writeText(output.join("\n")).then(() => {
+            globalContext.showToast("The output has been copied to your clipboard", "success");
+        });
+    }
+
+    const downloadFile = (content: string, filename: string) => {
+        const element = document.createElement("a");
+        const file = new Blob([content], {type: 'text/plain'});
+        element.href = URL.createObjectURL(file);
+        element.download = filename;
+        document.body.appendChild(element);
+        element.click();
+    }
 
 
     return (
@@ -66,16 +93,18 @@ export default function Compiler() {
                 <div className={`compiler-top-buttons`}>
                     <div className={"buttons"}>
                         <button>
-                            <FaSave/>
+                            <FaSave onClick={save}/>
                         </button>
 
+                        <button>
+                            <HiDownload onClick={() => downloadFile(code[language], `main.${extensions[language]}`)}/>
+                        </button>
                     </div>
 
                     <div className={"buttons"}>
                         <button onClick={() => setDarkMode(dark => !dark)}>
                             {darkMode ? <BsFillSunFill/> : <BsMoonFill/>}
                         </button>
-
                         <button className={"js-icon"} onClick={() => setLanguagesDialog(lan => !lan)}>
                             {languages[language]}
                         </button>
@@ -95,7 +124,8 @@ export default function Compiler() {
                     </div>
 
                     <div className={"ace-wrapper"}>
-                        <Editor theme={darkMode ? "monokai" : "xcode"} code={code} setCode={setCode}
+                        <Editor theme={darkMode ? "monokai" : "xcode"} code={code[language]}
+                                setCode={(text) => setCode({...code, [language]: text})}
                                 language={language.toString().toLowerCase()}/>
                     </div>
 
@@ -116,11 +146,11 @@ export default function Compiler() {
                 <div className={"terminal-wrapper"}>
                     <div className={"terminal-buttons"}>
                         <button>
-                            <FiCopy/>
+                            <FiCopy onClick={copyOutput}/>
                         </button>
 
                         <button>
-                            <HiDownload/>
+                            <HiDownload onClick={() => downloadFile(output.join("\n"), 'output.txt')}/>
                         </button>
 
                         <button>
@@ -139,7 +169,8 @@ export default function Compiler() {
             </main>
 
             <LanguageDialog languages={languages} setLanguage={setLanguage} show={languagesDialog}
-                            setShow={setLanguagesDialog} setCode={setCode} LanguageToHelloCode={LanguageToHelloCode}/>
+                            setShow={setLanguagesDialog} setCode={(text) => setCode({...code, [language]: text})}
+                            LanguageToHelloCode={LanguageToHelloCode}/>
             <Footer/>
 
         </div>

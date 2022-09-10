@@ -1,6 +1,23 @@
 @use "../../init/global" as *;
 
 
+.create-exam-private {
+
+  input[type="text"] {
+    width: 160px;
+    height: 35px;
+    border: 2px solid dodgerblue;
+    border-radius: 5px;
+    padding-inline: 10px;
+    outline: none;
+    transition: 0.2s ease-in-out;
+
+    &:focus {
+      border: 2px solid $main-color;
+    }
+  }
+
+}
 
 .create-exam {
   width: 100%;
@@ -38,19 +55,7 @@
   margin-inline: auto;
 
 
-  input[type="text"] {
-    width: 160px;
-    height: 35px;
-    border: 2px solid dodgerblue;
-    border-radius: 5px;
-    padding-inline: 10px;
-    outline: none;
-    transition: 0.2s ease-in-out;
 
-    &:focus {
-      border: 2px solid $main-color;
-    }
-  }
 
   .row {
     width: 100%;
@@ -73,16 +78,7 @@
       align-items: center;
       gap: 10px;
 
-      input[type="checkbox"] {
-        width: 20px;
-        height: 20px;
-        transition: 0.2s ease-in-out;
-        cursor: pointer;
 
-        &:checked {
-          background-color: $main-color;
-        }
-      }
 
       label {
         font-size: 16px;
