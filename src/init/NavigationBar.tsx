@@ -1,6 +1,6 @@
 import React, {createRef, useContext, useEffect, useState} from "react";
 import style from "./Navigation.module.css";
-import LoginModal from "../LoginModal";
+import LoginModal from "../Authentication/LoginModal";
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
 import {Profile} from "../CommonComponents/Profile/Profile";

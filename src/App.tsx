@@ -11,9 +11,9 @@ import {GlobalContext, postRequest} from "./Global";
 import {QuickPlayConfig} from "./Play/QuickPlay/QuickPlayConfig";
 import MultiPlayer from "./Play/MultiPlayer/MultiPlayer";
 import {ChooseGameMode} from "./Play/Setup/ChooseGameMode";
-import {UserData} from "./DataTypes";
+import {QuestionList, UserData} from "./DataTypes";
 import {QueryClient, QueryClientProvider} from "react-query";
-import {doc, getFirestore, onSnapshot, collection} from "firebase/firestore";
+import {collection, doc, getFirestore, onSnapshot} from "firebase/firestore";
 import {app} from "./init/firebase";
 import * as firebaseui from "firebaseui";
 import Test from "./Test/Test";
@@ -22,7 +22,6 @@ import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import CreateExam from "./Exam/CreateExam/CreateExam";
-
 
 
 const getDisplayName = (username: string): string => {
@@ -43,7 +42,8 @@ const formatDBUserData = (name: string, userData: any): UserData => {
         mediumRecord: userData["medium_record"],
         hardRecord: userData["hard_record"],
         image: userData["p"].toString(),
-        displayName: getDisplayName(name)
+        displayName: getDisplayName(name),
+        likes: userData["likes"] || [],
     };
 };
 
@@ -54,7 +54,9 @@ export default function App() {
     const [userName, setUserName] = React.useState<string>(undefined);
     const [userData, setUserData] = React.useState<UserData>(undefined);
     const [solutions, setSolutions] = React.useState<any>(undefined);
+    const [questionNames, setQuestionNames] = React.useState<any>(undefined);
     const queryClient = new QueryClient()
+
 
     useEffect(() => {
         let uiConfig = {
@@ -82,6 +84,14 @@ export default function App() {
         else if (type === "success") toast.success(message, options);
         else toast.error(message, options);
     }
+
+    const getQuestionNames = async () => {
+        return await postRequest("/general/getQuestionNames", {}) as QuestionList;
+    }
+
+    useEffect(() => {
+        getQuestionNames().then((questionNames) => setQuestionNames(questionNames));
+    }, [])
 
     useEffect(() => {
         getAuth().onAuthStateChanged(async (user) => {
@@ -147,7 +157,8 @@ export default function App() {
                 username: userName,
                 userData: userData,
                 solutions: solutions,
-                showToast: showToast
+                showToast: showToast,
+                questionNames: questionNames
             }}>
                 <div>
                     <div style={{display: "none"}} id={"helper-firebase-ui"}/>

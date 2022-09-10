@@ -1,9 +1,12 @@
 import React, {useEffect, useRef} from "react";
 import styles from "./showResult.module.scss"
-
 type Props = {
     close: () => void;
     result: string;
+    statistics: { execTimePercentile: number, questionTimePercentile: number, execTime: number, questionTime: number };
+    funcName: string;
+    formatInput: (input: string[]) => JSX.Element[];
+    practice: boolean;
 }
 
 export default  function ShowResult(props: Props) {
@@ -13,13 +16,26 @@ export default  function ShowResult(props: Props) {
         if (!dialogRef.current.open) dialogRef.current.showModal();
     }, [])
 
+    const round = (number: number, decimalPoints: number) => {
+        const temp = Math.floor(number * Math.pow(10, decimalPoints))
+        return temp / (Math.pow(10, decimalPoints))
+    }
+
+    let input;
+    let output;
+    let expectedOutput;
+    try {
+        input = props.formatInput(JSON.parse(props.result).input)
+        output = (JSON.parse(props.result).output).toString()
+        expectedOutput = (JSON.parse(props.result).expected).toString()
+    } catch (e) {
+
+    }
+
+    const json = input && output && expectedOutput
+
     return (
         <dialog ref={dialogRef} className={styles.dialog}>
-            {/*<button onClick={props.close} className={styles.close}>*/}
-            {/*    <img src={"/images/x.png"} alt={"close"}/>*/}
-            {/*</button>*/}
-
-
             {props.result === "loading" && <div className={styles.loading}>
                 <div className={styles.spinner}/>
                 <span>Preprocessing your answer...</span>
@@ -27,13 +43,47 @@ export default  function ShowResult(props: Props) {
 
             {!["loading", "success"].includes(props.result) && <div className={[styles.loading, styles.loadingError].join(" ")}>
                 <div className={styles.spinner}/>
-                <span aria-label={"Error description"}>{props.result}</span>
+
+                {!json && <span aria-label={"Error description"}>{props.result}</span>}
+
+                {json && <div className={styles.testCaseContainer}>
+                    <div>
+                        <span className={styles.testCaseTitle}>Input:</span>
+                        <span className={styles.testCaseValue}>{input}</span>
+                    </div>
+                    <div>
+                        <span className={styles.testCaseTitle}>Output:</span>
+                        <span className={styles.testCaseValue}>{output}</span>
+                    </div>
+                    <div>
+                        <span className={styles.testCaseTitle}>Excepted:</span>
+                        <span className={styles.testCaseValue}>{expectedOutput}</span>
+                    </div>
+                </div>}
+
+
                 <button onClick={props.close}>Try again</button>
             </div>}
 
             {props.result === "success" && <div className={[styles.loading, styles.loadingSuccess].join(" ")}>
                 <div className={styles.spinner}/>
                 <span>Your answer is correct!</span>
+
+                {props.practice && <>
+                    <span>
+                        <span style={{fontWeight: "bold"}}>Runtime: </span>
+                        <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.execTime / 1_000_000, 2)} ms</span>
+                        <span style={{fontWeight: "500"}}>, faster than <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.execTimePercentile, 2)}%</span> of Python online submissions for {props.funcName}.</span>
+                    </span>
+
+                    <span>
+                        <span style={{fontWeight: "bold"}}>Time To Solve: </span>
+                        <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.questionTime / 60, 2)} minutes</span>
+                        <span style={{fontWeight: "500"}}>, faster than <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.questionTimePercentile, 2)}%</span> of Python online submissions for {props.funcName}.</span>
+                    </span>
+                </>}
+
+
                 <button onClick={props.close}>Close</button>
             </div>}
 

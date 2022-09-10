@@ -1,0 +1,66 @@
+@use "../../init/global" as *;
+
+.title {
+    font-size: 22px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.description {
+    margin-top: 10px;
+    font-size: 18px;
+    text-align: center;
+}
+
+
+.priceDescription {
+    font-size: 22px;
+    text-align: center;
+    font-weight: 600;
+    margin-top: 40px;
+}
+
+.solutionIcon {
+    width: 180px;
+    height: 180px;
+    margin-top: 15px;
+    margin-bottom: 50px;
+    transition: filter 0.7s;
+}
+
+.increaseBrightness {
+    filter: brightness(2);
+}
+
+
+.dialog button {
+    width: 60%;
+
+    @include mobile {
+        width: 100%;
+    }
+}
+
+
+.dialog button:nth-of-type(1) {
+    background: dodgerblue;
+}
+
+.dialog button:nth-of-type(2) {
+    background: grey;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.modal::backdrop {
+    background: rgba(black, 0.5);
+}
+
+.loading {
+    background: grey;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}

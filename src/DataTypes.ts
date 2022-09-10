@@ -2,15 +2,16 @@
 export type QuestionData = {
     description: string;
     example: { input: string[], output: string };
-    level: string;
+    level: Level;
     params: string;
     return: string;
     subject: string;
     time: number;
     languages: Language[];
+    hasSolution: Language[];
 }
 
-export type Level = "easy" | "medium" | "hard";
+export type Level = "easy" | "medium" | "hard" | "";
 
 
 export type QuickPlayGameData = {
@@ -61,6 +62,7 @@ export type UserData = {
     hardRecord: number;
     image: string;
     displayName: string;
+    likes: string[];
 }
 
 export type Solutions = {
@@ -82,6 +84,9 @@ export type PracticeQuestionList = {
     Medium: PracticeQuestionItem[],
     Hard: PracticeQuestionItem[]
 }
+
+export type QuestionList = string[];
+
 
 
 export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";

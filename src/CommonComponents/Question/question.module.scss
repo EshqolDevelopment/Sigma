@@ -1,7 +1,104 @@
+@use '../../init/global' as *;
 
 
 .questionLayout {
-    margin-top: 100px;
+    margin-top: var(--navigation-height);
+}
+
+.topRow {
+    box-sizing: border-box;
+    width: 94%;
+    height: 48px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: flex-start;
+    margin-inline: auto;
+    gap: 25px;
+
+    @include mobile {
+        width: 98%;
+        margin-top: 100px;
+        margin-bottom: 30px;
+
+        .topRowLogo {
+            display: none;
+        }
+
+        .nextQuestion {
+            display: none;
+        }
+
+        .questionList {
+            display: none;
+        }
+    }
+}
+
+.topRowMobile {
+    gap: 14px;
+    display: none;
+
+    @include mobile {
+        display: flex;
+    }
+}
+
+.topRowMobile .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw, .solutionBtn {
+    border-radius: 5px;
+}
+
+.questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw, .solutionBtn {
+    border: 0;
+    padding: 0;
+    height: 45px;
+    padding-inline: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: white;
+    font-size: 16.5px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(black, 0.5);
+    transition: 0.3s ease-in-out;
+    background: #295986;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+
+    @include mobile {
+        padding-inline: 9px;
+        gap: 4.5px;
+    }
+
+    &:hover {
+        background: rgb(60, 115, 250);
+    }
+
+}
+
+.topRow > div:nth-of-type(1) {
+    background: $main-color;
+
+    img {
+        height: 70%;
+        width: auto;
+        border-radius: 10px;
+    }
+}
+
+.questionList, .nextQuestion, .watch, .draw, .solutionBtn {
+    cursor: pointer;
+    img {
+        height: 60%;
+        width: auto;
+    }
+}
+
+.selectBox {
+    position: relative;
 }
 
 .languagePicker {
@@ -10,6 +107,7 @@
     gap: 20px;
     align-items: center;
 }
+
 .languagePicker button {
     background: rgb(0 0 0 /0);
     border: 0;
@@ -32,9 +130,9 @@
 }
 
 .codeEditor {
-    width: calc(50% - 200px);
+    width: calc(50% - 0px);
     min-width: 400px;
-    height: calc(100vh - 140px);
+    height: calc(100vh - 170px);
 }
 
 .codeEditorWithSeekBar {
@@ -44,20 +142,20 @@
 .container1 {
     display: flex;
     flex-direction: row;
+    gap: 50px;
+
+    @include mobile {
+        gap: 78px;
+    }
 }
 
 .container1 > div:first-child {
     margin-left: auto;
-    padding-left: 20px;
-    margin-right: 35px;
 }
 
 .container1 > div:last-child {
     margin-right: auto;
-    padding-right: 20px;
-    margin-left: 47px;
 }
-
 
 .questionInfo {
     display: flex;
@@ -70,20 +168,30 @@
     display: flex;
     flex-direction: column;
     color: white;
-    margin-top: -15px;
+    margin-top: -10px;
 }
 
+.submit {
+    margin-left: auto;
+    background: green;
+
+    &:hover {
+        background: #035e03;
+    }
+}
 
 .questionName {
     font-size: 30px;
     font-weight: bold;
-    margin-top: 50px;
     margin-bottom: 20px;
     border-bottom: 1px solid white;
     text-align: center;
     padding-bottom: 7px;
-}
 
+    @include mobile {
+        margin-top: 70px;
+    }
+}
 
 .actionsButtonsContainer {
     display: flex;
@@ -91,11 +199,6 @@
     justify-content: space-between;
     margin-inline: 40px;
     gap: 20px;
-}
-
-.timer {
-    font-weight: bold;
-    font-size: 22px;
 }
 
 .actionsButtonsContainer button {
@@ -138,18 +241,8 @@
     white-space: pre-wrap;
 }
 
-
 .varName {
     color: #fd971f;
-}
-
-
-.arrow {
-    transition: transform 0.2s ease;
-}
-
-.arrowOpen {
-    transform: rotate(180deg);
 }
 
 .languagePickerMobile {
@@ -162,12 +255,16 @@
     margin-top: 0;
 }
 
+@include mobile{
 
-@media (max-width: 960px) {
     .container1 {
         flex-direction: column;
         align-items: center;
         padding-inline: 10px;
+    }
+
+    .topRowComputer {
+        display: none;
     }
 
     .languagePicker {
@@ -185,6 +282,7 @@
 
     .codeEditor {
         order: 3;
+        margin-top: -130px;
     }
 
     .actionsButtonsContainer {
@@ -212,6 +310,7 @@
     }
 
     .questionName {
+        margin-top: 100px;
         margin-bottom: 20px;
         border: 0;
     }
@@ -244,4 +343,119 @@
         font-size: 17px;
     }
 
+}
+
+
+$quickTestRadius: 8px;
+
+.quickTestContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    color: white;
+    background: #2a5273;
+    border-radius: $quickTestRadius;
+
+
+    input[type="text"] {
+        margin-top: 20px;
+        width: 90%;
+        min-height: 40px;
+        margin-left: 2.5%;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        overflow: hidden;
+        //background: #2c2b33;
+        background: rgba(39,40,32,255);
+        color: white;
+        letter-spacing: 0.52px;
+
+        &:focus-visible {
+            outline: 2px solid $main-color;
+        }
+    }
+}
+
+.quickTestTitle {
+    background: #2a465a;
+    display: flex;
+    justify-content: space-between;
+    border-top-left-radius: $quickTestRadius;
+    border-top-right-radius: $quickTestRadius;
+
+
+    span {
+        background: $main-color;
+        padding: 6px;
+        font-size: 18px;
+        font-weight: bold;
+        border-top-left-radius: $quickTestRadius;
+    }
+
+    button {
+        background: green;
+        color: white;
+        border: 0;
+        font-weight: bold;
+        padding-inline: 30px;
+        font-size: 20px;
+        border-top-right-radius: $quickTestRadius;
+    }
+}
+
+.quickTestOutput {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 15px;
+
+    span:nth-of-type(1) {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    span:nth-of-type(2) {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 10px;
+        color: #04e517;
+    }
+}
+
+.topRow > *:hover .toolTip {
+    visibility: visible;
+}
+
+.toolTip {
+    position: absolute;
+    background: white;
+    color: black;
+    left: 50%;
+    transform: translateX(-50%);
+    top: calc(100% + 12px);
+    z-index: 100;
+    border-radius: 8px;
+    padding: 10px;
+    visibility: hidden;
+    padding-inline: 14px;
+    white-space: nowrap;
+    width: fit-content;
+    text-align: center;
+    cursor: initial;
+    user-select: none;
+    font-size: 15px;
+    font-weight: bold;
+    box-shadow: 0 0 8px 5px rgba(black, 0.8);
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        background: white;
+        z-index: -1;
+        left: 50%;
+        top: 0;
+        transform: translateX(-50%) translateY(-10%) rotate(45deg);
+    }
 }

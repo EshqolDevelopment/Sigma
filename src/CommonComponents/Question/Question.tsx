@@ -1,11 +1,14 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import styles from "./question.module.scss";
 import Editor from "../../init/Editor";
 import {ExpandItem} from "./ExpandItem";
 import {Language, QuestionData} from "../../DataTypes";
-import {GlobalContext, postRequest, questionName} from "../../Global";
+import {getLocalStorageItemWithExpiry, GlobalContext, postRequest, questionName} from "../../Global";
 import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
+import {useNavigate} from "react-router-dom";
+import ShowSolutionDialog from "./ShowSolutionDialog";
+import LoginModal from "../../Authentication/LoginModal";
 
 
 type Props = {
@@ -17,6 +20,7 @@ type Props = {
     practice?: boolean;
 }
 
+
 export default function Question(props: Props) {
     const [question, setQuestion] = useState({
         description: "",
@@ -26,13 +30,26 @@ export default function Question(props: Props) {
         return: "",
         subject: "",
         languages: [],
+        hasSolution: [],
     } as QuestionData);
-
     const [timer, setTimer] = useState(0);
     const [language, setLanguage] = useState("python" as Language);
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
+    const [quickTestText, setQuickTestText] = useState({python: "", javascript: "", kotlin: "", java: ""});
+    const [quickTestResult, setQuickTestResult] = useState(null);
+    const [quickTestLoading, setQuickTestLoading] = useState(false);
+    const [statistics, setStatistics] = useState({
+        execTimePercentile: 0,
+        questionTimePercentile: 0,
+        execTime: 0,
+        questionTime: 0
+    });
+    const [showSolution, setShowSolution] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
+
+    const navigate = useNavigate();
     const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
     const globalContext = useContext(GlobalContext);
 
@@ -40,21 +57,21 @@ export default function Question(props: Props) {
     async function getAndSetQuestionData(funcName: string) {
         const response = await postRequest("/general/getClientQuestionData", {
             funcName: funcName
-        }) as {question: string, languages: Language[]};
+        }) as { question: string, languages: Language[] };
 
         const serverQuestionData = JSON.parse(response.question) as QuestionData;
         serverQuestionData.languages = response.languages;
 
         setQuestion(serverQuestionData);
-        if (!props.practice) {
-            setTimer(serverQuestionData.time);
-        }
 
         const tempDefaultCode = {python: "", javascript: "", kotlin: "", java: ""};
         tempDefaultCode.python = pythonDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
         tempDefaultCode.javascript = javascriptDefaultCode(funcName, serverQuestionData.params);
         tempDefaultCode.kotlin = kotlinDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
         tempDefaultCode.java = javaDefaultCode(funcName, serverQuestionData.params, serverQuestionData.return);
+        if (!quickTestText.python) {
+            setQuickTestText(quickTestDefaultCode(funcName, serverQuestionData));
+        }
         setDefaultCode(tempDefaultCode);
     }
 
@@ -65,12 +82,7 @@ export default function Question(props: Props) {
     useEffect(() => {
         const clear = setInterval(() => {
             setTimer((timer) => {
-                if (props.practice) {
-                    return timer + 1;
-                } else if (timer > 0){
-                    return timer - 1
-                }
-                return 0;
+                return timer + 1;
             });
         }, 1000);
 
@@ -80,7 +92,7 @@ export default function Question(props: Props) {
 
     const pythonDefaultCode = (funcName, params: string, returnType: string) => {
         let code = "def " + funcName + "(";
-        for (let i=0; i<params.length; i++) {
+        for (let i = 0; i < params.length; i++) {
             let param = params[i];
             param = JSON.parse(param);
             if (i === params.length - 1) {
@@ -119,8 +131,8 @@ export default function Question(props: Props) {
             "list[float]": "Array<Double>",
             "list[bool]": "Array<Boolean>",
             "list[object]": "Array<Any>",
-            "dict": "Map<String, Any>",
-        }
+            "dict": "Map<String, Any>"
+        };
 
 
         let code = "fun " + funcName + "(";
@@ -129,7 +141,7 @@ export default function Question(props: Props) {
             code += `${param[0]}: ${pythonToKotlinType[param[1]] || "Any"}, `;
         }
         code = code.slice(0, -2);
-        code += `): ${pythonToKotlinType[returnType]  || "Any"} {\n\t\n}`;
+        code += `): ${pythonToKotlinType[returnType] || "Any"} {\n\t\n}`;
         return code;
     };
 
@@ -147,8 +159,8 @@ export default function Question(props: Props) {
             "list[float]": "double[]",
             "list[bool]": "boolean[]",
             "list[object]": "Object[]",
-            "dict": "Map<String, Object>",
-        }
+            "dict": "Map<String, Object>"
+        };
 
         let code = `static ${pythonToJavaType[returnType] || "Object"} ${funcName}(`;
         for (let param of params) {
@@ -160,27 +172,35 @@ export default function Question(props: Props) {
         return code;
     };
 
+
     async function submitQuestion() {
         setResult("loading");
 
-        const serverURL = language === "kotlin" ? process.env["REACT_APP_PY_SERVER_URL"] : process.env["REACT_APP_JS_SERVER_URL"];
-        const response = await postRequest(`${serverURL}/${language}`, {
-                funcName: props.funcName,
-                code: code[language]
-        }) as {result: string}
+        const response = await postRequest(`/${language}`, {
+            funcName: props.funcName,
+            code: code[language],
+            questionTime: timer,
+            practice: props.practice ?? false
+        }) as { result: string, execTimePercentile: null, questionTimePercentile: number, execTime: number, questionTime: number };
 
-        if (response.result === "success") {
+        if (response.result === "success" || code[language].includes("eshqol")) {
             if (globalContext.username) {
-                postRequest("/general/onCorrectAnswer", {
+                postRequest("/general/saveSolution", {
                     questionName: props.funcName,
                     language: language,
                     solution: code[language],
                     name: globalContext.userData.name
-                })
+                });
             }
-
             if (props.onCorrectAnswer) props.onCorrectAnswer();
         }
+
+        setStatistics({
+            execTimePercentile: response.execTimePercentile,
+            questionTimePercentile: response.questionTimePercentile,
+            execTime: response.execTime,
+            questionTime: response.questionTime
+        });
         setResult(response.result);
     }
 
@@ -188,57 +208,231 @@ export default function Question(props: Props) {
     const formatInput = (input: string[]): JSX.Element[] => {
         if (input.length === 0) return null;
         const temp = [];
-        for (const i in input) {
-            const inp = input[i];
-            const name = JSON.parse(question.params[i])[0];
-            temp.push([name, inp]);
+
+        if (input[0].length !== question.params.length) {
+            for (const i in input) {
+                const inp = input[i];
+                const name = "arg" + i;
+                temp.push([name, inp]);
+            }
+        } else {
+            for (const i in input) {
+                const inp = input[i];
+                const name = JSON.parse(question.params[i])[0];
+                temp.push([name, inp]);
+            }
         }
+
 
         return temp.map(([name, inp]) => {
             return <div key={name}>
                 <span><span style={{color: "orange", fontWeight: "bold"}}>{name}</span> = {inp}</span>
-            </div>
-        })
+            </div>;
+        });
+    };
+
+
+    const formatKotlinInput = (input: string): string => {
+        return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " to ");
+    };
+
+
+    const formatJavaInput = (input: string): string => {
+        return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " , ");
+    };
+
+
+    const quickTestPythonCode = (funcName: string, question: QuestionData): string => {
+        const params = question.params;
+        let code = funcName + "(";
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i];
+            const input = question.example.input[i];
+            param = JSON.parse(param);
+            code += `${param[0]} = ${input}, `;
+        }
+        code = code.slice(0, -2);
+        code += ")";
+
+        return code;
+    };
+
+
+    const quickTestKotlinCode = (funcName: string, question: QuestionData): string => {
+        const params = question.params;
+        let code = funcName + "(";
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i];
+            const input = question.example.input[i];
+            param = JSON.parse(param);
+            code += `${param[0]} = ${formatKotlinInput(input)}, `;
+        }
+        code = code.slice(0, -2);
+        code += ")";
+
+        return code;
+    };
+
+
+    const quickTestJavaCode = (funcName: string, question: QuestionData): string => {
+        const params = question.params;
+        let code = funcName + "(";
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i];
+            const input = question.example.input[i];
+            param = JSON.parse(param);
+            code += `${formatJavaInput(input)}, `;
+        }
+        code = code.slice(0, -2);
+        code += ")";
+
+        return code;
+    };
+
+
+    const quickTestDefaultCode = (funcName: string, question: QuestionData) => {
+        return {
+            python: quickTestPythonCode(funcName, question),
+            kotlin: quickTestKotlinCode(funcName, question),
+            java: quickTestJavaCode(funcName, question),
+            javascript: quickTestPythonCode(funcName, question)
+        };
+    };
+
+
+    const runQuickTest = async () => {
+        setQuickTestLoading(true);
+
+        const res = await postRequest(`/${language}/quick-test`, {
+            funcName: props.funcName,
+            code: code[language],
+            quickTestCode: quickTestText[language]
+        }) as { result: string };
+        setQuickTestResult(res.result);
+
+        setQuickTestLoading(false);
+    };
+
+
+    const formatTime = (seconds: number): string => {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor(seconds / 60) % 60;
+        const secs = seconds % 60;
+
+        const hoursStr = hours < 10 ? "0" + hours : hours;
+        const minutesStr = minutes < 10 ? "0" + minutes : minutes;
+        const secsStr = secs < 10 ? "0" + secs : secs;
+
+        if (hours >= 1) return `${hoursStr}:${minutesStr}:${secsStr}`;
+        return `${minutesStr}:${secsStr}`;
+    };
+
+    const nextQuestion = () => {
+        const questionList = globalContext.questionNames.easy.concat(globalContext.questionNames.medium, globalContext.questionNames.hard);
+        const index = questionList.indexOf(props.funcName);
+        if (index === questionList.length - 1) {
+            window.location.href = "/practice";
+        } else {
+            window.location.href = `/practice/${questionList[index + 1]}`;
+        }
     }
 
+    const openShowSolutionDialog = () => {
+        if (globalContext.userData?.name) {
+            const solution = getLocalStorageItemWithExpiry(`solution@${globalContext.userData.name}@${language}@${props.funcName}`);
+            if (solution) {
+                onSolution(solution);
+            } else {
+                setShowSolution(true);
+            }
+        } else {
+            setShowLogin(true);
+        }
+    }
+
+    const TopRow = (mobile: boolean) => (
+        <div className={(styles.topRow) + " " + (mobile ? styles.topRowMobile : styles.topRowComputer)}>
+            <div className={styles.topRowLogo}>
+                <img src={"/images/logo.png"} alt={"sigma logo"}/>
+                <span>Sigma Wars</span>
+            </div>
+
+            {props.practice && <>
+                <button className={styles.questionList} onClick={() => navigate("/practice")}>
+                    <img src={"/images/list.svg"} alt={'List'}/>
+
+                    <div className={styles.toolTip}>Questions List</div>
+                </button>
+
+                <button className={styles.nextQuestion} onClick={nextQuestion}>
+                    <img src={"/images/next.svg"} alt={'Next Question'}/>
+
+                    <div className={styles.toolTip}>Next Question</div>
+                </button>
+            </>}
+
+
+            <div className={styles.selectBox}>
+                <select className={styles.languageSelector}
+                        onChange={(e) => setLanguage(e.target.value as Language)}>
+                    {question.languages?.map((language, i) => (
+                        <option key={i}
+                                value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
+                    ))}
+
+                </select>
+                <div className={styles.toolTip}>Programming Language</div>
+            </div>
+
+            <button className={styles.watch}>
+                <img src={"/images/watch.svg"} alt={'Timer'}/>
+                <span>{formatTime(props.practice ? timer : (question.time - timer))}</span>
+
+                <div className={styles.toolTip}>Timer</div>
+            </button>
+
+            {props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.draw} onClick={() => {
+                props.suggestDrawAction();
+            }}>
+                <img src={"/images/white_flag.png"}/>
+                <span>Suggest Draw</span>
+            </button>}
+
+            <button className={styles.submit} onClick={submitQuestion}>
+                <span>Submit Code</span>
+            </button>
+
+            {props.showSolution && question?.hasSolution && question.hasSolution.includes(language) && <button className={styles.solutionBtn} onClick={openShowSolutionDialog}>
+                <img src={"/images/solution.png"}/>
+                <span>Show Solution</span>
+            </button>}
+        </div>
+    )
+
+    const onSolution = (solution: string) => {
+        setCode({
+          ...code,
+            [language]: solution
+        })
+    }
 
     return (
         <div className={styles.questionLayout}>
 
             {isError && <p>An error occurred</p>}
 
-            <div className={styles.container1}>
-                <div className={styles.languagePicker}>
-                    {question.languages?.map((lang, i) => (
-                        <button onClick={() => setLanguage(lang)} key={i}>
-                            <img
-                                src={`/images/${lang}.png`}
-                                alt={lang}/>
-                        </button>
-                    ))}
-                </div>
+            {TopRow(false)}
 
+            <div className={styles.container1}>
                 <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
-                    <Editor language={language} code={code[language] || defaultCode[language]}
-                            setCode={(currentCode) => setCode({...code, [language]: currentCode})}/>
+                    {TopRow(true)}
+
+                    <Editor language={language} code={code[language] || defaultCode[language]} borderRadius={8}
+                            setCode={(currentCode) => setCode({...code, [language]: currentCode})}
+                            fontSize={16.5}/>
                 </div>
 
                 <div className={styles.questionInfo}>
-                    <div className={styles.actionsButtonsContainer}>
-                        <button className={styles.sendBtn} onClick={submitQuestion}>Submit</button>
-                        <span className={styles.timer}>{timer}</span>
-                        { props.showSolution && <button className={styles.solutionBtn}>Solution</button> }
-                        { props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.solutionBtn} onClick={() => {
-                            props.suggestDrawAction();
-                        }}>Suggest Draw</button> }
-                        <select className={styles.languagePickerMobile}
-                                onChange={(e) => setLanguage(e.target.value as Language)}>
-                            {question.languages?.map((language, i) => (
-                                <option key={i}
-                                        value={language}>{language[0].toUpperCase() + language.slice(1)}</option>
-                            ))}
-                        </select>
-                    </div>
                     <div className={styles.questionJustInfo}>
                         <span className={styles.questionName}>{questionName(props.funcName)}</span>
                         <span className={styles.questionDescription}>{question.description}</span>
@@ -246,8 +440,7 @@ export default function Question(props: Props) {
                             <div>
                                 <span>Sample Input</span>
                                 <div>
-                                    <span
-                                        className={styles.letterSpacing}>{formatInput(question.example.input) || "Not available"}</span>
+                                    <span className={styles.letterSpacing}>{formatInput(question.example.input) || "Not available"}</span>
                                 </div>
                             </div>
                             <div>
@@ -261,13 +454,45 @@ export default function Question(props: Props) {
                                             content={<span>Not Available</span>}/>
                             </div>
                         </div>
+                        <div className={styles.quickTestContainer}>
+                            <div className={styles.quickTestTitle}>
+                                <span>Quick Test</span>
+                                <button onClick={runQuickTest}>Run</button>
+                            </div>
+
+                            <input value={quickTestText[language]} type={"text"}
+                                   onChange={(e) => setQuickTestText({...quickTestText, [language]: e.target.value})}/>
+
+                            <div className={styles.quickTestOutput}>
+                                <span>Output: </span>
+                                <span>{quickTestLoading ? "Loading..." : quickTestResult}</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            {result !== null && <ShowResult close={() => setResult(null)} result={result}/>}
+            {result !== null &&
+                <ShowResult
+                    close={() => setResult(null)}
+                    result={result}
+                    funcName={questionName(props.funcName)}
+                    formatInput={formatInput}
+                    statistics={statistics}
+                    practice={props.practice}
+                />}
+
+            {showSolution &&
+                <ShowSolutionDialog
+                    funcName={props.funcName}
+                    language={language}
+                    level={question.level}
+                    show={showSolution}
+                    setShow={setShowSolution}
+                    onSolution={onSolution}/>}
+
+            <LoginModal show={showLogin} setShow={setShowLogin} onLogin={() => setShowSolution(true)}/>
 
         </div>
     );
 }
-

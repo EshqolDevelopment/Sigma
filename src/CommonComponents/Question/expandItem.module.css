@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 
 .expandItemTitle img {
@@ -21,8 +22,18 @@
 }
 
 .contentContainer {
-    margin-top: 15px;
-    animation: expand 3s ease;
+    animation: expand 3s ease ;
+    height: 35px;
+    position: relative;
+    top: 15px;
+}
+
+.arrow {
+    transition: transform 0.2s ease;
+}
+
+.arrowOpen {
+    transform: rotate(180deg);
 }
 
 @keyframes expand {

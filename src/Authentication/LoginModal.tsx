@@ -1,9 +1,15 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import loginStyle from "./login.module.scss"
 import {getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
-import {GlobalContext} from "./Global";
+import {GlobalContext} from "../Global";
 
-export default function LoginModal(props) {
+type Props = {
+    show: boolean,
+    setShow: (show: boolean) => void,
+    onLogin?: () => void
+}
+
+export default function LoginModal(props: Props) {
     const multiPlayDialog = useRef<HTMLDialogElement>();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -32,6 +38,7 @@ export default function LoginModal(props) {
                     globalContext.showToast("Signed in successfully", "success");
                 }
                 multiPlayDialog.current.close();
+                if (props.onLogin) props.onLogin();
             } else {
                 setError("An unexpected error occurred");
             }
@@ -58,6 +65,7 @@ export default function LoginModal(props) {
 
             if (result.user) {
                 multiPlayDialog.current.close();
+                if (props.onLogin) props.onLogin();
             } else {
                 setError("An unexpected error occurred");
             }
@@ -82,6 +90,7 @@ export default function LoginModal(props) {
             if (result.user) {
                 globalContext.showToast("Signed in successfully", "success");
                 multiPlayDialog.current.close();
+                if (props.onLogin) props.onLogin();
             } else {
                 setError("Unexpected error occurred");
             }

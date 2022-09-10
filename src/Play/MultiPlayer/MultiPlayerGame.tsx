@@ -111,10 +111,13 @@ export default function MultiPlayerGame(props: Props) {
                                     currentStep={playersData[globalContext.username].currentQuestion}
                                     playersData={playersData}/>
 
-                <ToastContainer />
             </> :
 
                 <div className={styles.finishContainer}>
+
+                    <div>
+
+                    </div>
                     <div className={styles.coins}>
                         <span className={styles.coinsAdded}>Coins:&nbsp;&nbsp;+{coins}</span>
                         <img src={"/images/coin.png"} alt={"coins"}/>

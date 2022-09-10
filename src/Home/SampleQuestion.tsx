@@ -23,8 +23,6 @@ export function SampleQuestion() {
     const [sampleQuestionLoadingState, setSampleQuestionLoadingState] = useState("")
     const [result, setResult] = useState("")
 
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
     const formatName = (name: string) =>  {
         const words = name.split("_");
         return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
@@ -34,10 +32,9 @@ export function SampleQuestion() {
         setSampleQuestionLoadingState("loading")
         const res = await postRequest(`/python`, {
             funcName: question.name,
-            code: sampleQuestionCode
+            code: sampleQuestionCode,
+            questionTime: 3600,
         }) as {result: string}
-
-        await sleep(1000)
 
         setResult(res.result)
         setSampleQuestionLoadingState(res.result === "success" ? "success" : "error")

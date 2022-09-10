@@ -62,6 +62,7 @@ export default function QuickPlayQuestionWrapper(props: Props) {
         const drawListener = onValue(drawRef, (snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val() as DrawData;
+                console.log("draw data", data);
                 if (data.name === globalContext.username && data.response === "waiting") {
                     toast.promise(waitForDrawResponse, {
                         pending: 'Waiting for response from your opponent',
@@ -130,7 +131,6 @@ export default function QuickPlayQuestionWrapper(props: Props) {
                 onDecline={() => answerDraw(false)}
             />}
 
-            <ToastContainer />
         </div>
     )
 
