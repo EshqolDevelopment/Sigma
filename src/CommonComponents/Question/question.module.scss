@@ -40,6 +40,11 @@
 
     @include mobile {
         display: flex;
+        grid-template-columns: 1fr 1fr;
+        height: auto;
+        & > *, select {
+            width: 100%;
+        }
     }
 }
 
@@ -95,6 +100,10 @@
         height: 60%;
         width: auto;
     }
+}
+
+.watch {
+    gap: 10px;
 }
 
 .selectBox {

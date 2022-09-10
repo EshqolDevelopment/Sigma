@@ -145,6 +145,13 @@ export default function Question(props: Props) {
         return code;
     };
 
+    useEffect(() => {
+        const selector = document.querySelector("#ace-editor > div.ace_mobile-menu")
+        if (selector) {
+            selector.remove();
+        }
+    })
+
 
     const javaDefaultCode = (funcName, params: string, returnType: string) => {
         const pythonToJavaType = {
