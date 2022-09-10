@@ -69,7 +69,7 @@
     }
 
     & > div {
-        width: 150px;
+        width: min(150px, 30vw);
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -118,14 +118,25 @@
 
 
 .finishContainer {
-    margin-top: 100px;
+    margin-top: 60px;
     text-align: center;
     color: white;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(#00a6ff, #314cab, #6b65c4);
+    margin-inline: auto;
+    min-height: calc(100vh - 90px);
+    width: min(700px, 100vw);
+    padding-block: 30px;
 
     & > h2 {
         font-size: 30px;
+        font-family: Game-Bold, serif;
+        -webkit-text-stroke: 2px #3e0080;
+
+        @include mobile {
+            font-size: 24px;
+        }
     }
 
     .coins {
@@ -157,11 +168,11 @@
 }
 
 .buttonContainer button {
-    width: 300px;
+    width: min(400px, 95vw);
     border: 0;
     background: dodgerblue;
     color: white;
-    border-radius: 10px;
+    border-radius: 6px;
     font-weight: bold;
     font-size: 20px;
     padding: 10px;

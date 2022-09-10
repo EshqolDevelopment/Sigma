@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import loginStyle from "./login.module.scss"
 import {getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword} from "firebase/auth";
-import {GlobalContext} from "./Global";
+import {GlobalContext} from "../Global";
 
 type Props = {
     show: boolean,

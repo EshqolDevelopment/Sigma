@@ -2,7 +2,7 @@ import styles from "./levels.module.scss";
 import React, {useContext, useRef, useState} from "react";
 import {Level} from "../../DataTypes";
 import {GlobalContext} from "../../Global";
-import LoginModal from "../../LoginModal";
+import LoginModal from "../../Authentication/LoginModal";
 
 
 

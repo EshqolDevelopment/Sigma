@@ -8,7 +8,7 @@ import ShowResult from "./ShowResult";
 import {useQuery} from "react-query";
 import {useNavigate} from "react-router-dom";
 import ShowSolutionDialog from "./ShowSolutionDialog";
-import LoginModal from "../../LoginModal";
+import LoginModal from "../../Authentication/LoginModal";
 
 
 type Props = {

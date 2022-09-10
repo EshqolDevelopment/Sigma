@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styles from "../Setup/play.module.scss";
 import {Levels} from "../Setup/Levels";
 import {GlobalContext, postRequest} from "../../Global";
-import LoginModal from "../../LoginModal";
+import LoginModal from "../../Authentication/LoginModal";
 
 type Props = {
     onSubmit: (code: string) => void;

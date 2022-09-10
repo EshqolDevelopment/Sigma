@@ -65,26 +65,21 @@
 
 
 .gameSummary {
-    color: white;
+    display: flex;
+   justify-content: center;
+
+}
+
+
+.resultContainer {
     display: flex;
     flex-direction: column;
-    margin-top: 100px;
     align-items: center;
-
-    & > h3 {
-        font-size: 43px;
-        font-weight: 400;
-
-        @include mobile {
-            font-size: 38px;
-        }
-    }
-
-    & > span {
-        font-size: 24px;
-        margin-top: 20px;
-        font-weight: bold;
-    }
+    width: min(700px, 100vw);
+    padding-block: 30px;
+    color: white;
+    margin-top: 60px;
+    min-height: calc(100vh - 90px);
 
     .coins {
         display: flex;
@@ -100,6 +95,48 @@
             height: 35px;
             margin-left: 10px;
         }
+    }
+
+    & > h3 {
+        font-size: 38px;
+        font-weight: 400;
+        font-family: Game-Bold, serif;
+        -webkit-text-stroke: 2px black;
+        text-align: center;
+
+        @include mobile {
+            font-size: 30px;
+        }
+    }
+
+    & > span {
+        font-size: 24px;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+}
+
+.won {
+    background: linear-gradient(#aa7b2e, #f5d26e, #974e0e);
+
+    & > h3 {
+        color: #00ff00;
+    }
+}
+
+.lost {
+    background: linear-gradient(#706b62, #6c5855, #483424);
+
+    & > h3 {
+        color: #f5ecdb;
+    }
+}
+
+.draw {
+    background: linear-gradient(#00a6ff, #314cab, #302d62);
+
+    & > h3 {
+        color: white;
     }
 }
 
@@ -183,7 +220,6 @@
 
     @include mobile {
         width: 90% !important;
-        margin-top: 12px;
     }
     font-weight: bold;
 }
@@ -193,7 +229,7 @@
     margin-bottom: 15px;
 
     @include mobile {
-        margin-top: 100px;
+        margin-top: 80px;
     }
 }
 

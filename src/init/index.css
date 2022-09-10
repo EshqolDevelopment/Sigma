@@ -58,3 +58,10 @@ button {
 .sigma-button:disabled {
     background-color: #84b4e5;
 }
+
+@font-face {
+    font-family: Game-Bold;
+    src: url(/public/GameBold.otf);
+}
+
+
