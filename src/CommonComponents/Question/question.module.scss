@@ -63,6 +63,14 @@
     border-radius: 5px;
 }
 
+.selectBox:hover .toolTip{
+    visibility: visible;
+}
+
+.selectBox {
+    position: relative;
+}
+
 .questionList, .topRowLogo, .nextQuestion, .selectBox select, .watch, .submit, .draw, .solutionBtn {
     border: 0;
     padding: 0;
