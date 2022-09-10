@@ -176,7 +176,7 @@ export default function ListOfQuestions(props: Props) {
     }
 
     return (
-        <div onMouseUp={onMouseUp} onMouseMove={(e) => onMouseMove(e.pageY)} onTouchEnd={onTouchEnd}
+        <div className={'list-of-question-private'} onMouseUp={onMouseUp} onMouseMove={(e) => onMouseMove(e.pageY)} onTouchEnd={onTouchEnd}
              onTouchMove={(e) => onMouseMove(e.touches[0].pageY)}>
             {questionList.map((data, i) => {
                     return (

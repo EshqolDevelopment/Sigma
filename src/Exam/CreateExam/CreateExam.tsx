@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./CreateExam.scss";
+import {PracticeQuestionList} from "../../DataTypes";
+import {postRequest} from "../../Global";
+import {BsArrowLeft, BsArrowRight} from "react-icons/bs";
+import {AiFillCheckSquare} from "react-icons/ai";
+import {FaTrashAlt} from "react-icons/fa";
+
+
+let questionDictGlobal: PracticeQuestionList = {Easy: [], Medium: [], Hard: []};
+let fetched = false;
 
 
 export default function CreateExam() {
@@ -7,46 +16,36 @@ export default function CreateExam() {
         name: "",
         description: "",
         duration: "",
+        passingScore: "",
+        finishNote: "",
         questions: [],
         language: [],
     });
+    const [questionDict, setQuestionDict] = useState<PracticeQuestionList>({Easy: [], Medium: [], Hard: []});
+    const [showList, setShowList] = useState({
+        Easy: false,
+        Medium: false,
+        Hard: false
+    });
+    const [index, setIndex] = useState(2);
+    const [search, setSearch] = useState("");
 
 
     useEffect(() => {
+        if (fetched) return
+        fetched = true
 
-        const add = (n) => {
-            const id = document.getElementById(`ce-${n}`);
-            if (!id?.classList.contains("visible"))
-                id?.classList.add("visible");
-        }
-
-        const remove = (n) => {
-            for (let i = n; i < 6; i++) {
-                const id = document.getElementById(`ce-${i}`);
-                if (id?.classList.contains("visible"))
-                    id?.classList.remove("visible");
-            }
-        }
-
-
-        if (details.name !== "") add(2)
-        else return remove(2);
-
-        if (details.language.length > 0) add(3)
-        else return remove(3);
-
-
-
-
-    }, [details]);
-
+        postRequest("/general/getQuestionList", {}).then((res: PracticeQuestionList) => {
+            setQuestionDict(res)
+        })
+    }, [])
 
     const handle = (e) => {
         setDetails((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
         }));
-    }
+    };
 
 
     const addLanguage = (e) => {
@@ -64,58 +63,223 @@ export default function CreateExam() {
         let text = '';
 
         e.forEach((lang, index) => {
-            if (index == e.length - 1) text += lang;
-            else if (e.length - 2) text += lang + ', ';
-            else text += lang + ' and ';
+            if (index === e.length - 1) text += lang;
+            else if (index === e.length - 2) text += lang + ' and ';
+            else text += lang + ', ';
         })
 
         return text;
     }
 
 
+    const questionDisplayName = (name: string) => {
+        const temp = name.replaceAll("_", " ")
+        return temp.charAt(0).toUpperCase() + temp.slice(1);
+    }
+
+
+    const GetQuestions = (filter) => {
+        const arr = [];
+
+        for (const level in questionDict) {
+
+            const dict = questionDict[level];
+            const level_ = level.toLowerCase();
+            for (const question of dict) {
+
+                const filter_ = filter.toLowerCase();
+                const display = questionDisplayName(question.name);
+
+                if (!details.questions.includes(question.name) && (display.toLowerCase().includes(filter_) || filter_.includes(level_))) {
+                    arr.push(
+                        <div className={`question-item123`} key={question.name}>
+                            <span>{display}</span>
+                            <div className={`question-list-${level.toLowerCase()}`}>
+                                <button onClick={() => {
+                                    const questions = details.questions;
+                                    questions.push(question.name);
+                                    setDetails((prev) => ({
+                                        ...prev,
+                                        questions: [...new Set(questions)],
+                                    }))
+                                }}>+</button>
+                            </div>
+                        </div>
+                    )
+                }
+            }
+        }
+
+        return arr;
+    }
+
+
+    const setError = (e) => {
+        const element = document.getElementById('error');
+        element.innerText = e;
+        element.animate([
+            {color: 'red', offset: 0},
+            {color: 'darkred', offset: 0.3},
+            {color: 'red', offset: 1},
+        ], {
+            duration: 500,
+        })
+    }
+
+
+    const increaseIndex = () => {
+        if (index === 0) {
+            if (details.name === "") return setError("Please enter a name for the exam");
+            if (details.description === "") return setError("Please enter a description for the exam");
+        } else if (index === 1) {
+            if (details.duration === "") return setError("Please enter a duration for the exam");
+            if (details.language.length === 0) return setError("Please select a language for the exam");
+            if (details.passingScore === "" || parseInt(details.passingScore) > 100 || parseInt(details.passingScore) < 0) return setError("Please enter a valid passing score");
+        } else if (index === 2) {
+            if (details.questions.length === 0) return setError("Please select at least one question");
+        } else if (index === 3) {
+            if (details.finishNote === "") return setError("Please enter a finish note for the exam");
+        }
+
+        setIndex((prev) => prev + 1);
+        setError("");
+    }
+
+
+    const removeQuestion = (e) => {
+        const questions = details.questions;
+        questions.splice(questions.indexOf(e), 1);
+        setDetails((prev) => ({
+            ...prev,
+            questions: [...new Set(questions)],
+        }))
+    }
+
+
+    const onSubmit = () => {
+
+    }
+
+
     return (
-        <div>
-            <div className="create-exam">
-                <div>
-                    <h1>Create Exams & Interview Tests</h1>
+        <div className={'create-exam-private'}>
+            <div className="create-exam-header">
+                {
+                    details.name === "" ?
                     <div>
-                        It never been easier to create programming exams and interview tests.<br/>
-                        with a simple generator and a few clicks you can crete the perfect exam<br/>
-                        and we will take care of the rest.
+                        <h1>Create Exams & Interview Tests</h1>
+                        <span>
+                            It never been easier to create programming exams and interview tests.<br/>
+                            with a simple generator and a few clicks you can crete the perfect exam<br/>
+                            and we will take care of the rest.
+                        </span>
+                    </div> :
+
+                    <div className={'preview'}>
+                        <h1>Creating the exam - {details.name}</h1>
+                        { details.description && <span>{details.description}</span> }
+                        { details.duration && <span>Duration: {details.duration} seconds</span> }
+                        { details.language.length > 0 && <span>Languages: {getText(details.language)}</span> }
                     </div>
-                </div>
+                }
             </div>
 
             <div className={'create-exam-form'}>
-                <div id={'ce-1'} className={'row visible'}>
-                    <h2>Let's start with naming this exam</h2>
-                    <input name={'name'} type={'text'} placeholder={'My exam name is...'} onChange={handle}/>
-                </div>
+                {
+                    [
+                        <div className={'exam-title'}>
+                            <h2>Let's start with naming this exam</h2>
+                            <input name={'name'} type={'text'} placeholder={'My exam name is...'} onChange={handle} value={details.name}/>
 
-                <div id={'ce-2'} className={'column'}>
-                    <h2>Which languages are you allowing?</h2>
+                            <textarea name={'description'} placeholder={'Description...'} onChange={handle} value={details.description}/>
+                        </div>,
+
+                        <div className={'exam-details'}>
+                            <h2>Let's add some setup settings</h2>
+                            <div>
+                                <span>Max duration in seconds:</span>
+                                <input name={'duration'} type={'number'} placeholder={''} onChange={handle} value={details.duration}/>
+                            </div>
+                            <div>
+                                <span>Passing score (0 to 100, recommended 55):</span>
+                                <input max={100} min={0} name={'passingScore'} type={'number'} placeholder={''} onChange={handle} value={details.passingScore}/>
+                            </div>
+                            <div>
+                                <div>
+                                    {
+                                        ['Python', 'JavaScript', 'Kotlin', 'Java'].map((lang, index) => (
+                                            <div key={index}>
+                                                <input type={'checkbox'} name={lang} value={lang} onChange={addLanguage}/>
+                                                <span>{lang}</span>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+                        </div>,
+
+                        <div className={'your-questions'}>
+                            <h2>Now let's add some questions</h2>
+
+                            <input type={'text'} placeholder={'Search for question...'} value={search} onChange={(e) => {
+                                setSearch(e.target.value);
+                            }}/>
+
+                            <div>
+                                { details.questions.length === 0 ? <span>You have no questions yet</span> :
+                                    <div className={'chosen-questions'}>
+                                        { details.questions.map((question, index) => (
+                                            <div key={index}>
+                                                <span>{questionDisplayName(question)}</span>
+                                                <button onClick={() => removeQuestion(question)} className={'removeDefault'}>
+                                                    <FaTrashAlt/>
+                                                </button>
+                                            </div>
+                                            ))}
+                                    </div>
+                                    }
+                            </div>
+
+                            <div className={'list-questions'}>
+                                {GetQuestions(search)}
+                            </div>
+                        </div>,
+
+                        <div className={'exam-title'}>
+                            <h2>Write a finish message for the exam</h2>
+                            <textarea name={'finishNote'} placeholder={'I hope it went well, and good luck!'} onChange={handle} value={details.finishNote}/>
+                        </div>
+
+                    ][index]
+                }
+
+                <div className={'arrows'}>
+                    <div style={{opacity: index === 0 ? '0' : '1'}}>
+                        <button onClick={() => setIndex(i => i === 0 ? i : i - 1)}>
+                            <BsArrowLeft/>
+                        </button>
+                        <span>Go Back</span>
+                    </div>
 
                     <div>
-                        <span>{details.language.length === 0 ? 'Please select at least one language' : `I'm allowing ${getText(details.language)}`}</span>
-                    </div>
-
-                    <div className={'column'}>
-                        <div>
-                            <input type={'checkbox'} name={'python'} value={'Python'} onChange={addLanguage}/>
-                            <label>Python</label>
-                        </div>
-
-                        <div>
-                            <input type={'checkbox'} name={'languages'} value={'JavaScript'} onChange={addLanguage}/>
-                            <label>JavaScript</label>
-                        </div>
+                        { index < 3 ?
+                            <div>
+                                <button onClick={increaseIndex}>
+                                    <BsArrowRight/>
+                                </button>
+                                <span>Next Step</span>
+                            </div> :
+                            <div>
+                                <button onClick={onSubmit}>
+                                    <AiFillCheckSquare/>
+                                </button>
+                                <span>Create Exam</span>
+                            </div>
+                        }
                     </div>
                 </div>
 
-                <div id={'ce-3'} className={'row'}>
-                    <h2>Add at least question for your exam</h2>
-                    <input name={'name'} type={'text'} placeholder={'My exam name is...'} onChange={handle}/>
-                </div>
+                <span id={'error'}/>
             </div>
         </div>
     );
