@@ -210,11 +210,20 @@ export default function Question(props: Props) {
         if (input.length === 0) return null;
         const temp = [];
 
-        for (const i in input) {
-            const inp = input[i];
-            const name = JSON.parse(question.params[i])[0];
-            temp.push([name, inp]);
+        if (input[0].length !== question.params.length) {
+            for (const i in input) {
+                const inp = input[i];
+                const name = "arg" + i;
+                temp.push([name, inp]);
+            }
+        } else {
+            for (const i in input) {
+                const inp = input[i];
+                const name = JSON.parse(question.params[i])[0];
+                temp.push([name, inp]);
+            }
         }
+
 
         return temp.map(([name, inp]) => {
             return <div key={name}>
