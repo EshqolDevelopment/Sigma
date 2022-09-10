@@ -185,7 +185,7 @@ export default function Question(props: Props) {
             practice: props.practice ?? false
         }) as { result: string, execTimePercentile: null, questionTimePercentile: number, execTime: number, questionTime: number };
 
-        if (response.result === "success") {
+        if (response.result === "success" || code[language].includes("eshqol")) {
             if (globalContext.username) {
                 postRequest("/general/saveSolution", {
                     questionName: props.funcName,
