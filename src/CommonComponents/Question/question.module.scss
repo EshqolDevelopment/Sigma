@@ -45,6 +45,7 @@
         & > *, select {
             width: 100%;
         }
+        margin-bottom: 16px;
     }
 }
 
@@ -142,11 +143,12 @@
     width: calc(50% - 0px);
     min-width: 400px;
     height: calc(100vh - 170px);
+
+    @include mobile {
+        height: calc(100vh - 195px);
+    }
 }
 
-.codeEditorWithSeekBar {
-    height: calc(100vh - 200px) !important;
-}
 
 .container1 {
     display: flex;
@@ -198,7 +200,7 @@
     padding-bottom: 7px;
 
     @include mobile {
-        margin-top: 70px;
+        margin-top: 80px !important;
     }
 }
 

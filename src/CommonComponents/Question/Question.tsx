@@ -431,7 +431,7 @@ export default function Question(props: Props) {
             {TopRow(false)}
 
             <div className={styles.container1}>
-                <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
+                <div className={[styles.codeEditor].join(" ")}>
                     {TopRow(true)}
 
                     <Editor language={language} code={code[language] || defaultCode[language]} borderRadius={8}
