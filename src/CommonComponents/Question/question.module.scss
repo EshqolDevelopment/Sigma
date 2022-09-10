@@ -39,7 +39,7 @@
     display: none;
 
     @include mobile {
-        display: flex;
+        display: grid;
         grid-template-columns: 1fr 1fr;
         height: auto;
         & > *, select {
@@ -322,10 +322,6 @@
         margin-top: 100px;
         margin-bottom: 20px;
         border: 0;
-    }
-
-    .solutionBtn {
-        display: none;
     }
 
     .actionsButtonsContainer {
