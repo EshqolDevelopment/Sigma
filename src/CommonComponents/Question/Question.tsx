@@ -380,7 +380,7 @@ export default function Question(props: Props) {
 
 
             <div className={styles.selectBox}>
-                <select className={styles.languageSelector}
+                <select
                         onChange={(e) => setLanguage(e.target.value as Language)}>
                     {question.languages?.map((language, i) => (
                         <option key={i}
@@ -398,16 +398,16 @@ export default function Question(props: Props) {
                 <div className={styles.toolTip}>Timer</div>
             </button>
 
+            <button className={[styles.submit, (!props.suggestDrawAction) && !(props.showSolution && question?.hasSolution && question.hasSolution.includes(language)) ? styles.submitOnly : ""].join(" ")} onClick={submitQuestion}>
+                <span>Submit Code</span>
+            </button>
+
             {props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.draw} onClick={() => {
                 props.suggestDrawAction();
             }}>
                 <img src={"/images/white_flag.png"}/>
                 <span>Suggest Draw</span>
             </button>}
-
-            <button className={styles.submit} onClick={submitQuestion}>
-                <span>Submit Code</span>
-            </button>
 
             {props.showSolution && question?.hasSolution && question.hasSolution.includes(language) && <button className={styles.solutionBtn} onClick={openShowSolutionDialog}>
                 <img src={"/images/solution.png"}/>
@@ -431,7 +431,7 @@ export default function Question(props: Props) {
             {TopRow(false)}
 
             <div className={styles.container1}>
-                <div className={[styles.codeEditor, !props.practice ? styles.codeEditorWithSeekBar : ""].join(" ")}>
+                <div className={[styles.codeEditor].join(" ")}>
                     {TopRow(true)}
 
                     <Editor language={language} code={code[language] || defaultCode[language]} borderRadius={8}

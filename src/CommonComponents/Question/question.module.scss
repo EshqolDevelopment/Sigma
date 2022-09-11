@@ -39,20 +39,39 @@
     display: none;
 
     @include mobile {
-        display: flex;
+        display: grid;
         grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
         height: auto;
-        & > *, select {
+        margin-bottom: 16px;
+
+        select {
             width: 100%;
         }
+
+        .submitOnly {
+            grid-column: 1/3;
+        }
     }
+
+
 }
 
-.topRowMobile .questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw, .solutionBtn {
+
+
+.topRowMobile .questionList, .topRowLogo, .nextQuestion, .selectBox select, .watch, .submit, .draw, .solutionBtn {
     border-radius: 5px;
 }
 
-.questionList, .topRowLogo, .nextQuestion, .languageSelector, .watch, .submit, .draw, .solutionBtn {
+.selectBox:hover .toolTip{
+    visibility: visible;
+}
+
+.selectBox {
+    position: relative;
+}
+
+.questionList, .topRowLogo, .nextQuestion, .selectBox select, .watch, .submit, .draw, .solutionBtn {
     border: 0;
     padding: 0;
     height: 45px;
@@ -106,47 +125,19 @@
     gap: 10px;
 }
 
-.selectBox {
-    position: relative;
-}
 
-.languagePicker {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
-}
 
-.languagePicker button {
-    background: rgb(0 0 0 /0);
-    border: 0;
-}
-
-.languagePicker img {
-    width: 70px;
-    height: 70px;
-    cursor: pointer;
-}
-
-.languagePicker img[alt="kotlin"] {
-    width: 60px;
-    height: 60px;
-}
-
-.languagePicker img[alt="java"] {
-    margin-top: -6px;
-    margin-bottom: 5px;
-}
 
 .codeEditor {
     width: calc(50% - 0px);
     min-width: 400px;
     height: calc(100vh - 170px);
+
+    @include mobile {
+        height: calc(100vh - 195px);
+    }
 }
 
-.codeEditorWithSeekBar {
-    height: calc(100vh - 200px) !important;
-}
 
 .container1 {
     display: flex;
@@ -187,6 +178,11 @@
     &:hover {
         background: #035e03;
     }
+
+    @include mobile {
+        margin-left: initial;
+
+    }
 }
 
 .questionName {
@@ -198,7 +194,7 @@
     padding-bottom: 7px;
 
     @include mobile {
-        margin-top: 70px;
+        margin-top: 80px !important;
     }
 }
 
@@ -254,9 +250,7 @@
     color: #fd971f;
 }
 
-.languagePickerMobile {
-    display: none;
-}
+
 
 .questionDescription {
     color: white;
@@ -273,10 +267,6 @@
     }
 
     .topRowComputer {
-        display: none;
-    }
-
-    .languagePicker {
         display: none;
     }
 
@@ -324,10 +314,6 @@
         border: 0;
     }
 
-    .solutionBtn {
-        display: none;
-    }
-
     .actionsButtonsContainer {
         display: flex;
         margin-left: 0;
@@ -337,15 +323,6 @@
 
     .sendBtn {
         width: 150px !important;
-    }
-
-    .languagePickerMobile {
-        display: initial;
-        width: 145px;
-        border-radius: 10px;
-        padding-left: 15px;
-        outline: none;
-        border: none;
     }
 
     .questionDescription {
