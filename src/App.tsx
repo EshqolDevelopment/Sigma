@@ -21,7 +21,8 @@ import {toast, ToastContainer, Zoom} from "react-toastify";
 import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
-import CreateExam from "./Exam/CreateExam/CreateExam";
+import CreateExam from "./Exam/Create/CreateExam";
+import MyExams from "./Exam/MyExams/MyExams";
 
 
 const getDisplayName = (username: string): string => {
@@ -44,6 +45,7 @@ const formatDBUserData = (name: string, userData: any): UserData => {
         image: userData["p"].toString(),
         displayName: getDisplayName(name),
         likes: userData["likes"] || [],
+        uid: getAuth().currentUser?.uid,
     };
 };
 
@@ -182,6 +184,7 @@ export default function App() {
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
                                 <Route path={"/create-exam"} element={<CreateExam/>}/>
+                                <Route path={"/my-exams"} element={<MyExams/>}/>
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>

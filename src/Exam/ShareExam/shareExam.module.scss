@@ -1,0 +1,66 @@
+
+.dialog {
+    border-radius: 30px;
+    width: 509px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 24px;
+
+
+    h3 {
+        font-size: 34px;
+        margin-top: -8px;
+    }
+
+    span {
+        margin-top: 24px;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        color: #000000;
+    }
+
+    input[type="text"] {
+        margin-top: 10px;
+        height: 45px;
+        border: 2px solid lightgray;
+        border-radius: 15px;
+        padding-left: 14px;
+        font-size: 15px;
+    }
+
+}
+
+
+.copyLinkBtn {
+    background-color: #00a6ff;
+    border: 0;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 32px;
+    height: 42px;
+    border-radius: 30px;
+    margin-bottom: 22px;
+    transition: 0.15s background-color;
+}
+
+.copyLinkBtn:hover {
+    background-color: #0088cc;
+}
+
+
+.close {
+
+    margin-left: auto;
+    position: relative;
+    left: 22px;
+
+    img {
+        width: 28px;
+        height: 28px;
+    }
+}

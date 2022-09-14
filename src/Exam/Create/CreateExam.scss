@@ -1,0 +1,406 @@
+@use "../../init/global" as *;
+
+$container-background: #fcf2e3;
+
+.create-exam-private {
+    margin-bottom: -80px;
+    padding-bottom: 20px;
+    min-height: calc(100vh - 60px);
+
+    input[type="text"], input[type='number'], textarea {
+        outline: none;
+        padding-inline: 20px;
+        transition: 0.2s ease-in-out;
+        font-size: 18px;
+        font-family: 'Arial', serif;
+        resize: none;
+        border: 2px solid black;
+        border-radius: 10px;
+        box-sizing: border-box;
+
+        &:focus {
+            border: 2px solid dodgerblue;
+        }
+    }
+
+    textarea {
+        padding: 20px;
+    }
+
+
+    h2 {
+        border-bottom: 2px solid;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .create-exam-header {
+        width: min(600px, 95%);
+        margin-inline: auto;
+        background-color: $container-background;
+        padding-bottom: 20px;
+        margin-top: calc(var(--navigation-height) + 40px);
+        min-height: 220px;
+        color: black;
+        border-radius: 10px;
+    }
+
+    .preview {
+        display: flex;
+        flex-direction: column;
+        h3 {
+            margin-top: 24px;
+            font-size: 30px;
+            text-align: center;
+        }
+        p {
+            margin-top: 22px;
+            font-size: 18px;
+            width: 90%;
+            margin-inline: auto;
+        }
+
+        .preview-default-title {
+            padding-top: 10px;
+            padding-bottom: 6px;
+            border-bottom: 3px solid black;
+        }
+
+        width: 100%;
+    }
+
+    .preview-desc {
+        margin-top: 4px;
+        white-space: pre-wrap;
+        font-size: 17.5px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .preview-exam-details {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        justify-content: flex-start;
+        width: 75%;
+        margin-inline: auto;
+        gap: 10px;
+
+        span {
+            display: flex;
+            gap: 10px;
+        }
+        & > span > span {
+            min-width: 130px;
+        }
+    }
+
+    .create-exam-form {
+        position: relative;
+        width: min(800px, 95vw);
+        color: black;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border: 2px solid;
+        background-color: $container-background;
+        margin: 30px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+
+        & > *:not(.arrows) {
+            position: relative;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            width: 80%;
+            z-index: 1;
+        }
+    }
+
+    .exam-details {
+        display: flex;
+        flex-direction: column;
+
+        .input-container {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            margin-inline: auto;
+            margin-top: 18px;
+
+
+            & > span {
+                font-weight: bold;
+                font-size: 17px;
+            }
+
+            & > input[type="text"] {
+                margin-top: 5px;
+                height: 48px;
+            }
+
+        }
+
+
+        span {
+            font-size: 18px;
+        }
+
+    }
+
+
+    .list-questions {
+        display: flex;
+        flex-wrap: wrap;
+        overflow: auto;
+        justify-content: space-around;
+        max-height: 300px;
+        width: 97%;
+    }
+
+    .chosen-questions {
+        display: flex;
+        align-items: center;
+        overflow: auto;
+        gap: 20px;
+        flex-shrink: 0;
+        background-color: #f3d68f;
+        padding: 10px 15px;
+        border-radius: 14px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        width: 85%;
+        height: 40px;
+
+        @include mobile {
+            width: 100%;
+        }
+
+
+        & > div {
+            display: flex;
+            gap: 10px;
+            background: white;
+            border: 1px solid;
+            border-radius: 10px;
+            font-size: 18px;
+            height: 100%;
+            align-items: center;
+            padding-inline: 10px;
+            flex-shrink: 0;
+
+            button {
+                margin-top: 5px;
+            }
+        }
+    }
+
+    .question-item123 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row;
+        border-radius: 10px;
+        margin: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+        min-width: 35%;
+        border: 1px solid;
+        height: 40px;
+        background: white;
+
+        span {
+            margin-left: 10px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        & > div {
+            width: 40px;
+            height: 100%;
+            border-top-right-radius: 10px;
+            border-bottom-right-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            button {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                border: none;
+                outline: none;
+                cursor: pointer;
+                transition: 0.2s ease-in-out;
+                background-color: white;
+                color: black;
+                font-size: 20px;
+                font-weight: bold;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+    }
+
+    .question-list-easy {
+        background: limegreen;
+    }
+
+    .question-list-medium {
+        background: orange;
+    }
+
+    .question-list-hard {
+        background: red;
+    }
+
+    .arrows {
+        position: absolute;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 98%;
+        height: 100%;
+        z-index: 0;
+
+        button {
+            margin: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            background: none;
+        }
+
+        div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        svg {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: 0.2s ease-in-out;
+            fill: black;
+        }
+
+        svg:hover {
+            transform: scale(1.1);
+        }
+
+        span {
+            font-size: 17px;
+            font-weight: 600;
+        }
+    }
+
+    #error {
+        color: red;
+        font-size: 20px;
+        font-weight: 600;
+        margin: -20px 0 20px;
+    }
+
+    .language-picker-exam {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 10px;
+        margin-bottom: 40px;
+
+        & > div {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
+        }
+
+        img[src*="kotlin"] {
+            width: 32px;
+            height: 32px;
+        }
+
+        input[type="checkbox"] {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            accent-color: forestgreen;
+
+            &:hover {
+                accent-color: green;
+            }
+        }
+    }
+
+
+    .exam-start-info {
+        padding-bottom: 50px;
+        input[type="text"] {
+            height: 50px;
+            width: 80%;
+            margin-top: 30px;
+        }
+
+        textarea {
+            height: 100px;
+            width: 80%;
+        }
+    }
+
+
+    .your-questions {
+
+        input[type="text"] {
+            width: 60%;
+            height: 48px;
+            margin-top: 6px;
+
+            @include mobile {
+                width: 100%;
+            }
+        }
+    }
+
+    .no-question {
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 18px;
+    }
+
+    .exam-finish {
+        textarea {
+            margin-top: 14px;
+            margin-bottom: 50px;
+            min-height: 200px;
+            width: 80%;
+        }
+    }
+
+    .spinner111 {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 9px solid #dbdcef;
+        margin-right: 30px;
+        border-right-color: #474bff;
+        animation: spinner-d3wgkg 1s infinite linear;
+    }
+
+    @keyframes spinner-d3wgkg {
+        to {
+            transform: rotate(1turn);
+        }
+    }
+
+}
+

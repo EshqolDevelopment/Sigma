@@ -63,6 +63,7 @@ export type UserData = {
     image: string;
     displayName: string;
     likes: string[];
+    uid: string;
 }
 
 export type Solutions = {
@@ -87,6 +88,14 @@ export type PracticeQuestionList = {
 
 export type QuestionList = string[];
 
-
+export type ExamDetails = {
+    name: string;
+    description: string;
+    duration: string;
+    passingScore: string;
+    finishNote: string;
+    questions: string[];
+    languages: Language[];
+}
 
 export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";

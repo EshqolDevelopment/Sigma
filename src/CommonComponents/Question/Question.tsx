@@ -467,7 +467,7 @@ export default function Question(props: Props) {
                                 <button onClick={runQuickTest}>Run</button>
                             </div>
 
-                            <input value={quickTestText[language]} type={"text"}
+                            <input value={quickTestText[language] || props.funcName} type={"text"} className={"normalInput"}
                                    onChange={(e) => setQuickTestText({...quickTestText, [language]: e.target.value})}/>
 
                             <div className={styles.quickTestOutput}>

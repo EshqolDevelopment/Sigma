@@ -11,18 +11,18 @@ import { useLocation } from "react-router";
 let lastCoinsUpdate = 0;
 export default function NavigationBar() {
     const [showLogin, setShowLogin] = useState(false);
-    const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
+    const pages = ["Home", "Practice", "Leaderboard", "Compiler", "My Exams"];
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const mobileMenuRef = createRef<HTMLButtonElement>();
     const globalContext = useContext(GlobalContext);
-    const [activePage, setActivePage] = useState(window.location.pathname.split("/")[1].toLocaleLowerCase());
+    const [activePage, setActivePage] = useState(window.location.pathname.split("/")[1].toLowerCase());
     const [showProfile, setShowProfile] = useState(false);
     const [showCoinsShop, setShowCoinsShop] = useState(false);
     const [lastCoinsDelta, setLastCoinsDelta] = useState(0);
     const location = useLocation();
 
     useEffect(() => {
-        setActivePage(location.pathname.split("/")[1].toLocaleLowerCase());
+        setActivePage(location.pathname.split("/")[1].toLowerCase());
     }, [location]);
 
 
@@ -64,14 +64,18 @@ export default function NavigationBar() {
         setShowCoinsShop(true);
     }
 
+    const nameToUrl = (name) => {
+        return name.toLowerCase().replace(" ", "-");
+    }
+
     return (
         <nav className={style.navigationBar}>
             <div className={style.navMenu}>
                 {pages.map((page, index) => {
                     return (
                         <Link key={index}
-                              className={[style.page, isActive(activePage.toLocaleLowerCase(), page.toLocaleLowerCase()) ? style.active : ""].join(" ")}
-                              to={"/" + (page.toLowerCase() === "home" ? "" : page.toLowerCase())}>
+                              className={[style.page, isActive(nameToUrl(activePage), nameToUrl(page)) ? style.active : ""].join(" ")}
+                              to={"/" + (nameToUrl(page) === "home" ? "" : nameToUrl(page))}>
                             {page}
                         </Link>
                     );
@@ -113,8 +117,8 @@ export default function NavigationBar() {
                 <span>Hello, {globalContext.userData?.displayName}</span>
                 {pages.map((page, index) => {
                     return (
-                        <Link className={style.mobileLink} onClick={openMobileMenu} key={index} to={"/" + (page.toLowerCase() === "home" ? "" : page.toLowerCase())}>
-                            <img src={`/images/${page.toLowerCase()}.png`} alt={"coins"}/>
+                        <Link className={style.mobileLink} onClick={openMobileMenu} key={index} to={"/" + (nameToUrl(page)) === "home" ? "" : nameToUrl(page)}>
+                            <img src={`/images/${nameToUrl(page)}.png`} alt={"coins"}/>
                             <span>{page}</span>
                         </Link>
                     );

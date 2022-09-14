@@ -110,7 +110,7 @@ export default function Practice() {
                 <div className={"practice-title-container"}>
                     <h1 className={"practice-title"}>200+ Coding Practice Challenges</h1>
                     <h2>The practice you need to become a professional programmer</h2>
-                    <input className={"filter-question"} type={"text"} placeholder={"Search for a question"} onChange={filterQuestions}/>
+                    <input className={"filter-question normalInput"} type={"text"} placeholder={"Search for a question"} onChange={filterQuestions}/>
                 </div>
 
                 <div className={`accomplishment-container`}>
