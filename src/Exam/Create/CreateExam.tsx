@@ -41,7 +41,7 @@ export default function CreateExam() {
     }, [])
 
     useEffect(() => {
-        document.documentElement.style.setProperty("--background", "#050536");
+        document.documentElement.style.setProperty("--background", "dodgerblue");
     }, []);
 
 

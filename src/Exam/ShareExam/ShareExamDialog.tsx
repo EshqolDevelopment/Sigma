@@ -13,7 +13,7 @@ export default function ShareExamDialog(props: Props) {
     const dialog = useRef<HTMLDialogElement>();
     const globalContext = useContext(GlobalContext);
     const navigate = useNavigate();
-    const url = "https://sigmawars.com/exam/" + props.examId;
+    const url = window.location.origin + "/exam/" + props.examId;
 
 
     useEffect(() => {

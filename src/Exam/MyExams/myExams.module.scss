@@ -10,9 +10,10 @@
     background-color: white;
     margin-inline: auto;
     margin-top: 100px;
-    border-radius: 32px;
+    border-radius: 18px;
     padding-inline: 48px;
     box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .titleContainer {
@@ -42,7 +43,7 @@
     width: 100%;
     min-height: 500px;
     background-color: white;
-    border-radius: 36px;
+    border-radius: 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     margin-top: 36px;
     margin-bottom: 100px;

@@ -1,5 +1,5 @@
 import React, {createRef, useContext, useEffect, useState} from "react";
-import style from "./Navigation.module.css";
+import style from "./Navigation.module.scss";
 import LoginModal from "../Authentication/LoginModal";
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";

@@ -1,11 +1,11 @@
 import styles from "./myExams.module.scss";
 import React, {useState} from "react";
-import {ExamData} from "../ExamDataTypes";
+import {ExamListItem} from "../ExamDataTypes";
 import ExamSolverRow from "./ExamSolverRow";
 import ShareExamDialog from "../ShareExam/ShareExamDialog";
 
 type Props = {
-    exam: ExamData;
+    exam: ExamListItem;
 }
 
 export default function MyExamRow(props: Props) {

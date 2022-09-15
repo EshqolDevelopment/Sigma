@@ -2,18 +2,18 @@ import React, {useContext, useEffect, useState} from "react";
 import {GlobalContext, postRequest} from "../../Global";
 import {Helmet} from "react-helmet";
 import styles from "./myExams.module.scss"
-import {ExamData} from "../ExamDataTypes";
+import {ExamListItem} from "../ExamDataTypes";
 import MyExamRow from "./MyExamRow";
 import {useNavigate} from "react-router-dom";
 
 
 export default function MyExams() {
     const globalContext = useContext(GlobalContext);
-    const [examData, setExamData] = useState<ExamData[]>([]);
+    const [examData, setExamData] = useState<ExamListItem[]>([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.documentElement.style.setProperty("--background", "#061631");
+        document.documentElement.style.setProperty("--background", "dodgerblue");
 
         // const sample_student = {
         //     name: "John Doe",
@@ -38,10 +38,10 @@ export default function MyExams() {
         // setExamData(examsData);
 
         if (globalContext.userData) {
-            postRequest("/exam/getExamsData", {
+            postRequest("/exam/getExamList", {
                 uid: globalContext.userData.uid,
             }).then((data) => {
-                setExamData(data as ExamData[]);
+                setExamData(data as ExamListItem[]);
             })
 
         }

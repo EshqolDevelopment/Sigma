@@ -23,6 +23,7 @@ import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import CreateExam from "./Exam/Create/CreateExam";
 import MyExams from "./Exam/MyExams/MyExams";
+import Exam from "./Exam/SolveExam/Exam";
 
 
 const getDisplayName = (username: string): string => {
@@ -185,6 +186,7 @@ export default function App() {
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
                                 <Route path={"/create-exam"} element={<CreateExam/>}/>
                                 <Route path={"/my-exams"} element={<MyExams/>}/>
+                                <Route path={"/exam/*"} element={<Exam/>}/>
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>
