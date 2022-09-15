@@ -8,6 +8,7 @@ import Loading from "../CommonComponents/Loading/Loading";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
 
+
 let questionDictGlobal: PracticeQuestionList = {Easy: [], Medium: [], Hard: []};
 
 
@@ -145,6 +146,5 @@ export default function Practice() {
                 </div>
             </main>}
         </div>
-
     )
 }

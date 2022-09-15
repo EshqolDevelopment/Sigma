@@ -21,7 +21,6 @@ button {
     cursor: pointer;
 }
 
-
 .center-text {
     width: 100%;
     text-align: center;
@@ -54,7 +53,6 @@ button {
     background-color: #1d89f6;
 }
 
-
 .sigma-button:disabled {
     background-color: #84b4e5;
 }
@@ -63,5 +61,4 @@ button {
     font-family: Game-Bold;
     src: url(/public/GameBold.otf);
 }
-
 

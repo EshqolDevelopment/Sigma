@@ -424,11 +424,10 @@ h1, h2, h3, h4 {
     }
 }
 
-.box > svg {
+.box > svg, .box > img {
     width: 50px;
     margin: 10px 0;
-    // transition for 2 properties: transform and margin
-    transition: transform 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
 }
 
 .box > p {

@@ -15,8 +15,8 @@ import {Helmet} from "react-helmet";
 const LanguageToHelloCode = {
     python: "print('Hello World!')",
     javascript: "console.log('Hello World!')",
-    kotlin: "fun main() {\n    println(\"Hello World!\")\n}",
-    java: "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World!\");\n    }\n}"
+    kotlin: "fun main() {\n    println('Hello World!')\n}",
+    java: "public class Main {\n    public static void main(String[] args) {\n        System.out.println('Hello World!');\n    }\n}"
 };
 
 
@@ -49,7 +49,6 @@ export default function Compiler() {
     }
 
     const runCode = async () => {
-       setOutput(["Loading..."]);
         const res = await postRequest(`/${language.toLowerCase()}/run`, {
             code: code[language]
         }) as { result: string };

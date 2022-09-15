@@ -10,17 +10,6 @@
     --mobile-gap: 100px;
 }
 
-.list-of-questions-private {
-    input {
-        height: 30px;
-        border-radius: 10px;
-        border: 1.5px solid #6772E54C;
-        padding: 0 10px;
-        font-size: 16px;
-        font-weight: 600;
-    }
-}
-
 .container {
     top: var(--start-height);
     position: absolute;
@@ -342,4 +331,11 @@
 }
 
 
-
+input {
+    height: 30px;
+    border-radius: 10px;
+    border: 1.5px solid #6772E54C;
+    padding: 0 10px;
+    font-size: 16px;
+    font-weight: 600;
+}

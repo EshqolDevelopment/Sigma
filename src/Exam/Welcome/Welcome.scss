@@ -1,0 +1,73 @@
+@use '../../init/global' as *;
+
+
+.welcome-to-exam {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: dodgerblue;
+
+  & > div {
+    position: absolute;
+    aspect-ratio: 1.41421356237/1;
+    top: 50%;
+    left: 50%;
+    background: white;
+    margin-inline: auto;
+    margin-top: calc(var(--navigation-height) / 2);
+    transform: translate(-50%, -50%);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+}
+
+.welcome-to-exam-title {
+  margin-top: 30px;
+}
+
+.welcome-to-exam-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
+
+  span {
+    font-size: 18px;
+    width: 80%;
+  }
+
+  & > span {
+    margin-bottom: 10px;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  button {
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+
+  input {
+    border-radius: 5px;
+    outline: none;
+    font-size: 19px;
+    height: 40px;
+    border: 1.5px solid black;
+  }
+}

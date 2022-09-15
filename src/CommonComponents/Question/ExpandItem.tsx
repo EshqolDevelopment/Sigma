@@ -40,5 +40,5 @@ export function ExpandItem(props: Props) {
                 {props.content}
             </div>
         }
-    </div>
+    </div>;
 }

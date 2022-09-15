@@ -60,8 +60,7 @@ export default function Home() {
                 { props.icon &&
                     <svg viewBox={props.viewBox || "0 0 24 24"} xmlns="http://www.w3.org/2000/svg">
                         <path fill={props.fill ? "#3d73e7" : "none"} strokeLinecap={props.strokeLine || "butt"} stroke="#3d73e7" strokeWidth={props.strokeWidth || "2"} d={props.icon}/>
-                    </svg>
-                }
+                    </svg> }
                 <h2>{props.title}</h2>
                 <p>{props.children}</p>
                 <span>Learn more.</span>
@@ -149,10 +148,15 @@ export default function Home() {
                             We support multiplayer mode, so you can challenge up to 5 of your friends and have fun!
                         </Box>
 
-                        <Box id={'ide'} title={'User Friendly IDE'} strokeLine={'round'} icon={"M3.2 14.222V4a2 2 0 0 1 2-2h13.6a2 2 0 0 1 2 2v10.222m-17.6 0h17.6m-17.6 0-1.48 5.234A2 2 0 0 0 3.644 22h16.712a2 2 0 0 0 1.924-2.544l-1.48-5.234 M11 19L13 19"}>
-                            We are doing our best to provide great experience for you,
-                            And hence our IDE is designed for these purposes, with color coding & syntax highlighting.
+                        {/*<Box id={'ide'} title={'User Friendly IDE'} strokeLine={'round'} icon={"M3.2 14.222V4a2 2 0 0 1 2-2h13.6a2 2 0 0 1 2 2v10.222m-17.6 0h17.6m-17.6 0-1.48 5.234A2 2 0 0 0 3.644 22h16.712a2 2 0 0 0 1.924-2.544l-1.48-5.234 M11 19L13 19"}>*/}
+                        {/*    We are doing our best to provide great experience for you,*/}
+                        {/*    And hence our IDE is designed for these purposes, with color coding & syntax highlighting.*/}
+                        {/*</Box>*/}
+
+                        <Box id={'exams'} title={'Create Your own Exams'} strokeLine={'round'} icon={"M3.2 14.222V4a2 2 0 0 1 2-2h13.6a2 2 0 0 1 2 2v10.222m-17.6 0h17.6m-17.6 0-1.48 5.234A2 2 0 0 0 3.644 22h16.712a2 2 0 0 0 1.924-2.544l-1.48-5.234 M11 19L13 19"}>
+                            With Sigma Tests, you can create your own exams and share them with your friends, students, interviewers or anyone else!
                         </Box>
+
 
                         <Box id={'leaderboard'} title={'Compare Yourself to Others'} viewBox="0 0 512 512"  fill={true} icon={"M256 25c-11.594 0-23 12.8-23 31s11.406 31 23 31 23-12.8 23-31-11.406-31-23-31zm-103.951 2.975l-16.098 8.05c15.092 30.185 51.37 56.81 82.188 74.442L232.334 295H247V192h18v103h14.666l14.195-184.533c30.818-17.632 67.096-44.257 82.188-74.442l-16.098-8.05c-19.91 29.9-44.891 49.148-71.334 57.77C281.311 97.28 269.75 105 256 105c-13.75 0-25.31-7.72-32.617-19.256-26.443-8.62-51.424-27.87-71.334-57.77zM169 313v96H25v78h462v-30H343V313H169z"}>
                             Our leaderboard to compare your performance to others, so you can challenge yourself to be the best!
