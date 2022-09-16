@@ -13,6 +13,22 @@ export type QuestionData = {
 
 export type Level = "easy" | "medium" | "hard" | "";
 
+export type ExamData = {
+    name: string;
+    description: string;
+    duration: string;
+    passingScore: string;
+    finishNote: string;
+    questions: LiteQuestionData[];
+    languages: Language[];
+    createdDate: number;
+}
+
+export type LiteQuestionData = {
+    name: string;
+    description: string;
+    level: Level;
+}
 
 export type QuickPlayGameData = {
     opponent: UserData;
