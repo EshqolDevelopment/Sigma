@@ -21,9 +21,8 @@
     transition: 0.2s ease-in transform;
     font-size: 18px;
     font-weight: bold;
-    color: rgb(50, 50, 50);
+    color: rgb(31, 31, 31);
     text-decoration: none !important;
-    margin-right: 8px;
 }
 
 .page:hover:not(.active) {
@@ -230,3 +229,22 @@
 
 }
 
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-family: "Avenir Next", sans-serif;
+    font-weight: bold;
+    font-size: 19px;
+    margin-right: 16px;
+
+    span {
+        margin-left: -6px;
+    }
+
+    img {
+        margin-top: 9px;
+        width: 80px;
+        height: 80px;
+    }
+}

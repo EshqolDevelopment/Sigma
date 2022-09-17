@@ -88,14 +88,5 @@ export type PracticeQuestionList = {
 
 export type QuestionList = string[];
 
-export type ExamDetails = {
-    name: string;
-    description: string;
-    duration: string;
-    passingScore: string;
-    finishNote: string;
-    questions: string[];
-    languages: Language[];
-}
 
 export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";

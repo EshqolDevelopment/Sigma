@@ -16,14 +16,10 @@ import {QueryClient, QueryClientProvider} from "react-query";
 import {collection, doc, getFirestore, onSnapshot} from "firebase/firestore";
 import {app} from "./init/firebase";
 import * as firebaseui from "firebaseui";
-import Test from "./Test/Test";
 import {toast, ToastContainer, Zoom} from "react-toastify";
 import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
-import CreateExam from "./Exam/Create/CreateExam";
-import MyExams from "./Exam/MyExams/MyExams";
-import Exam from "./Exam/SolveExam/Exam";
 
 
 const getDisplayName = (username: string): string => {
@@ -181,12 +177,8 @@ export default function App() {
                                 <Route path={"/play"} element={<ChooseGameMode/>}/>
                                 <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
                                 <Route path={"/multi-player"} element={<MultiPlayer/>}/>
-                                <Route path={"/test/*"} element={<Test/>}/>
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
-                                <Route path={"/create-exam"} element={<CreateExam/>}/>
-                                <Route path={"/my-exams"} element={<MyExams/>}/>
-                                <Route path={"/exam/*"} element={<Exam/>}/>
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>

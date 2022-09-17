@@ -11,7 +11,7 @@ import { useLocation } from "react-router";
 let lastCoinsUpdate = 0;
 export default function NavigationBar() {
     const [showLogin, setShowLogin] = useState(false);
-    const pages = ["Home", "Practice", "Leaderboard", "Compiler", "My Exams"];
+    const pages = ["Home", "Practice", "Leaderboard", "Compiler"];
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const mobileMenuRef = createRef<HTMLButtonElement>();
     const globalContext = useContext(GlobalContext);
@@ -71,6 +71,11 @@ export default function NavigationBar() {
     return (
         <nav className={style.navigationBar}>
             <div className={style.navMenu}>
+                <div className={style.logo}>
+                    <img src={"/images/nav-logo.png"} alt={"Sigma Code Wars"}/>
+                    <span>SigmaCodeWars</span>
+                </div>
+
                 {pages.map((page, index) => {
                     return (
                         <Link key={index}

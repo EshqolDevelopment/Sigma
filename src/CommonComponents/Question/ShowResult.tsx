@@ -7,6 +7,11 @@ type Props = {
     funcName: string;
     formatInput: (input: string[]) => JSX.Element[];
     practice: boolean;
+    language: string;
+}
+
+function title(st: string) {
+    return st.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();});
 }
 
 export default  function ShowResult(props: Props) {
@@ -31,6 +36,7 @@ export default  function ShowResult(props: Props) {
     } catch (e) {
 
     }
+
 
     const json = input && output && expectedOutput
 
@@ -73,13 +79,13 @@ export default  function ShowResult(props: Props) {
                     <span>
                         <span style={{fontWeight: "bold"}}>Runtime: </span>
                         <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.execTime / 1_000_000, 2)} ms</span>
-                        <span style={{fontWeight: "500"}}>, faster than <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.execTimePercentile, 2)}%</span> of Python online submissions for {props.funcName}.</span>
+                        <span style={{fontWeight: "500"}}>, faster than <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.execTimePercentile, 2)}%</span> of {title(props.language)} online submissions for {props.funcName}.</span>
                     </span>
 
                     <span>
                         <span style={{fontWeight: "bold"}}>Time To Solve: </span>
                         <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.questionTime / 60, 2)} minutes</span>
-                        <span style={{fontWeight: "500"}}>, faster than <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.questionTimePercentile, 2)}%</span> of Python online submissions for {props.funcName}.</span>
+                        <span style={{fontWeight: "500"}}>, faster than <span style={{color: "orange", fontWeight: "500"}}>{round(props.statistics.questionTimePercentile, 2)}%</span> of {title(props.language)} online submissions for {props.funcName}.</span>
                     </span>
                 </>}
 

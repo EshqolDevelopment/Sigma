@@ -13,11 +13,14 @@ import LoginModal from "../../Authentication/LoginModal";
 
 type Props = {
     funcName: string;
-    onCorrectAnswer?: () => void;
+    onCorrectAnswer?: (language: Language, solution: string, status?: boolean) => void;
     showSolution?: boolean;
     suggestDrawAction?: () => void;
     alreadyOfferedDraw?: boolean;
     practice?: boolean;
+    defaultCode?: string;
+    defaultLanguage?: Language;
+    exam?: boolean;
 }
 
 
@@ -33,7 +36,7 @@ export default function Question(props: Props) {
         hasSolution: [],
     } as QuestionData);
     const [timer, setTimer] = useState(0);
-    const [language, setLanguage] = useState("python" as Language);
+    const [language, setLanguage] = useState(props.defaultLanguage || "python" as Language);
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
@@ -77,7 +80,9 @@ export default function Question(props: Props) {
 
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
-    }, [props.funcName]);
+        code[props.defaultLanguage || "python"] = props.defaultCode || "";
+
+    }, []);
 
     useEffect(() => {
         const clear = setInterval(() => {
@@ -199,7 +204,7 @@ export default function Question(props: Props) {
                     name: globalContext.userData.name
                 });
             }
-            if (props.onCorrectAnswer) props.onCorrectAnswer();
+            if (props.onCorrectAnswer) props.onCorrectAnswer(language, code[language], true);
         }
 
         setStatistics({
@@ -359,10 +364,16 @@ export default function Question(props: Props) {
 
     const TopRow = (mobile: boolean) => (
         <div className={(styles.topRow) + " " + (mobile ? styles.topRowMobile : styles.topRowComputer)}>
-            <div className={styles.topRowLogo}>
+            {!props.exam && <div className={styles.topRowLogo}>
                 <img src={"/images/logo.png"} alt={"sigma logo"}/>
                 <span>Sigma Wars</span>
-            </div>
+            </div>}
+
+            {props.exam && <button className={styles.questionListExam} onClick={() => props.onCorrectAnswer(language, code[language], false)}>
+                <img src={"/images/list.svg"} alt={'List'}/>
+                <span>Go to Question List</span>
+                <div className={styles.toolTip}>Questions List</div>
+            </button>}
 
             {props.practice && <>
                 <button className={styles.questionList} onClick={() => navigate("/practice")}>
@@ -380,7 +391,7 @@ export default function Question(props: Props) {
 
 
             <div className={styles.selectBox}>
-                <select
+                <select value={language}
                         onChange={(e) => setLanguage(e.target.value as Language)}>
                     {question.languages?.map((language, i) => (
                         <option key={i}
@@ -487,6 +498,7 @@ export default function Question(props: Props) {
                     formatInput={formatInput}
                     statistics={statistics}
                     practice={props.practice}
+                    language={language}
                 />}
 
             {showSolution &&

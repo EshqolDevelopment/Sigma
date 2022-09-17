@@ -59,7 +59,7 @@
 
 
 
-.topRowMobile .questionList, .topRowLogo, .nextQuestion, .selectBox select, .watch, .submit, .draw, .solutionBtn {
+.topRowMobile .questionList, .topRowLogo, .nextQuestion, .selectBox select, .watch, .submit, .draw, .solutionBtn, .questionListExam {
     border-radius: 5px;
 }
 
@@ -71,7 +71,7 @@
     position: relative;
 }
 
-.questionList, .topRowLogo, .nextQuestion, .selectBox select, .watch, .submit, .draw, .solutionBtn {
+.questionList, .topRowLogo, .nextQuestion, .selectBox select, .watch, .submit, .draw, .solutionBtn, .questionListExam {
     border: 0;
     padding: 0;
     height: 45px;
@@ -103,7 +103,7 @@
 
 }
 
-.topRow > div:nth-of-type(1) {
+.topRowLogo {
     background: $main-color;
 
     img {
@@ -113,7 +113,7 @@
     }
 }
 
-.questionList, .nextQuestion, .watch, .draw, .solutionBtn {
+.questionList, .nextQuestion, .watch, .draw, .solutionBtn, .questionListExam {
     cursor: pointer;
     img {
         height: 60%;
@@ -360,6 +360,10 @@ $quickTestRadius: 8px;
             outline: 2px solid $main-color;
         }
     }
+}
+
+.questionListExam {
+    gap: 14px;
 }
 
 .quickTestTitle {
