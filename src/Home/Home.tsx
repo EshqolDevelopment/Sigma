@@ -12,7 +12,7 @@ const languages = {
     'JavaScript': [Svg.Javascript(), 'Web developers'],
     'Kotlin': [Svg.Kotlin(), 'Android developers'],
     'Java': [Svg.Java(), 'old school programmers'],
-    'C#': [Svg.Csharp(), 'Windows & Unity developers'],
+    // 'C#': [Svg.Csharp(), 'Windows & Unity developers'],
 }
 
 const languagesList = Object.keys(languages);
@@ -44,15 +44,14 @@ const ide = {
 export default function Home() {
     const navigate = useNavigate();
 
+
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "white");
     }, [])
 
 
     const Box = (props: {title: string, children: string, icon?: string, viewBox?: string, fill?: boolean,
-        strokeLine?: "butt" | "round" | "square" | "inherit", strokeWidth?: string, id: string}) => (
-
-            <button className={'box'} onClick={() => props.id === 'questions' ? navigate("/practice") : document.getElementById(props.id).scrollIntoView({
+        strokeLine?: "butt" | "round" | "square" | "inherit", strokeWidth?: string, id: string}) => <button className={'box'} onClick={() => props.id === 'questions' ? navigate("/practice") : document.getElementById(props.id).scrollIntoView({
                 behavior: 'smooth',
                 block: 'start',
                 inline: 'center'
@@ -66,13 +65,9 @@ export default function Home() {
                 <p>{props.children}</p>
                 <span>Learn more.</span>
             </button>
-    )
 
 
-
-
-    const List = (props) => {
-        return <>
+    const List = (props) => <>
             { Object.keys(props.data).map((key, index) => (
                 <div key={index}>
                     {props.data[key][0]}
@@ -82,11 +77,9 @@ export default function Home() {
                 </div>
             ))}
         </>
-    }
 
 
-    const ReadMore = (props) => (
-        <div id={props.id || ''}>
+    const ReadMore = (props) => <div id={props.id || ''}>
             <div className={'line-separating'}/>
 
             <div className={'details'}>
@@ -100,12 +93,10 @@ export default function Home() {
                 </div>
             </div>
         </div>
-    )
 
 
     return (
         <div>
-
             <Helmet>
                 <title>Sigma - Code Wars</title>
                 <meta name={"description"} content={"Sigma is a platform that helps you to improve your coding skills by competing with your friends and other players in coding questions in real-time"}/>
@@ -200,9 +191,6 @@ export default function Home() {
                     <Footer/>
                 </div>
             </main>
-
-
         </div>
-
     );
 }

@@ -412,38 +412,51 @@ h1, h2, h3, h4 {
     border-radius: 5px;
     background: white;
     border: 0;
-}
 
+    & > p {
+        font-size: 16px;
+        line-height: 1.5;
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 10px;
+        color: #595757;
+    }
 
-.box:hover, .box:focus-visible {
-    outline: 0;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    & > span {
+        color: #1c98f8;
+        cursor: pointer;
+        font-size: 15px;
+    }
 
-    svg {
-        transform: scale(1.15);
+    & > svg, & > img {
+        width: 50px;
+        margin: 12px 0;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    &:hover, &:focus-visible {
+        outline: 0;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
+        svg {
+            transform: scale(1.15);
+        }
+    }
+
+    &.exams-box {
+
+        & > span {
+            color: #1c98f8;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        & > svg, & > img {
+            margin: 15px 0;
+        }
     }
 }
 
-.box > svg {
-    width: 50px;
-    margin: 10px 0;
-    // transition for 2 properties: transform and margin
-    transition: transform 0.3s ease-in-out;
-}
-
-.box > p {
-    font-size: 16px;
-    line-height: 1.5;
-    text-align: center;
-    margin-top: 25px;
-    margin-bottom: 10px;
-    color: #595757;
-}
-
-.box > span {
-    color: #1c98f8;
-    cursor: pointer;
-}
 
 .line-separating {
     width: 85%;
@@ -480,7 +493,6 @@ h1, h2, h3, h4 {
         }
     }
 }
-
 
 .details-title > span {
     font-size: 20px;

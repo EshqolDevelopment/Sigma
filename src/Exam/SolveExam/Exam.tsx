@@ -25,10 +25,7 @@ export default function Exam() {
                     <h1>{exam.name}</h1>
                     <p>{exam.description}</p>
                 </div>
-
-
             </main>
-
         </div>
     )
 }

@@ -5,6 +5,7 @@ import styles from "./myExams.module.scss"
 import {ExamListItem} from "../ExamDataTypes";
 import MyExamRow from "./MyExamRow";
 import {useNavigate} from "react-router-dom";
+import '../SolveExam/solveExam.module.scss'
 
 
 export default function MyExams() {
@@ -59,12 +60,11 @@ export default function MyExams() {
                 <meta name={"description"} content={"View all the exams you have created."}/>
             </Helmet>
 
-
             <main className={styles.mainContainer}>
                 <div className={styles.container}>
                     <div className={styles.titleContainer}>
                         <span className={styles.title}>My Exams</span>
-                        <button className={styles.createExamBtn} onClick={createNewExam}>New Exam</button>
+                        <button className={styles.examButton} onClick={createNewExam}>New Exam</button>
                     </div>
 
                     <div className={styles.table}>
@@ -77,6 +77,10 @@ export default function MyExams() {
                             <div/>
                         </div>
 
+                        { examData.length === 0 && <div className={styles.noExams}>
+                            You have not created any exams yet.<br/>
+                            Let's create your first one!
+                        </div> }
                         {examData.map((exam, index) => (
                             <MyExamRow exam={exam} key={index}/>
                         ))}
@@ -85,9 +89,6 @@ export default function MyExams() {
 
                 </div>
             </main>
-
-
-
         </div>
     );
 }

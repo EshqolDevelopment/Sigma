@@ -99,3 +99,14 @@ export type ExamDetails = {
 }
 
 export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";
+
+export type Exam = {
+    type: "popular" | "easy" | "hard";
+    title: string;
+    description: string;
+    questions: string[];
+    stars: number;
+    count_solvers: number;
+    average: number;
+    date_added: number;
+}

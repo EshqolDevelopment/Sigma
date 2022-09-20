@@ -24,3 +24,11 @@ export type ExamData = {
     languages: Language[];
     createdDate: number;
 }
+
+export type ExamExplorerData = {
+    name: string;
+    description: string;
+    languages: Language[];
+    commits: number;
+    stars: number;
+}

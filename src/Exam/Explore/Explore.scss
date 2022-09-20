@@ -1,0 +1,132 @@
+@use '../../init/global' as *;
+
+.explore-exams {
+    margin-top: var(--navigation-height);
+    width: 100%;
+    background: $orange-theme;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    padding-inline: 30px;
+    box-sizing: border-box;
+    text-align: center;
+    padding-bottom: 55px;
+
+    h1 {
+        margin-top: 50px;
+        font-size: 28px;
+    }
+
+    h2 {
+        margin-top: 30px;
+        font-size: 21px;
+    }
+
+    input[type='text'] {
+        margin-top: 50px;
+        width: min(350px, 100%);
+        border-radius: 10px;
+        border: none;
+        padding: 13px 15px;
+        font-size: 18px;
+        font-weight: bold;
+
+        &:focus {
+            outline: 2px solid dodgerblue;
+        }
+    }
+}
+
+.exams-table {
+    margin-top: 50px;
+    width: 95%;
+    margin-inline: auto;
+    min-height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 50px   ;
+
+    & > div {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    b {
+        font-weight: 500;
+    }
+}
+
+.table-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.exams-list {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.exam-item {
+    width: 400px;
+    min-height: 70px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding-block: 5px;
+    padding-inline: 10px;
+    box-sizing: border-box;
+    gap: 5px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out transform;
+    background: white;
+    $shadow-args: 0 0 10px;
+
+    &[data-kind='easy'] {
+        box-shadow: $shadow-args forestgreen;
+    }
+
+    &[data-kind='popular'] {
+        box-shadow: $shadow-args dodgerblue;
+    }
+
+    &[data-kind='hard'] {
+        box-shadow: $shadow-args red;
+    }
+
+    &:hover {
+        transform: scale(1.02);
+    }
+}
+
+.item-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-top: 7px;
+}
+
+.item-description {
+    margin-top: 3px;
+}
+
+.exam-troll {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.star-rating {
+    display: flex;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}

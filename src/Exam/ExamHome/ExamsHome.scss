@@ -1,0 +1,50 @@
+@use '../../init/global' as *;
+
+.exams-header {
+  padding-bottom: 60px;
+
+  & > button {
+    background: orange;
+    font-weight: bold;
+
+    &:hover {
+      background: #fc961d;
+    }
+  }
+}
+
+.home-upper.exams-upper {
+  background: $orange-theme;
+  padding-bottom: 10px;
+  padding-top: 110px;
+
+  img {
+    width: 250px;
+    height: 250px;
+    margin-right: 120px;
+    margin-top: -10px;
+
+    @include mobile {
+      display: none;
+    }
+  }
+}
+
+.explorer {
+  width: 90%;
+  min-height: 400px;
+  background: white;
+  border-radius: 10px;
+  margin-inline: auto;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px;
+}
+
+.exams-title {
+  font-weight: 500;
+  font-size: 35px;
+  text-align: center;
+}

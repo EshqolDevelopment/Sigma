@@ -238,7 +238,7 @@ export default function CreateExam() {
                             <div className={'your-questions'}>
                                 <h2>Now let's add some questions</h2>
 
-                                <input type={'text'} placeholder={'Search for question...'} value={search} onChange={(e) => {
+                                <input type={'text'} placeholder={'Explore for question...'} value={search} onChange={(e) => {
                                     setSearch(e.target.value);
                                 }}/>
 
