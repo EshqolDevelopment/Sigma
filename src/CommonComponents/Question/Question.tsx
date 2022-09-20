@@ -36,7 +36,7 @@ export default function Question(props: Props) {
         hasSolution: [],
     } as QuestionData);
     const [timer, setTimer] = useState(0);
-    const [language, setLanguage] = useState(props.defaultLanguage || "python" as Language);
+    const [language, setLanguage] = useState(props.defaultLanguage || "java" as Language);
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
@@ -453,7 +453,7 @@ export default function Question(props: Props) {
                 <div className={styles.questionInfo}>
                     <div className={styles.questionJustInfo}>
                         <span className={styles.questionName}>{questionName(props.funcName)}</span>
-                        <span className={styles.questionDescription}>{question.description}</span>
+                        <span className={styles.questionDescription}>{question.description?.trim()}</span>
                         <div className={styles.exampleContainer}>
                             <div>
                                 <span>Sample Input</span>

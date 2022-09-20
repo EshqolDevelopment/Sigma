@@ -253,9 +253,9 @@
 
 
 .questionDescription {
-    color: white;
     font-size: 18px;
     margin-top: 0;
+    white-space: pre-wrap;
 }
 
 @include mobile{
