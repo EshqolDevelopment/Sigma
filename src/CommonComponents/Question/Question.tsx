@@ -36,7 +36,7 @@ export default function Question(props: Props) {
         hasSolution: [],
     } as QuestionData);
     const [timer, setTimer] = useState(0);
-    const [language, setLanguage] = useState(props.defaultLanguage || "java" as Language);
+    const [language, setLanguage] = useState(props.defaultLanguage || "python" as Language);
     const [code, setCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [defaultCode, setDefaultCode] = useState({python: "", javascript: "", kotlin: "", java: ""});
     const [result, setResult] = useState(null);
@@ -53,7 +53,7 @@ export default function Question(props: Props) {
     const [showLogin, setShowLogin] = useState(false);
 
     const navigate = useNavigate();
-    const {isError} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName));
+    const {isError, error} = useQuery(["question-data", props.funcName], () => getAndSetQuestionData(props.funcName), {retry: false});
     const globalContext = useContext(GlobalContext);
 
 
@@ -81,7 +81,6 @@ export default function Question(props: Props) {
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#282c34");
         code[props.defaultLanguage || "python"] = props.defaultCode || "";
-
     }, []);
 
     useEffect(() => {
@@ -245,12 +244,18 @@ export default function Question(props: Props) {
 
 
     const formatKotlinInput = (input: string): string => {
-        return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " to ");
+        if (input) {
+            return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " to ");
+        }
+        return "";
     };
 
 
     const formatJavaInput = (input: string): string => {
-        return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " , ");
+        if (input) {
+            return input.replaceAll("[", "arrayOf(").replaceAll("]", ")").replaceAll("{", "mapOf(").replaceAll("}", ")").replaceAll(":", " , ");
+        }
+        return "";
     };
 
 
@@ -437,7 +442,7 @@ export default function Question(props: Props) {
     return (
         <div className={styles.questionLayout}>
 
-            {isError && <p>An error occurred</p>}
+            {isError && <p>{error.toString()}</p>}
 
             {TopRow(false)}
 
