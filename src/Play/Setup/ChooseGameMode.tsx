@@ -16,6 +16,9 @@ export function ChooseGameMode() {
         navigate("/multi-player");
     };
 
+    useEffect(() => {
+        document.documentElement.style.setProperty("--background", "#f6f9fc");
+    }, [])
 
     return <div>
 

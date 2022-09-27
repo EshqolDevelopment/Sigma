@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "../Setup/play.module.scss";
 import { Levels } from "../Setup/Levels";
 import SearchForMatch from "../../Home/SearchForMatch";
@@ -11,6 +11,10 @@ import Footer from "../../CommonComponents/Footer/Footer";
 export function QuickPlayConfig() {
     const [level, setLevel] = useState<Level | "">("");
     const [gameData, setGameData] = useState<QuickPlayGameData | null>(null);
+
+    useEffect(() => {
+        document.documentElement.style.setProperty("--background", "#f6f9fc");
+    }, [])
 
     return (<>
 

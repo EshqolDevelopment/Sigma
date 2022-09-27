@@ -84,7 +84,7 @@
 
 .mobileMenu {
     display: none;
-    margin-left: 14px;
+    margin-left: 20px;
     margin-block: auto;
     border: 0;
     background: inherit;
@@ -237,14 +237,15 @@
     font-weight: bold;
     font-size: 19px;
     margin-right: 16px;
-    height: 85%;
 
     span {
         margin-left: -6px;
     }
 
     img {
-        height: 100%;
-        border-radius: 12px;
+        margin-top: 9px;
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
     }
 }

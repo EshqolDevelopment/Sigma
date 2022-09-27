@@ -36,6 +36,10 @@ export default function MultiPlayer() {
         };
     }, [code, admin, closeRoom]);
 
+    useEffect(() => {
+        document.documentElement.style.setProperty("--background", "#f6f9fc");
+    }, [])
+
     const onEnterWaitingRoom = (code) => {
         setCode(code);
         navigate(`/multi-player?code=${code}`);
