@@ -22,6 +22,8 @@ type Props = {
     exam?: boolean;
 }
 
+let codeGlobal = null;
+let languageGlobal = null;
 
 export default function Question(props: Props) {
     const [question, setQuestion] = useState({
@@ -185,6 +187,8 @@ export default function Question(props: Props) {
 
     async function submitQuestion() {
         setResult("loading");
+        const code = codeGlobal;
+        const language = languageGlobal;
 
         const response = await postRequest(`/${language}`, {
             funcName: props.funcName,
@@ -447,7 +451,7 @@ export default function Question(props: Props) {
         try {
             const isMac = () => window.navigator.platform.toUpperCase().startsWith('MAC');
             window.addEventListener("keydown", (e) => {
-                if (e.key === "r" && (isMac() ? e.ctrlKey : e.altKey)) {
+                if ((["r", "R"].includes(e.key) && (isMac() ? e.ctrlKey : e.altKey))) {
                     submitQuestion()
                 }
             });
@@ -459,6 +463,11 @@ export default function Question(props: Props) {
     useEffect(() => {
         addShortcuts()
     }, [])
+
+    useEffect(() => {
+        codeGlobal = code;
+        languageGlobal = language;
+    }, [code, language])
 
 
     return (
