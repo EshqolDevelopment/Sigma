@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import "./ListOfQuestions.scss";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {PracticeQuestionItem} from "../DataTypes";
 import {GlobalContext, postRequest} from "../Global";
 
@@ -201,8 +201,9 @@ export default function ListOfQuestions(props: Props) {
 
                             <div>
                                 <div className={"circle " + ((globalContext.solutions && globalContext.solutions[data.name]) ? "circle-mark" : "")}/>
-                                <button onClick={() => navigate(`/practice/${data.name}`)}
-                                      className={"nameText"}>{formatFuncName(data.name)}</button>
+                                <Link to={`/practice/${data.name}`} className={"nameText"}>
+                                    {formatFuncName(data.name)}
+                                </Link>
                             </div>
 
 
