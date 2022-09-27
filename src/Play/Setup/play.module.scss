@@ -190,14 +190,22 @@
   }
 
   input[type="text"] {
-    width: calc(100% - 20px);
+    width: 100%;
     height: 60px;
+    border-radius: 10px;
+    border: 1px black solid;
+    padding-left: 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    margin-top: 5px;
   }
 
   button {
     margin-top: 30px;
     width: 100%;
     border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
   }
 
 
@@ -208,10 +216,10 @@
 }
 
 .border {
-    border: 3px solid #4a6a93;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(black, 0.5);
-    background: #4a6a93;
+    border: 4px solid #4a6a93;
+    border-radius: 8px;
+   box-shadow: 0 0 10px rgba(black, 0.5);
+   background: #4a6a93;
 }
 
 .inviteOrJoinTitle {

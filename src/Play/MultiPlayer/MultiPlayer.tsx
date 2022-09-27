@@ -6,6 +6,7 @@ import {GlobalContext, postRequest} from "../../Global";
 import MultiPlayerGame from "./MultiPlayerGame";
 import {PlayersData} from "../../DataTypes";
 import {Helmet} from "react-helmet";
+import Footer from "../../CommonComponents/Footer/Footer";
 
 
 export default function MultiPlayer() {
@@ -73,6 +74,8 @@ export default function MultiPlayer() {
                     numberOfQuestions={numberOfQuestions}
                 />}
         </main>
+
+        <Footer/>
 
     </div>;
 }

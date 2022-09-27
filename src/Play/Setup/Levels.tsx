@@ -49,9 +49,9 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
                 <ul>
-                    <li>Check if a number is prime</li>
-                    <li>Check if a string is palindrome</li>
-                    <li>Get the median from list of numbers</li>
+                    <li>Get the index of a number in the fibonacci sequence</li>
+                    <li>Queen attack in chess</li>
+                    <li>Add two binary numbers</li>
                 </ul>
                 <span>Average time limit per question: 20 minutes</span>
             </div>}
@@ -67,9 +67,9 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
                 <ul>
-                    <li>Check if a number is prime</li>
-                    <li>Check if a string is palindrome</li>
-                    <li>Get the median from list of numbers</li>
+                    <li>Determinate the result of a tic-tac-toe game</li>
+                    <li>Find the shortest path in a maze</li>
+                    <li>Validate parentheses in a string</li>
                 </ul>
                 <span>Average time limit per question: 50 minutes</span>
             </div>}

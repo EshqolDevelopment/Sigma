@@ -5,6 +5,7 @@ import SearchForMatch from "../../Home/SearchForMatch";
 import {Level, QuickPlayGameData} from "../../DataTypes";
 import QuickPlayGame from "./QuickPlayGame";
 import {Helmet} from "react-helmet";
+import Footer from "../../CommonComponents/Footer/Footer";
 
 
 export function QuickPlayConfig() {
@@ -41,6 +42,8 @@ export function QuickPlayConfig() {
 
             {gameData && <QuickPlayGame gameData={gameData}/>}
         </main>
+
+        <Footer/>
 
     </>)
 }

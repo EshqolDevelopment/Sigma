@@ -66,7 +66,7 @@ export function InviteOrJoin(props: Props) {
                     joinGame();
                 }}>
                     <span>Enter the code you received from your friend</span>
-                    <input value={codeForGui} onChange={(e) => setCodeForGui(e.target.value)} type={"text"}
+                    <input maxLength={8} value={codeForGui} onChange={(e) => setCodeForGui(e.target.value)} type={"text"}
                            placeholder={"Enter your invitation code"} name={"code"}/>
                     <button className={"sigma-button"} disabled={codeForGui.length === 0}>Join</button>
                 </form>

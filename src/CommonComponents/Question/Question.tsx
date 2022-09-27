@@ -10,7 +10,6 @@ import {useNavigate} from "react-router-dom";
 import ShowSolutionDialog from "./ShowSolutionDialog";
 import LoginModal from "../../Authentication/LoginModal";
 
-
 type Props = {
     funcName: string;
     onCorrectAnswer?: (language: Language, solution: string, status?: boolean) => void;
@@ -344,6 +343,9 @@ export default function Question(props: Props) {
         return `${minutesStr}:${secsStr}`;
     };
 
+
+
+
     const nextQuestion = () => {
         const questionList = globalContext.questionNames.easy.concat(globalContext.questionNames.medium, globalContext.questionNames.hard);
         const index = questionList.indexOf(props.funcName);
@@ -353,6 +355,7 @@ export default function Question(props: Props) {
             window.location.href = `/practice/${questionList[index + 1]}`;
         }
     }
+
 
     const openShowSolutionDialog = () => {
         if (globalContext.userData?.name) {
@@ -366,6 +369,7 @@ export default function Question(props: Props) {
             setShowLogin(true);
         }
     }
+
 
     const TopRow = (mobile: boolean) => (
         <div className={(styles.topRow) + " " + (mobile ? styles.topRowMobile : styles.topRowComputer)}>
@@ -439,6 +443,24 @@ export default function Question(props: Props) {
         })
     }
 
+    const addShortcuts = () => {
+        try {
+            const isMac = () => window.navigator.platform.toUpperCase().startsWith('MAC');
+            window.addEventListener("keydown", (e) => {
+                if (e.key === "r" && (isMac() ? e.ctrlKey : e.altKey)) {
+                    submitQuestion()
+                }
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    useEffect(() => {
+        addShortcuts()
+    }, [])
+
+
     return (
         <div className={styles.questionLayout}>
 
@@ -466,6 +488,7 @@ export default function Question(props: Props) {
                                     <span className={styles.letterSpacing}>{formatInput(question.example.input) || "Not available"}</span>
                                 </div>
                             </div>
+
                             <div>
                                 <span>Sample Output</span>
                                 <div className={styles.letterSpacing}>{question.example.output || "Not available"}</div>

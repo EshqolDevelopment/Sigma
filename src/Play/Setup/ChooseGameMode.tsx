@@ -2,14 +2,11 @@ import styles from "./play.module.scss";
 import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet";
+import Footer from "../../CommonComponents/Footer/Footer";
 
 
 export function ChooseGameMode() {
     const navigate = useNavigate();
-
-    useEffect(() => {
-        document.documentElement.style.setProperty("--background", "#cdced2");
-    }, []);
 
     const quickPlay = () => {
         navigate("/quick-play");
@@ -81,6 +78,7 @@ export function ChooseGameMode() {
             </div>
         </main>
 
+        <Footer/>
 
     </div>;
 }
