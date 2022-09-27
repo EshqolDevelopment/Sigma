@@ -72,8 +72,7 @@ export default function NavigationBar() {
         <nav className={style.navigationBar}>
             <div className={style.navMenu}>
                 <div className={style.logo}>
-                    <img src={"/images/nav-logo.png"} alt={"Sigma Code Wars"}/>
-                    <span>SigmaCodeWars</span>
+                    <img src={"/images/new_logo.png"} alt={"Sigma Code Wars"}/>
                 </div>
 
                 {pages.map((page, index) => {
