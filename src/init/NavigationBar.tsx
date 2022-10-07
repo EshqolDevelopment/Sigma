@@ -56,14 +56,6 @@ export default function NavigationBar() {
         return false;
     };
 
-    const openProfile = () => {
-        setShowProfile(true);
-    }
-
-    const buyCoins = () => {
-        setShowCoinsShop(true);
-    }
-
     const nameToUrl = (name) => {
         return name.toLowerCase().replace(" ", "-");
     }
@@ -104,10 +96,10 @@ export default function NavigationBar() {
                     <>
                         {!!lastCoinsDelta && lastCoinsDelta !== globalContext.userData.coins && <span className={style.plusCoins}>{lastCoinsDelta >= 0 ? "+" : ""}{lastCoinsDelta}</span>}
                         <span className={style.coinsText}>{globalContext.userData.coins}</span>
-                        <button className={"removeDefault"} onClick={buyCoins}>
+                        <button className={"removeDefault"} onClick={() => setShowCoinsShop(true)}>
                             <img src={"/images/coins.png"} className={style.coins} alt={"coins"}/>
                         </button>
-                        <button className={"removeDefault"} onClick={openProfile} style={{height: "100%", marginTop: "3px"}}>
+                        <button className={"removeDefault"} onClick={() => setShowProfile(true)} style={{height: "100%", marginTop: "3px"}}>
                             <img src={`/images/p${globalContext.userData.image}.png`} className={style.profileImage}
                                  alt={"logo"}
                             />

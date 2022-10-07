@@ -3,6 +3,7 @@ import React, {useContext, useRef, useState} from "react";
 import {Level} from "../../DataTypes";
 import {GlobalContext} from "../../Global";
 import LoginModal from "../../Authentication/LoginModal";
+import BuyCoins from "../../CommonComponents/BuyCoins/BuyCoins";
 
 
 
@@ -10,12 +11,23 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
     const globalContext = useContext(GlobalContext);
     const [showLogin, setShowLogin] = useState(false);
     const chosenLevel = useRef<Level | null>(null);
+    const [showCoinsShop, setShowCoinsShop] = useState(false);
+
+    const LevelToCoins = {
+        easy: 50,
+        medium: 300,
+        hard: 1000
+    }
 
     const onLevelSelected = (level: Level, force?: boolean) => {
         chosenLevel.current = level;
 
         if (globalContext.username || force) {
-            props.onClick(level)
+            if (LevelToCoins[level] > globalContext.userData?.coins) {
+                setShowCoinsShop(true);
+            } else {
+                props.onClick(level)
+            }
         } else {
             setShowLogin(true);
         }
@@ -26,7 +38,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             <h3>For all your beginners :)</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/beginner.png"} alt={"beginner programmer"}/>
-                <button className={styles.easy} onClick={() => onLevelSelected("easy")}>Easy<br/>(50 coins)</button>
+                <button className={styles.easy} onClick={() => onLevelSelected("easy")}>Easy<br/>({LevelToCoins.easy} coins)</button>
             </div>
             {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
@@ -43,7 +55,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             <h3>For intermediate programmers</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/intermediate.png"} alt={"intermediate programmer"}/>
-                <button onClick={() => onLevelSelected("medium")} className={styles.medium}>Medium<br/>(300 coins)</button>
+                <button onClick={() => onLevelSelected("medium")} className={styles.medium}>Medium<br/>({LevelToCoins.medium} coins)</button>
             </div>
 
             {!props.shortVersion && <div className={styles.levelDetails}>
@@ -61,7 +73,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             <h3>For experienced programmers</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/expert.png"} alt={"expert programmer"}/>
-                <button onClick={() => onLevelSelected("hard")} className={styles.hard}>Hard<br/>(1000 coins)</button>
+                <button onClick={() => onLevelSelected("hard")} className={styles.hard}>Hard<br/>({LevelToCoins.hard} coins)</button>
             </div>
 
             {!props.shortVersion && <div className={styles.levelDetails}>
@@ -75,6 +87,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             </div>}
         </div>
 
+        {showCoinsShop && <BuyCoins close={() => setShowCoinsShop(false)}/>}
         <LoginModal show={showLogin} setShow={setShowLogin} onLogin={() => onLevelSelected(chosenLevel.current, true)}/>
     </div>;
 }
