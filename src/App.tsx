@@ -56,6 +56,14 @@ export default function App() {
     const [questionNames, setQuestionNames] = React.useState<any>(undefined);
     const queryClient = new QueryClient()
 
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/service-worker.js").then((registration) => {
+            console.log("SW registered: ", registration);
+        }).catch((registrationError) => {
+            console.log("SW registration failed: ", registrationError);
+        });
+    }
+
 
     useEffect(() => {
         let uiConfig = {
