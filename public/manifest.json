@@ -23,5 +23,9 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "description": "Sigma is the first app enabling users to compete against each other in coding challenges in real-time.\n\nIn addition, Sigma has a vast collection of programming challenges, starting from complete beginner's level to professional expert's level, which you can practice and solve as you want.\n\nCheck if a string is a palindrome? Print all the prime numbers between 1 to 100. Given there are two queens on a chessboard, check if they could attack each other. Check if 4 points on the x, y plane form a square.\n\nBecome fast and clever, plus become a part of the coding community.",
+  "orientation": "any",
+  "lang": "en",
+  "dir": "ltr"
 }
