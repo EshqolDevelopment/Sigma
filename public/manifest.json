@@ -10,7 +10,8 @@
     {
       "src": "images/192_logo.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any"
     },
     {
       "src": "images/512_logo.png",
