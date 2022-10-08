@@ -70,7 +70,7 @@ export default function Leaderboard() {
             {isLoading && <Loading/>}
 
             <Helmet>
-                <title>Leaderboard | Sigma Code Warsw</title>
+                <title>Leaderboard | Sigma Code Wars</title>
                 <meta name={"description"} content={"See your rank on the Sigma Code Wars leaderboard"}/>
             </Helmet>
 
