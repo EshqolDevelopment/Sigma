@@ -3,6 +3,7 @@ import { useContext, useEffect, useState} from "react";
 import {GlobalContext} from "../../Global";
 import styles from "./quickPlay.module.scss";
 import {Trophy} from "../../init/Svg";
+import {useNavigate} from "react-router-dom";
 
 type Props = {
     score: number[];
@@ -21,6 +22,7 @@ const BonusNameToDescription = {
 export function GameSummary(props: Props) {
     const globalContext = useContext(GlobalContext);
     const [coinsCount, setCoinsCount] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         let counter = 0;
@@ -81,8 +83,8 @@ export function GameSummary(props: Props) {
                 })}
             </div>}
 
-            <button className={["sigma-button", styles.summaryBtn].join(" ")}>Go Home</button>
-            <button className={["sigma-button", styles.summaryBtn].join(" ")}>Play Again</button>
+            <button onClick={() => navigate("/")} className={["sigma-button", styles.summaryBtn].join(" ")}>Go Home</button>
+            <button onClick={() => navigate("/quick-play")} className={["sigma-button", styles.summaryBtn].join(" ")}>Play Again</button>
         </div>
 
     </div>;

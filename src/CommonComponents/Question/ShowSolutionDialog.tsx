@@ -37,6 +37,11 @@ export default function ShowSolutionDialog(props: Props) {
     }
 
     const buySolution = async () => {
+        if (globalContext.userData?.coins < LevelToPrice[props.level]) {
+            globalContext.showToast("You don't have enough coins", "error");
+            return;
+        }
+
         setLoading(true);
         const solution = await postRequest("/general/getSolution", {
             funcName: props.funcName,

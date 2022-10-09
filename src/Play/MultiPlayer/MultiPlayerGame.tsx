@@ -8,6 +8,7 @@ import styles from "./multiPlayerGame.module.scss";
 import SeekBarMultiPlayer from "../../CommonComponents/SeekBar/SeekBarMultiPlayer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {useNavigate} from "react-router-dom";
 
 
 type Props = {
@@ -35,6 +36,7 @@ export default function MultiPlayerGame(props: Props) {
     const [playersData, setPlayersData] = useState<PlayersData>(props.players);
     const [inTransition, setInTransition] = useState(false);
     const [coins, setCoins] = useState(0);
+    const navigate = useNavigate();
 
     const notify = (text: string) => toast.info(text);
 
@@ -140,8 +142,8 @@ export default function MultiPlayerGame(props: Props) {
                     </div>
 
                     <div className={styles.buttonContainer}>
-                        <button>Go Home</button>
-                        <button>Play Again</button>
+                        <button onClick={() => navigate("/")}>Go Home</button>
+                        <button onClick={() => navigate("/multi-player")}>Play Again</button>
                     </div>
 
                 </div>}
