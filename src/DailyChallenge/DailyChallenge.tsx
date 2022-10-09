@@ -44,8 +44,7 @@ export default function DailyChallenge(props: Props) {
     }, [])
 
     const takeTheChallenge = (level: string) => {
-        navigate(`/challenge/${level}`)
-        props.close();
+        window.location.href = `/challenge/${level}`
     }
 
     const dailyChallengeData = globalContext.challenges[new Date().toLocaleDateString("en-IL").replaceAll("/", "-")] || {};

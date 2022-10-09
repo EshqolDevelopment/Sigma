@@ -49,8 +49,8 @@ export default function EarnCoins(props: Props) {
 
             </dialog>}
 
-            {dialogToShow === "shop" && <BuyCoins close={() => setDialogToShow("selector")}/>}
-            {dialogToShow === "challenge" && <DailyChallenge close={() => setDialogToShow("selector")}/>}
+            {dialogToShow === "shop" && <BuyCoins close={props.close}/>}
+            {dialogToShow === "challenge" && <DailyChallenge close={props.close}/>}
         </>
 
     )
