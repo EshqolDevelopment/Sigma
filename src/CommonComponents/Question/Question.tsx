@@ -429,12 +429,12 @@ export default function Question(props: Props) {
             {props.suggestDrawAction && <button disabled={props.alreadyOfferedDraw} className={styles.draw} onClick={() => {
                 props.suggestDrawAction();
             }}>
-                <img src={"/images/white_flag.png"}/>
+                <img src={"/images/white_flag.png"} alt={"White flag"}/>
                 <span>Suggest Draw</span>
             </button>}
 
             {props.showSolution && question?.hasSolution && question.hasSolution.includes(language) && <button className={styles.solutionBtn} onClick={openShowSolutionDialog}>
-                <img src={"/images/solution.png"}/>
+                <img src={"/images/solution.png"} alt={"Solution bulb"}/>
                 <span>Show Solution</span>
             </button>}
         </div>

@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import "./ListOfQuestions.scss";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {PracticeQuestionItem} from "../DataTypes";
 import {GlobalContext, postRequest} from "../Global";
 
@@ -22,7 +22,6 @@ export default function ListOfQuestions(props: Props) {
     const [currentDragItemIndex, setCurrentDragItemIndex] = useState(null);
     const ItemHeight = 56;
     const questionList = props.questionList;
-    const navigate = useNavigate();
     const globalContext = useContext(GlobalContext);
 
 

@@ -6,7 +6,7 @@ import {GlobalContext, postRequest} from "../../Global";
 import Question from "../../CommonComponents/Question/Question";
 import styles from "./multiPlayerGame.module.scss";
 import SeekBarMultiPlayer from "../../CommonComponents/SeekBar/SeekBarMultiPlayer";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {useNavigate} from "react-router-dom";
 

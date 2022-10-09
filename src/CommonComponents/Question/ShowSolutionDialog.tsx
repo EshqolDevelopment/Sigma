@@ -65,7 +65,7 @@ export default function ShowSolutionDialog(props: Props) {
                     <span className={styles.title}>Do you want to unlock the solution to this question?</span>
                     <span className={styles.description}>(The solution will be available for the next hour.)</span>
                     <span className={styles.priceDescription}>The price is {LevelToPrice[props.level]} coins</span>
-                    <img className={[styles.solutionIcon, loading ? styles.increaseBrightness : ""].join(" ")} src={"/images/solution.png"}/>
+                    <img alt={"Solution bulb"} className={[styles.solutionIcon, loading ? styles.increaseBrightness : ""].join(" ")} src={"/images/solution.png"}/>
 
                     <button onClick={buySolution}>Yes</button>
                     <button onClick={cancel}>No</button>
