@@ -1,7 +1,7 @@
-import Question from "../CommonComponents/Question/Question";
+import Question from "../Question/Question";
 import {useContext, useEffect, useState} from "react";
-import {GlobalContext, postRequest} from "../Global";
-import {Level} from "../DataTypes";
+import {GlobalContext, postRequest} from "../../Global";
+import {Level} from "../../DataTypes";
 
 
 export default function Challenge() {

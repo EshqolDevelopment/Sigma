@@ -5,7 +5,7 @@ import * as Svg from '../init/Svg'
 import { useNavigate } from "react-router-dom";
 import Footer from "../CommonComponents/Footer/Footer";
 import {Helmet} from "react-helmet";
-import DailyChallenge from "../DailyChallenge/DailyChallenge";
+import DailyChallenge from "../CommonComponents/DailyChallenge/DailyChallenge";
 
 
 const languages = {
@@ -207,7 +207,10 @@ export default function Home() {
                 </div>
             </main>
 
-            {(showChallengeDialog || (new URLSearchParams(window.location.search).get("challenge") && showChallengeDialog == null)) && <DailyChallenge close={() => setShowChallengeDialog(false)}/>}
+            {(showChallengeDialog || (new URLSearchParams(window.location.search).get("challenge") && showChallengeDialog == null)) && <DailyChallenge close={() => {
+                setShowChallengeDialog(false)
+                navigate("/")
+            }}/>}
 
         </div>
 

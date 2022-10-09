@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import styles from "./EarnCoins.module.scss";
 import BuyCoins from "../BuyCoins/BuyCoins";
-import DailyChallenge from "../../DailyChallenge/DailyChallenge";
+import DailyChallenge from "../DailyChallenge/DailyChallenge";
 
 type Props = {
     close: () => void;

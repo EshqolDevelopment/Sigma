@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import styles from "./showResult.module.scss"
 import {useNavigate} from "react-router-dom";
+import {LevelToCoinsChallenge} from "../../Global";
 
 type Props = {
     close: () => void;
@@ -105,7 +106,7 @@ export default  function ShowResult(props: Props) {
                 <div className={styles.spinner}/>
 
                 <span style={{fontSize: "24px", textAlign: "center"}}>You completed the challenge</span>
-                <span>You won <span style={{color: "orange"}}>200 coins</span></span>
+                <span>You earn <span style={{color: "orange"}}>{LevelToCoinsChallenge[props.level]} coins</span></span>
 
                 <button onClick={showChallengeDialog}>Show Remaining Challenges</button>
             </div>}

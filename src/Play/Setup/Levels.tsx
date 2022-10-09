@@ -3,7 +3,7 @@ import React, {useContext, useRef, useState} from "react";
 import {Level} from "../../DataTypes";
 import {GlobalContext} from "../../Global";
 import LoginModal from "../../Authentication/LoginModal";
-import BuyCoins from "../../CommonComponents/BuyCoins/BuyCoins";
+import EarnCoins from "../../CommonComponents/EarnCoins/EarnCoins";
 
 
 
@@ -87,7 +87,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             </div>}
         </div>
 
-        {showCoinsShop && <BuyCoins close={() => setShowCoinsShop(false)}/>}
+        {showCoinsShop && <EarnCoins close={() => setShowCoinsShop(false)}/>}
         <LoginModal show={showLogin} setShow={setShowLogin} onLogin={() => onLevelSelected(chosenLevel.current, true)}/>
     </div>;
 }

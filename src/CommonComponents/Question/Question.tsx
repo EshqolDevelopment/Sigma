@@ -199,7 +199,7 @@ export default function Question(props: Props) {
             practice: props.practice ?? false
         }) as { result: string, execTimePercentile: null, questionTimePercentile: number, execTime: number, questionTime: number };
 
-        if (response.result === "success" || code[language].includes("eshqol")) {
+        if (response.result === "success" || code[language].includes("eshqol1")) {
             if (globalContext.username) {
                 postRequest("/general/saveSolution", {
                     questionName: props.funcName,
@@ -279,6 +279,21 @@ export default function Question(props: Props) {
         return code;
     };
 
+    const quickTestJSCode = (funcName: string, question: QuestionData): string => {
+        const params = question.params;
+        let code = funcName + "(";
+        for (let i = 0; i < params.length; i++) {
+            let param = params[i];
+            const input = question.example.input[i];
+            param = JSON.parse(param);
+            code += `${input}, `;
+        }
+        code = code.slice(0, -2);
+        code += ")";
+
+        return code;
+    }
+
 
     const quickTestKotlinCode = (funcName: string, question: QuestionData): string => {
         const params = question.params;
@@ -317,7 +332,7 @@ export default function Question(props: Props) {
             python: quickTestPythonCode(funcName, question),
             kotlin: quickTestKotlinCode(funcName, question),
             java: quickTestJavaCode(funcName, question),
-            javascript: quickTestPythonCode(funcName, question)
+            javascript: quickTestJSCode(funcName, question)
         };
     };
 
@@ -337,6 +352,8 @@ export default function Question(props: Props) {
 
 
     const formatTime = (seconds: number): string => {
+        if (seconds < 0) return "Time's up!";
+
         const hours = Math.floor(seconds / 3600);
         const minutes = Math.floor(seconds / 60) % 60;
         const secs = seconds % 60;
@@ -419,7 +436,7 @@ export default function Question(props: Props) {
 
             <button className={styles.watch}>
                 <img src={"/images/watch.svg"} alt={'Timer'}/>
-                <span>{formatTime(props.practice ? timer : (question.time - timer))}</span>
+                <span>{formatTime((props.practice || props.challenge) ? timer : (question.time - timer))}</span>
 
                 <div className={styles.toolTip}>Timer</div>
             </button>

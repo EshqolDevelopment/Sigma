@@ -1,5 +1,5 @@
 import {useContext, useEffect, useRef, useState} from "react";
-import {GlobalContext, LevelToCoinsChallenge, postRequest} from "../Global";
+import {GlobalContext, LevelToCoinsChallenge, postRequest} from "../../Global";
 import styles from "./DailyChallenge.module.scss";
 import {useNavigate} from "react-router-dom";
 import {useQuery} from "react-query";

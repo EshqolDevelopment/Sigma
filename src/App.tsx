@@ -20,7 +20,7 @@ import {toast, ToastContainer, Zoom} from "react-toastify";
 import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
-import Challenge from "./DailyChallenge/Challenge";
+import Challenge from "./CommonComponents/DailyChallenge/Challenge";
 
 
 const getDisplayName = (username: string): string => {
