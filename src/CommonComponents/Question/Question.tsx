@@ -20,6 +20,8 @@ type Props = {
     defaultCode?: string;
     defaultLanguage?: Language;
     exam?: boolean;
+    challenge?: boolean;
+    level?: string;
 }
 
 let codeGlobal = null;
@@ -536,6 +538,8 @@ export default function Question(props: Props) {
                     statistics={statistics}
                     practice={props.practice}
                     language={language}
+                    challenge={props.challenge}
+                    level={props.level}
                 />}
 
             {showSolution &&

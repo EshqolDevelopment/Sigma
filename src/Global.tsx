@@ -7,9 +7,16 @@ type GlobalContextType = {
     solutions: Solutions;
     showToast: (message: string, type: "info" | "success" | "error") => void;
     questionNames: {
-        easy: string[],
-        medium: string[],
-        hard: string[]
+        easy: string[];
+        medium: string[];
+        hard: string[];
+    },
+    challenges: {
+        [date: string]: {
+            easy: boolean;
+            medium: boolean;
+            hard: boolean;
+        }
     }
 }
 
@@ -68,4 +75,15 @@ export function getLocalStorageItemWithExpiry(key) {
         return null;
     }
     return item.value;
+}
+
+export const formatName = (name: string) =>  {
+    const words = name.split("_");
+    return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
+}
+
+export const LevelToCoinsChallenge = {
+    easy: 150,
+    medium: 300,
+    hard: 750
 }

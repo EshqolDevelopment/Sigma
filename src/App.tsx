@@ -20,6 +20,7 @@ import {toast, ToastContainer, Zoom} from "react-toastify";
 import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
+import Challenge from "./DailyChallenge/Challenge";
 
 
 const getDisplayName = (username: string): string => {
@@ -54,14 +55,11 @@ export default function App() {
     const [userData, setUserData] = React.useState<UserData>(undefined);
     const [solutions, setSolutions] = React.useState<any>(undefined);
     const [questionNames, setQuestionNames] = React.useState<any>(undefined);
+    const [challenges, setChallenges] = React.useState<any>({});
     const queryClient = new QueryClient()
 
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/service-worker.js").then((registration) => {
-            console.log("SW registered: ", registration);
-        }).catch((registrationError) => {
-            console.log("SW registration failed: ", registrationError);
-        });
+        navigator.serviceWorker.register("/service-worker.js")
     }
 
 
@@ -148,6 +146,12 @@ export default function App() {
             doc.docs.map((doc) => solutions[doc.id] = doc.data());
             setSolutions(formatSolutions(solutions));
         });
+
+        onSnapshot(collection(getFirestore(app), `root/${username}/challenges`), (doc) => {
+            const challenges = {}
+            doc.docs.map((doc) => challenges[doc.id] = doc.data());
+            setChallenges(challenges);
+        })
     }
 
     useEffect(() => {
@@ -165,7 +169,8 @@ export default function App() {
                 userData: userData,
                 solutions: solutions,
                 showToast: showToast,
-                questionNames: questionNames
+                questionNames: questionNames,
+                challenges: challenges
             }}>
                 <div>
                     <div style={{display: "none"}} id={"helper-firebase-ui"}/>
@@ -187,6 +192,7 @@ export default function App() {
                                 <Route path={"/multi-player"} element={<MultiPlayer/>}/>
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
+                                <Route path={"/challenge/*"} element={<Challenge/>}/>
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>

@@ -4,8 +4,8 @@ import LoginModal from "../Authentication/LoginModal";
 import {GlobalContext} from "../Global";
 import {Link} from "react-router-dom";
 import {Profile} from "../CommonComponents/Profile/Profile";
-import BuyCoins from "../CommonComponents/BuyCoins/BuyCoins";
 import { useLocation } from "react-router";
+import EarnCoins from "../CommonComponents/EarnCoins/EarnCoins";
 
 
 let lastCoinsUpdate = 0;
@@ -95,7 +95,7 @@ export default function NavigationBar() {
                 {globalContext.userData && globalContext.username &&
                     <>
                         {!!lastCoinsDelta && lastCoinsDelta !== globalContext.userData.coins && <span className={style.plusCoins}>{lastCoinsDelta >= 0 ? "+" : ""}{lastCoinsDelta}</span>}
-                        <span className={style.coinsText}>{globalContext.userData.coins}</span>
+                        <span onClick={() => setShowCoinsShop(true)} className={style.coinsText}>{globalContext.userData.coins}</span>
                         <button className={"removeDefault"} onClick={() => setShowCoinsShop(true)}>
                             <img src={"/images/coins.png"} className={style.coins} alt={"coins"}/>
                         </button>
@@ -126,7 +126,7 @@ export default function NavigationBar() {
 
             {showProfile && <Profile close={() => setShowProfile(false)} userData={globalContext.userData}/>}
 
-            {showCoinsShop && <BuyCoins close={() => setShowCoinsShop(false)}/>}
+            {showCoinsShop && <EarnCoins close={() => setShowCoinsShop(false)}/>}
         </nav>
     );
 }

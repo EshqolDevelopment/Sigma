@@ -1,5 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import styles from "./showResult.module.scss"
+import {useNavigate} from "react-router-dom";
+
 type Props = {
     close: () => void;
     result: string;
@@ -8,6 +10,8 @@ type Props = {
     formatInput: (input: string[]) => JSX.Element[];
     practice: boolean;
     language: string;
+    challenge?: boolean;
+    level?: string;
 }
 
 function title(st: string) {
@@ -16,6 +20,7 @@ function title(st: string) {
 
 export default  function ShowResult(props: Props) {
     const dialogRef = useRef<HTMLDialogElement>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         if (!dialogRef.current.open) dialogRef.current.showModal();
@@ -37,8 +42,11 @@ export default  function ShowResult(props: Props) {
 
     }
 
-
     const json = input && output && expectedOutput
+
+    const showChallengeDialog = () => {
+        navigate("/?challenge=true")
+    }
 
     return (
         <dialog ref={dialogRef} className={styles.dialog}>
@@ -71,7 +79,7 @@ export default  function ShowResult(props: Props) {
                 <button onClick={props.close}>Try again</button>
             </div>}
 
-            {props.result === "success" && <div className={[styles.loading, styles.loadingSuccess].join(" ")}>
+            {props.result === "success" && !props.challenge && <div className={[styles.loading, styles.loadingSuccess].join(" ")}>
                 <div className={styles.spinner}/>
                 <span>Your answer is correct!</span>
 
@@ -89,10 +97,18 @@ export default  function ShowResult(props: Props) {
                     </span>
                 </>}
 
-
                 <button onClick={props.close}>Close</button>
             </div>}
 
+
+            {props.result === "success" && props.challenge && <div className={[styles.loading, styles.loadingSuccess].join(" ")}>
+                <div className={styles.spinner}/>
+
+                <span style={{fontSize: "24px", textAlign: "center"}}>You completed the challenge</span>
+                <span>You won <span style={{color: "orange"}}>200 coins</span></span>
+
+                <button onClick={showChallengeDialog}>Show Remaining Challenges</button>
+            </div>}
 
         </dialog>
     );

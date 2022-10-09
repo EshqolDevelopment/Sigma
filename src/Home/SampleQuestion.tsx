@@ -1,7 +1,7 @@
 import Editor from "../init/Editor";
 import React, {useState} from "react";
 import styles from "./sampleQuestion.module.scss";
-import {postRequest} from "../Global";
+import {formatName, postRequest} from "../Global";
 
 const questionsList: { name: string; title: string; description: string; }[] = [
     {
@@ -22,11 +22,6 @@ export function SampleQuestion() {
     const [sampleQuestionCode, setSampleQuestionCode] = useState(question.title)
     const [sampleQuestionLoadingState, setSampleQuestionLoadingState] = useState("")
     const [result, setResult] = useState("")
-
-    const formatName = (name: string) =>  {
-        const words = name.split("_");
-        return words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
-    }
 
     async function submitSampleQuestion() {
         setSampleQuestionLoadingState("loading")

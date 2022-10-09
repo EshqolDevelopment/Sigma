@@ -1,10 +1,11 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import "./Home.scss";
 import {SampleQuestion} from "./SampleQuestion";
 import * as Svg from '../init/Svg'
 import { useNavigate } from "react-router-dom";
 import Footer from "../CommonComponents/Footer/Footer";
 import {Helmet} from "react-helmet";
+import DailyChallenge from "../DailyChallenge/DailyChallenge";
 
 
 const languages = {
@@ -69,8 +70,6 @@ export default function Home() {
     )
 
 
-
-
     const List = (props) => {
         return <>
             { Object.keys(props.data).map((key, index) => (
@@ -101,6 +100,13 @@ export default function Home() {
             </div>
         </div>
     )
+
+    const [showChallengeDialog, setShowChallengeDialog] = useState(null);
+
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        setShowChallengeDialog(params.get('challenge') === 'true');
+    }, [])
 
 
     return (
@@ -200,6 +206,8 @@ export default function Home() {
                     <Footer/>
                 </div>
             </main>
+
+            {(showChallengeDialog || (new URLSearchParams(window.location.search).get("challenge") && showChallengeDialog == null)) && <DailyChallenge close={() => setShowChallengeDialog(false)}/>}
 
         </div>
 

@@ -1,0 +1,108 @@
+
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    border-radius: 30px;
+    width: 509px;
+
+    b {
+        font-weight: 550;
+    }
+}
+
+.title {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: 12px;
+    margin-bottom: 4px;
+
+    & > img {
+        width: 55px;
+        height: 55px;
+    }
+
+    h2 {
+        font-family: Game-Bold, Arial, sans-serif;
+        color: #ffd700;
+        -webkit-text-stroke: 2px black;
+        font-size: 26px;
+        margin-bottom: 22px;
+        margin-block: auto;
+    }
+}
+
+.challengeContainer {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 16px;
+}
+
+.challenge {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    & > div {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+
+        img {
+            width: 30px;
+            height: auto;
+        }
+    }
+
+    button {
+        height: 40px;
+        color: white;
+        font-weight: bold;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+    }
+
+    button[disabled] {
+        opacity: 0.5;
+        cursor: initial;
+    }
+}
+
+.easy {
+    background-color: green;
+}
+
+.medium {
+    background-color: orange;
+}
+
+.hard {
+    background-color: red;
+}
+
+.date {
+    font-weight: 800;
+    margin-top: 28px;
+}
+
+.close {
+    display: flex;
+    border: 0;
+    padding-left: 0;
+    background: inherit;
+
+    img {
+        width: 30px;
+        height: 30px;
+    }
+}
