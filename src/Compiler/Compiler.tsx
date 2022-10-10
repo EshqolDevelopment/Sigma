@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import Editor from "../init/Editor";
 import {FaSave, FaTrashAlt} from "react-icons/fa";
 import {BsFillSunFill, BsMoonFill} from "react-icons/bs";
@@ -78,6 +78,13 @@ export default function Compiler() {
         document.body.appendChild(element);
         element.click();
     }
+
+    useEffect(() => {
+        const selector = document.querySelector("#ace-editor > div.ace_mobile-menu");
+        if (selector) {
+            selector.remove();
+        }
+    }, [])
 
 
     return (
