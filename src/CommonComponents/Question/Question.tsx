@@ -63,7 +63,17 @@ export default function Question(props: Props) {
     async function getAndSetQuestionData(funcName: string) {
         const response = await postRequest("/general/getClientQuestionData", {
             funcName: funcName
-        }) as { question: string, languages: Language[] };
+        }) as { question: string, languages: Language[], error: string };
+        if (response.error === "General Error") {
+            if (props.practice) {
+                alert("This question does not exist. You will be redirected to the practice page.");
+                navigate("/practice");
+            } else {
+                alert("This question does not exist. You will be redirected to the home page.");
+                navigate("/");
+            }
+            return;
+        }
 
         const serverQuestionData = JSON.parse(response.question) as QuestionData;
         serverQuestionData.languages = response.languages;

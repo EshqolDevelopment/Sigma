@@ -113,7 +113,6 @@ export default function App() {
 
                 if (serverResult.error) {
                     showToast("An unexpected error occurred. Please try again later.", "error");
-                    await getAuth().signOut();
                 }
             } else {
                 setUserName(null);

@@ -1,7 +1,6 @@
 import {useContext, useEffect, useRef, useState} from "react";
 import {GlobalContext, LevelToCoinsChallenge, postRequest} from "../../Global";
 import styles from "./DailyChallenge.module.scss";
-import {useNavigate} from "react-router-dom";
 import {useQuery} from "react-query";
 
 type Props = {
@@ -11,7 +10,6 @@ type Props = {
 export default function DailyChallenge(props: Props) {
     const dialogRef = useRef<HTMLDialogElement>(null);
     const [dateString, setDateString] = useState("");
-    const navigate = useNavigate();
     const globalContext = useContext(GlobalContext);
     const challengesData = useQuery(["getDailyChallenges", new Date().toLocaleDateString("en-IL")], () => postRequest("/general/getDailyChallenges", {}));
 
