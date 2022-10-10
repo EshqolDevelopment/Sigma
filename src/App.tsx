@@ -112,7 +112,7 @@ export default function App() {
                 }
 
                 if (serverResult.error) {
-                    showToast("An unexpected error occurred. Please try again later.", "error");
+                    showToast("An unexpected error occurred", "error");
                 }
             } else {
                 setUserName(null);

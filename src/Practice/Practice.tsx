@@ -19,8 +19,14 @@ export default function Practice() {
     const globalContext = useContext(GlobalContext);
 
     async function fetchQuestions() {
-        const serverQuestionDict = await postRequest("/general/getQuestionList", {}) as PracticeQuestionList;
+        const serverQuestionDict = await postRequest("/general/getQuestionList", {}) as PracticeQuestionList & {error: string};
         const temp = {Easy: [], Medium: [], Hard: []};
+
+        if (serverQuestionDict.error) {
+            setQuestionDict(temp)
+            questionDictGlobal = temp;
+            return temp;
+        }
 
         for (let level of ["Easy", "Medium", "Hard"]) {
             const orderArray: string[] = localStorage.getItem("ListIndexes" + level) ? JSON.parse(localStorage.getItem("ListIndexes" + level)) : [];

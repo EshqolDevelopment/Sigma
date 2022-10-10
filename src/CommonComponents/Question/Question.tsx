@@ -64,7 +64,7 @@ export default function Question(props: Props) {
         const response = await postRequest("/general/getClientQuestionData", {
             funcName: funcName
         }) as { question: string, languages: Language[], error: string };
-        if (response.error === "General Error") {
+        if (response.error) {
             if (props.practice) {
                 alert("This question does not exist. You will be redirected to the practice page.");
                 navigate("/practice");
