@@ -21,6 +21,8 @@ import NotFound from "./404/NotFound";
 import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import Challenge from "./CommonComponents/DailyChallenge/Challenge";
+import {SinglePlayerConfig} from "./Play/SinglePlayer/SinglePlayerConfig";
+import Profile from "./Profile/Profile";
 
 
 const getDisplayName = (username: string): string => {
@@ -192,6 +194,10 @@ export default function App() {
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
                                 <Route path={"/challenge/*"} element={<Challenge/>}/>
+                                <Route path={"/single-player"} element={<SinglePlayerConfig/>}/>
+                                <Route path={"/profile"} element={<Profile/>}/>
+                                <Route path={"/profile/*"} element={<Profile/>}/>
+
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>

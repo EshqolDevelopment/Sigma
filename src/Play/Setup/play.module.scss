@@ -42,21 +42,13 @@
 }
 
 .container {
-  width: 80%;
+  width: 95%;
   margin-inline: auto;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   margin-top: 40px;
-  gap: 100px;
-
-  @include mobile {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    width: 90%;
-  }
+  gap: 30px;
 
   & > div {
     width: 42%;
@@ -71,12 +63,21 @@
     border-radius: 10px;
     padding: 15px;
     color: white;
-    min-height: 280px;
+  }
 
-    @include mobile {
+  @media (max-width: 1050px){
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    width: 90%;
+
+    & > div {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
       width: 100%;
-      min-height: 0;
-      gap: 10px;
     }
   }
 
@@ -85,7 +86,7 @@
   }
 
   span {
-    font-size: 17px;
+    font-size: 16.5px;
   }
 
   button {

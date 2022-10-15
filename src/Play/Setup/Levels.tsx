@@ -7,7 +7,7 @@ import EarnCoins from "../../CommonComponents/EarnCoins/EarnCoins";
 
 
 
-export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) => void }) {
+export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) => void, hideCoins?: boolean, hideTimeLimit?: boolean }) {
     const globalContext = useContext(GlobalContext);
     const [showLogin, setShowLogin] = useState(false);
     const chosenLevel = useRef<Level | null>(null);
@@ -38,7 +38,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             <h3>For all your beginners :)</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/beginner.png"} alt={"beginner programmer"}/>
-                <button className={styles.easy} onClick={() => onLevelSelected("easy")}>Easy<br/>({LevelToCoins.easy} coins)</button>
+                <button className={styles.easy} onClick={() => onLevelSelected("easy")}>Easy<br/>{!props.hideCoins && `(${LevelToCoins.easy} coins)`}</button>
             </div>
             {!props.shortVersion && <div className={styles.levelDetails}>
                 <h4>Questions in this category include</h4>
@@ -47,7 +47,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
                     <li>Check if a string is palindrome</li>
                     <li>Get the median from list of numbers</li>
                 </ul>
-                <span>Average time limit per question: 7 minutes</span>
+                {!props.hideTimeLimit && <span>Average time limit per question: 7 minutes</span>}
             </div>}
         </div>
 
@@ -55,7 +55,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             <h3>For intermediate programmers</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/intermediate.png"} alt={"intermediate programmer"}/>
-                <button onClick={() => onLevelSelected("medium")} className={styles.medium}>Medium<br/>({LevelToCoins.medium} coins)</button>
+                <button onClick={() => onLevelSelected("medium")} className={styles.medium}>Medium<br/>{!props.hideCoins && `(${LevelToCoins.medium} coins)`}</button>
             </div>
 
             {!props.shortVersion && <div className={styles.levelDetails}>
@@ -65,7 +65,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
                     <li>Queen attack in chess</li>
                     <li>Add two binary numbers</li>
                 </ul>
-                <span>Average time limit per question: 20 minutes</span>
+                {!props.hideTimeLimit && <span>Average time limit per question: 20 minutes</span>}
             </div>}
         </div>
 
@@ -73,7 +73,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
             <h3>For experienced programmers</h3>
             <div className={styles.levelDesignContainer}>
                 <img src={"/images/expert.png"} alt={"expert programmer"}/>
-                <button onClick={() => onLevelSelected("hard")} className={styles.hard}>Hard<br/>({LevelToCoins.hard} coins)</button>
+                <button onClick={() => onLevelSelected("hard")} className={styles.hard}>Hard<br/>{!props.hideCoins && `(${LevelToCoins.hard} coins)`}</button>
             </div>
 
             {!props.shortVersion && <div className={styles.levelDetails}>
@@ -83,7 +83,7 @@ export function Levels(props: { shortVersion?: boolean, onClick: (level: Level) 
                     <li>Find the shortest path in a maze</li>
                     <li>Validate parentheses in a string</li>
                 </ul>
-                <span>Average time limit per question: 50 minutes</span>
+                {!props.hideTimeLimit && <span>Average time limit per question: 50 minutes</span>}
             </div>}
         </div>
 

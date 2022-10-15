@@ -3,6 +3,7 @@ import {useState} from "react";
 
 type Props = {
     onSubmit: (numberOfQuestions: number) => void;
+    gap?: string;
 }
 
 export default function SelectQuestionsNum(props: Props) {
@@ -17,7 +18,7 @@ export default function SelectQuestionsNum(props: Props) {
     return (
         <div className={"form-wrapper"}>
             <form onSubmit={onSubmit} >
-                <h1 id={"form-title"}>Select number of questions</h1>
+                <h1 id={"form-title"} style={{marginBottom: props.gap || 0}}>Select number of questions</h1>
                 <div id={"debt-amount-slider"}>
                     <input type="radio" name="debt-amount" id={"1"} defaultValue={1} required={true} />
                     <label htmlFor={"1"} data-debt-amount={1} />

@@ -5,13 +5,14 @@
     top: 0;
     width: 100%;
     height: var(--navigation-height);
-    background: #e6e6e6;
+    background: #f0f0f0;
     display: flex;
     z-index: 200;
     justify-content: space-between;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
 
+$borderGap: 8px;
 
 .page {
     height: 75%;
@@ -24,17 +25,43 @@
     font-weight: bold;
     color: rgb(31, 31, 31);
     text-decoration: none !important;
+    margin-top: $borderGap;
 }
 
-.page:hover:not(.active) {
-    border-bottom: rgb(50, 50, 50) solid 3px;
-    transform: scale(1.02);
+.page:not(.active) {
+    transition: 0.3s ease-in-out scale;
+
+    &::after {
+        content: "";
+        height: 2px;
+        width: 0;
+        background: black;
+        transition: width 0.3s ease-out;
+        margin-top: $borderGap;
+        margin-inline: auto;
+    }
+
+    &:hover::after {
+        width: 100%
+    }
+
+    &:hover {
+        scale: 1.05;
+    }
 }
 
 .active {
-    border-bottom: black solid 3px;
-    color: black;
+    transition: 90ms ease-in-out scale;
+
+    &::after {
+        content: "";
+        height: 2px;
+        width: 100%;
+        background: black;
+        margin-top: $borderGap;
+    }
 }
+
 
 
 .profileImage, .sigmaIcon {

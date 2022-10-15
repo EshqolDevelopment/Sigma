@@ -1,0 +1,68 @@
+$borderRadius: 15px;
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: white;
+    width: min(800px, 90vw);
+    min-height: 400px;
+    margin-inline: auto;
+    margin-top: 120px;
+    border-radius: $borderRadius;
+    gap: 20px;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 50px;
+    background: wheat;
+    border-top-right-radius: $borderRadius;
+    border-top-left-radius: $borderRadius;
+    padding-block: 15px;
+
+    span {
+        font-size: 20px;
+        cursor: pointer;
+        margin-top: 5px;
+
+        &::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: black;
+            transition: width .3s;
+            margin-inline: auto;
+            margin-top: 5px;
+        }
+
+        &:hover::after {
+            width: 100%;
+            transition: width .3s;
+        }
+    }
+
+    .activeTab {
+        font-weight: bold;
+    }
+}
+
+.profile, .history, .statistics {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding-block: 20px;
+    margin-inline: 10px;
+    overflow-y: auto;
+
+    & > div {
+
+    }
+}

@@ -8,14 +8,6 @@ import Footer from "../../CommonComponents/Footer/Footer";
 export function ChooseGameMode() {
     const navigate = useNavigate();
 
-    const quickPlay = () => {
-        navigate("/quick-play");
-    };
-
-    const multiPlay = () => {
-        navigate("/multi-player");
-    };
-
     useEffect(() => {
         document.documentElement.style.setProperty("--background", "#f6f9fc");
     }, [])
@@ -61,22 +53,34 @@ export function ChooseGameMode() {
                         <img src={"/images/singlePlayer.svg"} alt={"player logo"}/>
                     </div>
 
-                    <button onClick={quickPlay}>Play Now!</button>
+                    <button onClick={() => navigate("/quick-play")}>Play Now!</button>
                 </div>
 
                 <div>
                     <h2>Play with Friends</h2>
                     <div className={styles.modeBody}>
                     <span>
-                        Multiplayer game mode where you can challenge up to 5 of your friends to a game,
-                        the level and the amount of questions can be modified by the game host.
+                        You can challenge up to 5 of your friends,
                         Unlike the quick play, here when a player answer a question correctly,
                         they move to the next one without disturbing the other ones.
                     </span>
                         <img src={"/images/multiPlayer.svg"} alt={"players logo"}/>
                     </div>
 
-                    <button onClick={multiPlay}>Play Now!</button>
+                    <button onClick={() => navigate("/multi-player")}>Play Now!</button>
+                </div>
+
+                <div>
+                    <h2>Play against yourself</h2>
+                    <div className={styles.modeBody}>
+                    <span>
+                        Play against yourself mode allows you to practice your skills and improve your knowledge,
+                        in addition to that you can also see your progress and compare it to your previous results.
+                    </span>
+                        <img src={"/images/multiPlayer.svg"} alt={"players logo"}/>
+                    </div>
+
+                    <button onClick={() => navigate("/single-player")}>Play Now!</button>
                 </div>
             </div>
         </main>
