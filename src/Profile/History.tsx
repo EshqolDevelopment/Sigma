@@ -2,13 +2,13 @@ import React, {useContext, useEffect} from "react";
 import s from "./Profile.module.scss";
 import {
     AnyHistory,
-    HistoryList,
     QuickPlayHistory,
     Result,
 } from "./ProfileTypes";
 import {Level} from "../DataTypes";
 import {GlobalContext, postRequest} from "../Global";
 import Loader from "../CommonComponents/Loading/Loader";
+import {useQuery} from "react-query";
 
 
 const LevelLabel = (props: {level: Level}) => {
@@ -85,33 +85,26 @@ const QuickPlay = (props: {history: QuickPlayHistory}) => {
 
 
 export default function History() {
-    const [history, setHistory] = React.useState<HistoryList>([]);
     const globalContext = useContext(GlobalContext);
+    const historyQuery = useQuery(["history"], async () => {
+        const res = await postRequest("/general/getHistory", {
+            name: globalContext.userData.name
+        }) as {history: AnyHistory[]};
 
-    useEffect(() => {
-        const getHistory = async () => {
-            if (globalContext.userData?.name) {
-                const history = await postRequest("/general/getHistory", {
-                    name: globalContext.userData.name
-                }) as {history: HistoryList};
+        return res.history;
+    }, {
+        enabled: !!globalContext.userData?.name,
+    });
 
-                const f = []
-                for (let i = 0; i < 30; i++) {
-                    f.push(...history.history);
-                }
+    const history = historyQuery.data;
 
-                setHistory(f as HistoryList);
-            }
-        }
-        getHistory();
-    }, [globalContext.userData]);
-
-    if (history.length === 0)
+    if (historyQuery.isLoading || !history) {
         return <Loader/>
+    }
 
     return <div className={s.history}>
         {history.map((item, index) => {
-            if (item.mode === "quick-play")
+            if (item.mode === "quick")
                 return <QuickPlay history={item as QuickPlayHistory}/>
 
             return null;
