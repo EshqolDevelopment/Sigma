@@ -51,7 +51,11 @@ export default function MultiPlayerGame(props: Props) {
                         const currentQuestion = data[playerName].currentQuestion;
                         const lastQuestion = lastPlayersData[playerName].currentQuestion;
                         if (currentQuestion !== lastQuestion && playerName !== globalContext.username) {
-                            notify(`${playerName} moved to the ${NumToWord[currentQuestion + 1]} question`);
+                            if (currentQuestion + 1 === props.numberOfQuestions) {
+                                notify(`${playerName} has finished the game!`);
+                            } else {
+                                notify(`${playerName} moved to the ${NumToWord[currentQuestion + 1]} question`);
+                            }
                         }
                     }
                     return data;

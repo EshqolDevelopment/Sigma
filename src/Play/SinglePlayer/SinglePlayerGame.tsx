@@ -64,7 +64,7 @@ export default function SinglePlayerGame() {
             time,
             level: questionLevel,
             name: globalContext.userData?.name,
-            numberOfQuestions: questions.length,
+            questions: questions,
         }) as {newRecord: boolean, time: number};
 
         if (res.newRecord) {
