@@ -39,7 +39,7 @@ export function SinglePlayerConfig() {
                 </div>
             </div>
 
-            {level && <SinglePlayerConfigDialog close={() => setLevel("")}/>}
+            {level && <SinglePlayerConfigDialog close={() => setLevel("")} level={level}/>}
 
         </main>
 

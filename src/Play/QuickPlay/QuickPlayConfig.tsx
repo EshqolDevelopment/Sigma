@@ -47,7 +47,7 @@ export function QuickPlayConfig() {
             {gameData && <QuickPlayGame gameData={gameData}/>}
         </main>
 
-        <Footer/>
+        {!gameData && <Footer/>}
 
     </>)
 }

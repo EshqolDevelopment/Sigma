@@ -23,6 +23,7 @@ import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import Challenge from "./CommonComponents/DailyChallenge/Challenge";
 import {SinglePlayerConfig} from "./Play/SinglePlayer/SinglePlayerConfig";
 import Profile from "./Profile/Profile";
+import SinglePlayerGame from "./Play/SinglePlayer/SinglePlayerGame";
 
 
 const getDisplayName = (username: string): string => {
@@ -197,8 +198,7 @@ export default function App() {
                                 <Route path={"/single-player"} element={<SinglePlayerConfig/>}/>
                                 <Route path={"/profile"} element={<Profile/>}/>
                                 <Route path={"/profile/*"} element={<Profile/>}/>
-
-
+                                <Route path={"/single-player-game"} element={<SinglePlayerGame/>}/>
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>
                         </BrowserRouter>

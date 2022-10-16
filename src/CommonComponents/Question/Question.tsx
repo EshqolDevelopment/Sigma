@@ -22,6 +22,7 @@ type Props = {
     exam?: boolean;
     challenge?: boolean;
     level?: string;
+    practiceTimer?: boolean;
 }
 
 let codeGlobal = null;
@@ -446,7 +447,7 @@ export default function Question(props: Props) {
 
             <button className={styles.watch}>
                 <img src={"/images/watch.svg"} alt={'Timer'}/>
-                <span>{formatTime((props.practice || props.challenge) ? timer : (question.time - timer))}</span>
+                <span>{formatTime((props.practice || props.challenge || props.practiceTimer) ? timer : (question.time - timer))}</span>
 
                 <div className={styles.toolTip}>Timer</div>
             </button>

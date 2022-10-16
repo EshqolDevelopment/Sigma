@@ -50,7 +50,7 @@ export function ChooseGameMode() {
                         the first one to answer each question correct score a point,<br/>
                         Win the game by scoring 3 points first!
                     </span>
-                        <img src={"/images/singlePlayer.svg"} alt={"player logo"}/>
+                        <img className={styles.v1v} src={"/images/new1v1.png"} alt={"player logo"}/>
                     </div>
 
                     <button onClick={() => navigate("/quick-play")}>Play Now!</button>
@@ -64,7 +64,7 @@ export function ChooseGameMode() {
                         Unlike the quick play, here when a player answer a question correctly,
                         they move to the next one without disturbing the other ones.
                     </span>
-                        <img src={"/images/multiPlayer.svg"} alt={"players logo"}/>
+                        <img src={"/images/newMultiPlayer.png"} alt={"players logo"}/>
                     </div>
 
                     <button onClick={() => navigate("/multi-player")}>Play Now!</button>
@@ -77,7 +77,7 @@ export function ChooseGameMode() {
                         Play against yourself mode allows you to practice your skills and improve your knowledge,
                         in addition to that you can also see your progress and compare it to your previous results.
                     </span>
-                        <img src={"/images/multiPlayer.svg"} alt={"players logo"}/>
+                        <img className={styles.singlePlayer} src={"/images/newSinglePlayer.png"} alt={"players logo"}/>
                     </div>
 
                     <button onClick={() => navigate("/single-player")}>Play Now!</button>

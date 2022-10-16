@@ -79,7 +79,7 @@ export default function MultiPlayer() {
                 />}
         </main>
 
-        <Footer/>
+        {!gameStart && <Footer/>}
 
     </div>;
 }

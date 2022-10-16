@@ -47,8 +47,9 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  flex-wrap: wrap;
   margin-top: 40px;
-  gap: 30px;
+  gap: 50px;
 
   & > div {
     width: 42%;
@@ -121,10 +122,14 @@
 .modeBody {
   display: flex;
   gap: 12px;
+}
 
-  img {
-    //filter: invert(47%) sepia(59%) saturate(3534%) hue-rotate(193deg) brightness(102%) contrast(104%);
-  }
+.v1v {
+  width: 70px !important;
+}
+
+.singlePlayer {
+  width: 52px !important;
 }
 
 .subTitle {

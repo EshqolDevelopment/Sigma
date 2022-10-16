@@ -105,7 +105,8 @@ export default function MultiPlayerGame(props: Props) {
 
                 {inTransition && <div className={styles.wonLoadingScreen}>
                     <h3>You answer correctly!<br/>
-                        You have two more questions remaining</h3>
+                        You have {props.numberOfQuestions - playersData[globalContext.username].currentQuestion} more questions remaining</h3>
+
                     <img src={"/images/timer.gif"} alt={"timer"}/>
                 </div>}
 
