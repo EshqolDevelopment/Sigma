@@ -185,20 +185,26 @@ export default function App() {
                             <Routes>
                                 <Route path={"/"} element={<Home/>}/>
                                 <Route path={"/home"} element={<Home/>}/>
+
                                 <Route path={"/leaderboard"} element={<Leaderboard/>}/>
                                 <Route path={"/compiler"} element={<Compiler/>}/>
                                 <Route path={"/practice"} element={<Practice/>}/>
                                 <Route path={"/practice/*"} element={<PracticeQuestionWrapper/>}/>
+
                                 <Route path={"/play"} element={<ChooseGameMode/>}/>
                                 <Route path={"/quick-play"} element={<QuickPlayConfig/>}/>
                                 <Route path={"/multi-player"} element={<MultiPlayer/>}/>
+                                <Route path={"/single-player"} element={<SinglePlayerConfig/>}/>
+                                <Route path={"/single-player-game"} element={<SinglePlayerGame/>}/>
+                                <Route path={"/challenge/*"} element={<Challenge/>}/>
+
+                                <Route path={"/profile"} element={<Profile tab={"profile"}/>}/>
+                                <Route path={"/profile/history"} element={<Profile tab={"history"}/>}/>
+                                <Route path={"/profile/statistics"} element={<Profile tab={"statistics"}/>}/>
+
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
-                                <Route path={"/challenge/*"} element={<Challenge/>}/>
-                                <Route path={"/single-player"} element={<SinglePlayerConfig/>}/>
-                                <Route path={"/profile"} element={<Profile/>}/>
-                                <Route path={"/profile/*"} element={<Profile/>}/>
-                                <Route path={"/single-player-game"} element={<SinglePlayerGame/>}/>
+
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>
                         </BrowserRouter>

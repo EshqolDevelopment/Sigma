@@ -1,15 +1,15 @@
 $borderRadius: 15px;
-
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     background: white;
-    width: min(800px, 90vw);
-    min-height: 400px;
+    width: min(800px, 95vw);
     margin-inline: auto;
     margin-top: 120px;
     border-radius: $borderRadius;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
+    padding-bottom: 30px;
     gap: 20px;
 }
 
@@ -24,6 +24,7 @@ $borderRadius: 15px;
     border-top-right-radius: $borderRadius;
     border-top-left-radius: $borderRadius;
     padding-block: 15px;
+    border-bottom: 1.5px solid;
 
     span {
         font-size: 20px;
@@ -47,22 +48,173 @@ $borderRadius: 15px;
         }
     }
 
+    .inactiveTab, .activeTab {
+        transition: 70ms ease-in-out;
+    }
+
     .activeTab {
         font-weight: bold;
     }
 }
 
-.profile, .history, .statistics {
+.profile {
+    position: relative;
+    width: 95%;
+}
+
+.stats {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
-    width: 100%;
-    padding-block: 20px;
-    margin-inline: 10px;
-    overflow-y: auto;
+    flex-shrink: 0;
 
     & > div {
-
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        width: min(350px, 90%);
+        padding-bottom: 20px;
+        padding-top: 15px;
+        padding-inline: 5px;
+        border-bottom: 2px solid;
     }
+
+    .profileHead {
+        justify-content: space-evenly;
+        margin-bottom: 10px;
+        background: wheat;
+        padding: 2px 5px;
+        border-radius: 10px;
+        border: 1px solid;
+
+        span {
+            font-weight: bold;
+            font-size: 23px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            border: none;
+            background: none;
+            border-radius: 50%;
+            padding: 4px 3px 0;
+            width: 70px;
+        }
+
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    span:not(.title) {
+        font-size: 22px;
+    }
+
+    span:first-of-type {
+        font-weight: 500;
+    }
+
+    span:last-of-type {
+    }
+}
+
+.buttons {
+    $red: #e85656;
+    $green: #2ea42e;
+    $darker: 3%;
+    position: absolute;
+    width: 140px;
+    right: 0;
+
+    button {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .signOut {
+        background: $red;
+        color: white;
+        border-radius: 8px;
+        font-weight: bold;
+        padding: 10px 0;
+        font-size: 15px;
+        transition: 0.2s ease-in-out;
+        border: 0;
+
+        &:hover {
+            background: darken($red, $darker);
+            scale: 1.02;
+        }
+    }
+
+    .greenBtn {
+        background: $green;
+
+        &:hover {
+            background: darken($green, $darker);
+        }
+    }
+}
+
+.history {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    & > div {
+        display: flex;
+        flex-direction: column;
+        border-radius: 10px;
+        padding: 15px 20px;
+        min-width: 300px;
+        gap: 20px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        & > div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        span {
+            font-size: 19px;
+            font-weight: 500;
+        }
+    }
+
+    b {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .win {
+        color: black;
+        font-weight: bold;
+        font-size: 20px;
+        background: #f6c446;
+        padding: 3px;
+        border-radius: 5px;
+    }
+}
+
+.quickplay {
+    border: 3px solid forestgreen;
+}
+
+.date {
+    margin: 0 0 0 auto;
+    font-size: 15px !important;
+    color: #575656;
 }

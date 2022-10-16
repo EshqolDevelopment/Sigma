@@ -1,0 +1,122 @@
+.ldsRoller {
+    position: relative;
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    padding-block: 100px;
+    transform: scale(1.75);
+}
+.ldsRoller div {
+    animation: lds-roller 1s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    transform-origin: 40px 40px;
+}
+.ldsRoller div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: dodgerblue;
+    opacity: 0;
+    margin: -4px 0 0 -4px;
+}
+.ldsRoller div:nth-child(1):not(img) {
+    animation-delay: -0.036s;
+}
+.ldsRoller div:nth-child(1):after {
+    top: 63px;
+    left: 63px;
+}
+.ldsRoller div:nth-child(2):not(img) {
+    animation-delay: -0.072s;
+}
+.ldsRoller div:nth-child(2):after {
+    top: 68px;
+    left: 56px;
+}
+.ldsRoller div:nth-child(3):not(img) {
+    animation-delay: -0.108s;
+}
+.ldsRoller div:nth-child(3):after {
+    top: 71px;
+    left: 48px;
+}
+.ldsRoller div:nth-child(4):not(img) {
+    animation-delay: -0.144s;
+}
+.ldsRoller div:nth-child(4):after {
+    top: 72px;
+    left: 40px;
+}
+.ldsRoller div:nth-child(5):not(img) {
+    animation-delay: -0.18s;
+}
+.ldsRoller div:nth-child(5):after {
+    top: 71px;
+    left: 32px;
+}
+.ldsRoller div:nth-child(6):not(img) {
+    animation-delay: -0.216s;
+}
+.ldsRoller div:nth-child(6):after {
+    top: 68px;
+    left: 24px;
+}
+.ldsRoller div:nth-child(7):not(img) {
+    animation-delay: -0.252s;
+}
+.ldsRoller div:nth-child(7):after {
+    top: 63px;
+    left: 17px;
+}
+.ldsRoller div:nth-child(8):not(img) {
+    animation-delay: -0.288s;
+}
+.ldsRoller div:nth-child(8):after {
+    top: 56px;
+    left: 12px;
+}
+@keyframes lds-roller {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.logo {
+    height: 50px;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: logoAnimation 1s ease-in-out infinite;
+    outline: 1.2px black solid;
+    background: wheat;
+}
+
+@keyframes logoAnimation {
+    0% {
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+        padding: 20px;
+        outline-color: black;
+    }
+    45% {
+        transform: translate(-50%, -50%) scale(1.5);
+        padding: 0;
+        outline-color: white;
+    }
+    55% {
+        transform: translate(-50%, -50%) scale(1.5);
+        padding: 0;
+        outline-color: white;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(360deg);
+        padding: 20px;
+        outline-color: black;
+    }
+}

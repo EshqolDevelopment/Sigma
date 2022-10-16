@@ -1,67 +1,32 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import s from "./Profile.module.scss";
-import {GlobalContext, postRequest} from "../Global";
-import style from "../CommonComponents/Profile/profile.module.scss";
+import {GlobalContext, winRate} from "../Global";
+import Loading from "../CommonComponents/Loading/Loading";
+import {getAuth} from "firebase/auth";
+import History from "./History";
 
 
 type tabType = "profile" | "history" | "statistics"
 
 
-export default function Profile() {
-    const [tab, setTab] = React.useState<tabType>("profile");
-    const [chooseProfile, setChooseProfile] = useState(false);
+export default function Profile(props: { tab: tabType }) {
     const globalContext = useContext(GlobalContext);
     const navigate = useNavigate();
-    const userData = globalContext?.userData
-
-    const setNewProfileImage = async (image: number) => {
-        await postRequest("/general/changeProfileImage", {
-            image: image,
-            name: userData.name
-        })
-        setChooseProfile(false);
-    }
-
-    const isCurrentUser = (userData?.name) && (userData?.name === globalContext?.userData?.name);
-
-    const openChooseProfileDialog = () => {
-        if (isCurrentUser) {
-            setChooseProfile(true)
-        }
-    }
-
+    const userData = globalContext.userData
+    const tab = props.tab
 
     useEffect(() => {
-
-        document.body.style.background = "dodgerblue";
-
-        const path = window.location.pathname;
-
-        if (path === "/profile") {
-            setTab("profile");
-        }
-
-        else if (path === "/profile/history") {
-            setTab("history");
-            navigate("/profile/history");
-        }
-
-        else if (path === "/profile/statistics") {
-            setTab("statistics");
-            navigate("/profile/statistics");
-        }
-
-        else {
-            setTab("profile");
-            navigate("/profile");
-        }
-
+        document.documentElement.style.setProperty('--background', 'dodgerblue');
     }, [navigate]);
 
-    const switchTab = (tab: tabType) => {
-        setTab(tab);
+    if (!userData) return <Loading/>
 
+    const isCurrentUser = (userData.name) && (userData.name === globalContext?.userData.name);
+
+    const signWithPassword = isCurrentUser && !userData.name.endsWith('_')
+
+    const switchTab = (tab: tabType) => {
         if (tab !== "profile")
             navigate(`/profile/${tab}`);
 
@@ -69,27 +34,82 @@ export default function Profile() {
             navigate(`/profile`);
     }
 
-    const GetProfile = () => <div className={s.profile}>
-        <div>
-            <span className={style.name}>{userData?.displayName}</span>
+    const signOut = () => {
+        globalContext.showToast("Signed out successfully", "info");
+        getAuth().signOut();
+        setTimeout(() => {
+            window.location.reload();
+        }, 500)
+    }
 
-            <button className={style.removeDefault} onClick={openChooseProfileDialog}>
-                <img src={`/images/p${userData?.image}.png`} className={style.profileImage} alt={"profile"}/>
-            </button>
+    const Profile = () => <div className={s.profile}>
+        <div className={s.buttons}>
+            {isCurrentUser && <button className={[s.signOut, s.greenBtn].join(" ")}>Export to CSV</button>}
+            {signWithPassword || true && <button className={[s.signOut, s.greenBtn].join(" ")} onClick={signOut}>Change Password</button>}
+
+            {isCurrentUser && <button className={s.signOut} onClick={signOut}>Sign Out</button>}
+            {isCurrentUser && <button className={s.signOut}>Delete Account</button>}
+        </div>
+
+        <div className={s.stats}>
+            <div className={s.profileHead}>
+                <span>{userData.displayName}</span>
+
+                <button>
+                    <img src={`/images/p${userData.image}.png`} alt={"profile"}/>
+                </button>
+            </div>
+
+            <div>
+                <span>Victories</span>
+                <span>{userData.wins}</span>
+            </div>
+
+            <div>
+                <span>Defeats</span>
+                <span>{userData.losses}</span>
+            </div>
+
+            <div>
+                <span>Winning rate</span>
+                <span>{winRate(userData)}%</span>
+            </div>
+
+            <div>
+                <span>Coins</span>
+                <span>{userData.coins}</span>
+            </div>
+
+            <div>
+                <span>Points</span>
+                <span>{userData.points}</span>
+            </div>
         </div>
     </div>
 
-    return <div className={s.container}>
-        <div className={s.tabs}>
-            {
-                ['profile', 'history', 'statistics'].map((tabName, i) =>
-                    <span key={i} className={tabName === tab ? 'activeTab' : ''} onClick={() => switchTab(tabName as tabType)}>
-                        {tabName}
-                    </span>
-                )
-            }
-        </div>
+    const Statistics = () => <span>Statistics</span>
+    // TODO
+    // 1. Add a graph of the user's win rate over time
+    // 2. Add a cake graph of victories, defeats and draws
+    // 3. Add a cake graph of the user favorite level
+    // 4. Add a graph of the user's average gap in games results
+    // 5. Add a graph of the user's points over time
 
-        {tab === "profile" ? <GetProfile/> : null}
+
+
+    const Tabs = () => {
+        const tabs = ["profile", "history", "statistics"];
+        return <div className={s.tabs}>
+            {tabs.map((tabName, i) =>
+                <span key={i} className={tabName === tab ? s.activeTab : s.inactiveTab}
+                      onClick={() => switchTab(tabName as tabType)}>
+                {tabName}
+            </span>)}
+        </div>
+    }
+
+    return <div className={s.container}>
+        <Tabs/>
+        {tab === "profile" ? <Profile/> : tab === "history" ? <History/> : <Statistics/>}
     </div>
 }

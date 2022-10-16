@@ -88,5 +88,4 @@ export type PracticeQuestionList = {
 
 export type QuestionList = string[];
 
-
 export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";
