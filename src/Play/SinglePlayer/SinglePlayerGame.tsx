@@ -60,7 +60,7 @@ export default function SinglePlayerGame() {
     }
 
     const onGameFinished = async (time: number) => {
-        const res = await postRequest("/general/addRecord", {
+        const res = await postRequest("/single-play/onGameFinished", {
             time,
             level: questionLevel,
             name: globalContext.userData?.name,
