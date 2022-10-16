@@ -54,7 +54,8 @@ export default function QuickPlayGame(props: Props) {
                 name: globalContext.userData.name,
                 opponent: props.gameData.opponent.name,
                 gameCode: props.gameData.gameCode,
-                level: props.gameData.level
+                level: props.gameData.level,
+                questions: props.gameData.questions,
             }).then((data: QuickPlayGameFinished) => {
                 setGameFinishedData(data);
             })

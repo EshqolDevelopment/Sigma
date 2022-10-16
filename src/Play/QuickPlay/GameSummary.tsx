@@ -23,6 +23,7 @@ export function GameSummary(props: Props) {
     const globalContext = useContext(GlobalContext);
     const [coinsCount, setCoinsCount] = useState(0);
     const navigate = useNavigate();
+    console.log(props)
 
     useEffect(() => {
         let counter = 0;
