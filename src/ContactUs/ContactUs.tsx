@@ -25,10 +25,10 @@ export default function ContactUs() {
 
     async function sendForm() {
         return await postRequest("/contact-us", {
-            subject: topic,
+            topic: topic,
             name: name,
             email: email,
-            content: message,
+            message: message,
             captcha: captcha,
         });
     }
