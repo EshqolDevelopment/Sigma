@@ -51,6 +51,7 @@
   margin-top: 40px;
   gap: 50px;
 
+
   & > div {
     width: 42%;
     height: 100%;
@@ -71,14 +72,14 @@
     justify-content: center;
     align-items: center;
     gap: 30px;
-    width: 90%;
+
 
     & > div {
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 30px;
-      width: 100%;
+      width: 90%;
     }
   }
 
