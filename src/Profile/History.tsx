@@ -1,9 +1,9 @@
 import React, {useContext, useEffect} from "react";
 import s from "./Profile.module.scss";
 import {
-    AnyHistory,
+    AnyHistory, MultiplayerHistory,
     QuickPlayHistory,
-    Result,
+    Result
 } from "./ProfileTypes";
 import {Level} from "../DataTypes";
 import {GlobalContext, postRequest} from "../Global";
@@ -47,6 +47,11 @@ const DurationLabel = (props: {duration: number}) => {
     return <span>{seconds} seconds</span>;
 }
 
+const getDate = (date: number) => {
+    return new Date(date).toLocaleDateString() + " " +
+        new Date(date).getHours() + ":" + new Date(date).getMinutes();
+}
+
 const QuickPlay = (props: {history: QuickPlayHistory}) => {
     const history = props.history;
     const questions = history.questionsData;
@@ -81,6 +86,11 @@ const QuickPlay = (props: {history: QuickPlayHistory}) => {
 
         <p className={s.date}>{date}</p>
     </div>
+}
+
+const MultiPlay = (props: {history: MultiplayerHistory}) => {
+
+
 }
 
 
