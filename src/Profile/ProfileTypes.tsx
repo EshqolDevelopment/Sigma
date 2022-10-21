@@ -16,9 +16,9 @@ export type MultiplayerHistory = {
     mode: "multi";
     date: number;
     players: string[];
-    questionsData: string[];
-    result: {name: string, time: number}[];
     level: Level;
+    times: {name: string, time: number}[];
+    numberOfQuestions: number;
 }
 
 export type SinglePlayerHistory = {
@@ -26,6 +26,9 @@ export type SinglePlayerHistory = {
     date: number;
     questionsData: string[];
     level: Level;
+    questions: string[];
+    timePerQuestion: number;
+    record: boolean;
 }
 
 export type QuestionHistory = {

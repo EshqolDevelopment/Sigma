@@ -30,21 +30,10 @@ $borderRadius: 15px;
         font-size: 20px;
         cursor: pointer;
         margin-top: 5px;
+        transition: font-weight 0.2s ease-in-out;
 
-        &::after {
-            content: "";
-            display: block;
-            width: 0;
-            height: 2px;
-            background: black;
-            transition: width .3s;
-            margin-inline: auto;
-            margin-top: 5px;
-        }
-
-        &:hover::after {
-            width: 100%;
-            transition: width .3s;
+        &:not(.activeTab):hover {
+            font-weight: 600;
         }
     }
 
@@ -60,6 +49,15 @@ $borderRadius: 15px;
 .profile {
     position: relative;
     width: 95%;
+}
+
+.place {
+    font-weight: bold !important;
+    color: white;
+    border-radius: 8px;
+    background: dodgerblue;
+    padding-inline: 8px;
+    padding-block: 3px;
 }
 
 .stats {
@@ -123,6 +121,36 @@ $borderRadius: 15px;
     }
 }
 
+.record {
+    color: black;
+    padding: 5px;
+    border-radius: 10px;
+    font-weight: bold;
+    background: orange;
+    animation: pulse 2s infinite;
+}
+
+.players {
+    white-space: pre-wrap;
+    font-weight: 400;
+    font-size: 16px !important;
+}
+
+@keyframes pulse {
+    0% {
+        background: orange;
+    }
+    33% {
+        background: #ff4e4e;
+    }
+    66% {
+        background: #00ff00;
+    }
+    100% {
+        background: orange;
+    }
+}
+
 .buttons {
     $red: #e85656;
     $green: #2ea42e;
@@ -165,7 +193,7 @@ $borderRadius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
 
     & > div {
@@ -173,7 +201,7 @@ $borderRadius: 15px;
         flex-direction: column;
         border-radius: 10px;
         padding: 15px 20px;
-        min-width: 300px;
+        width: 600px;
         gap: 20px;
 
         &:hover {
@@ -217,4 +245,13 @@ $borderRadius: 15px;
     margin: 0 0 0 auto;
     font-size: 15px !important;
     color: #575656;
+}
+
+.modeContainer {
+    & > h3 {
+        border-bottom: 3px solid black;
+        margin-bottom: 16px;
+        margin-top: 50px;
+        font-size: 24px;
+    }
 }

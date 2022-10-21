@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import s from "./Profile.module.scss";
 import {GlobalContext, winRate} from "../Global";
@@ -6,16 +6,18 @@ import Loading from "../CommonComponents/Loading/Loading";
 import {getAuth} from "firebase/auth";
 import History from "./History";
 import Statistics from "./Statistics";
+import {ChooseProfileDialog} from "./ChooseProfileDialog";
 
 
 type tabType = "profile" | "history" | "statistics"
 
 
-export default function Profile(props: { tab: tabType }) {
+export default function ProfilePage(props: { tab: tabType }) {
     const globalContext = useContext(GlobalContext);
     const navigate = useNavigate();
     const userData = globalContext.userData
     const tab = props.tab
+    const [chooseProfile, setChooseProfile] = useState(false);
 
     useEffect(() => {
         document.documentElement.style.setProperty('--background', 'dodgerblue');
@@ -55,7 +57,7 @@ export default function Profile(props: { tab: tabType }) {
             <div className={s.profileHead}>
                 <span>{userData.displayName}</span>
 
-                <button>
+                <button onClick={() => setChooseProfile(true)}>
                     <img src={`/images/p${userData.image}.png`} alt={"profile"}/>
                 </button>
             </div>
@@ -94,9 +96,10 @@ export default function Profile(props: { tab: tabType }) {
             {tabs.map((tabName, i) =>
                 <span key={i} className={tabName === tab ? s.activeTab : s.inactiveTab}
                       onClick={() => switchTab(tabName as tabType)}>
-                {tabName}
+                {tabName[0].toUpperCase() + tabName.slice(1)}
             </span>)}
         </div>
         {tab === "profile" ? <Profile/> : tab === "history" ? <History/> : <Statistics/>}
+        {chooseProfile && <ChooseProfileDialog close={() => setChooseProfile(false)} userData={userData}/>}
     </main>
 }
