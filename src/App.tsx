@@ -22,7 +22,6 @@ import ContactUs from "./ContactUs/ContactUs";
 import PrivacyPolicy from "./PrivacyPolicy/PrivacyPolicy";
 import Challenge from "./CommonComponents/DailyChallenge/Challenge";
 import {SinglePlayerConfig} from "./Play/SinglePlayer/SinglePlayerConfig";
-import Profile from "./Profile/Profile";
 import SinglePlayerGame from "./Play/SinglePlayer/SinglePlayerGame";
 
 
@@ -197,11 +196,6 @@ export default function App() {
                                 <Route path={"/single-player"} element={<SinglePlayerConfig/>}/>
                                 <Route path={"/single-player-game"} element={<SinglePlayerGame/>}/>
                                 <Route path={"/challenge/*"} element={<Challenge/>}/>
-
-                                <Route path={"/profile"} element={<Profile tab={"profile"}/>}/>
-                                <Route path={"/profile/history"} element={<Profile tab={"history"}/>}/>
-                                <Route path={"/profile/statistics"} element={<Profile tab={"statistics"}/>}/>
-
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
 
