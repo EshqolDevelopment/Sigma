@@ -65,10 +65,10 @@ export default function Leaderboard() {
         return ["user", "", "0", "undefined"]
     }
 
+    if (isLoading) return <Loading/>;
+
     return (
         <>
-            {isLoading && <Loading/>}
-
             <Helmet>
                 <title>Leaderboard | Sigma Code Wars</title>
                 <meta name={"description"} content={"See your rank on the Sigma Code Wars leaderboard"}/>
