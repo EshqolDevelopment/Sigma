@@ -88,4 +88,18 @@ export type PracticeQuestionList = {
 
 export type QuestionList = string[];
 
-export type Language = "python" | "javascript" | "java" | "kotlin" | "c#";
+export type Language = "python" | "javascript" | "java" | "kotlin";
+
+export type DataToSendTypes = {
+    name: string;
+    params: string[];
+    returnType: string;
+    description: string;
+    level: Level;
+    subject: string;
+    languages: Language[];
+    time: number;
+    asserts: { [language: string]: string };
+    solutions: { [language: string]: string };
+}
+
