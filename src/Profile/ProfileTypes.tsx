@@ -3,10 +3,8 @@ import {Level} from "../DataTypes";
 
 export type AnyHistory = (SinglePlayerHistory | QuickPlayHistory | MultiplayerHistory);
 
-export type HistoryList = AnyHistory[];
-
 export type QuickPlayHistory = {
-    mode: "quick-play";
+    mode: "quick";
     date: number;
     opponent: string;
     questionsData: QuestionHistory[];
@@ -15,19 +13,22 @@ export type QuickPlayHistory = {
 }
 
 export type MultiplayerHistory = {
-    mode: "multi-player";
+    mode: "multi";
     date: number;
     players: string[];
-    questionsData: string[];
-    result: {name: string, time: number}[];
     level: Level;
+    times: {name: string, time: number}[];
+    numberOfQuestions: number;
 }
 
 export type SinglePlayerHistory = {
-    mode: "single-player";
+    mode: "single";
     date: number;
     questionsData: string[];
     level: Level;
+    questions: string[];
+    timePerQuestion: number;
+    record: boolean;
 }
 
 export type QuestionHistory = {

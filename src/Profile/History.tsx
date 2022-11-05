@@ -1,14 +1,14 @@
 import React, {useContext, useEffect} from "react";
 import s from "./Profile.module.scss";
 import {
-    AnyHistory,
-    HistoryList,
+    AnyHistory, MultiplayerHistory,
     QuickPlayHistory,
-    Result,
+    Result, SinglePlayerHistory
 } from "./ProfileTypes";
 import {Level} from "../DataTypes";
-import {GlobalContext, postRequest} from "../Global";
+import {formatName, GlobalContext, postRequest} from "../Global";
 import Loader from "../CommonComponents/Loading/Loader";
+import {useQuery} from "react-query";
 
 
 const LevelLabel = (props: {level: Level}) => {
@@ -47,11 +47,15 @@ const DurationLabel = (props: {duration: number}) => {
     return <span>{seconds} seconds</span>;
 }
 
+const formatDate = (date: number) => {
+    return new Date(date).toLocaleDateString("en-IL") + " " +
+        new Date(date).getHours() + ":" + new Date(date).getMinutes();
+}
+
 const QuickPlay = (props: {history: QuickPlayHistory}) => {
     const history = props.history;
     const questions = history.questionsData;
-    const date = new Date(history.date).toLocaleDateString() + " " +
-        new Date(history.date).getHours() + ":" + new Date(history.date).getMinutes();
+    const date = formatDate(history.date);
 
     let [player, opponent] = [0, 0]
     for (let i = 0; i < questions.length; i++) {
@@ -69,7 +73,7 @@ const QuickPlay = (props: {history: QuickPlayHistory}) => {
 
     return <div className={s.quickplay}>
         <div>
-            <b>QuickPlay</b>
+            <b>Quick Play</b>
             <span>{player} - {opponent}</span>
             <LevelLabel level={history.level}/>
         </div>
@@ -83,38 +87,104 @@ const QuickPlay = (props: {history: QuickPlayHistory}) => {
     </div>
 }
 
+const MultiPlay = (props: {history: MultiplayerHistory}) => {
+    const globalContext = useContext(GlobalContext);
+    const history = props.history;
+    const date = formatDate(history.date);
+
+    const formatsPlayer = history.players.map((player) => formatName(player));
+
+    const place = history.times.findIndex((time) => time.name === globalContext.userData?.name);
+    const placeToName = ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th", "8th", "9th", "10th"];
+
+    return <div className={s.quickplay}>
+        <div>
+            <b>Multi Player</b>
+            <LevelLabel level={history.level}/>
+        </div>
+
+        <div>
+            <span className={s.place}>{placeToName[place]}</span>
+            <span className={s.players}>{formatsPlayer.join("\n")}</span>
+        </div>
+
+        <div>
+            Finish Time: <DurationLabel duration={history.times.find((time) => time.name === globalContext.userData.name)?.time/1000 as number}/>
+        </div>
+
+        <p className={s.date}>{date}</p>
+    </div>
+
+}
+
+const SinglePlay = (props: {history: SinglePlayerHistory}) => {
+    const history = props.history;
+    const date = formatDate(history.date);
+
+    return <div className={s.quickplay}>
+        <div>
+            <b>Single Play</b>
+            {history.record && <span className={s.record}>Record</span>}
+            <LevelLabel level={history.level}/>
+        </div>
+
+        <div>
+            Time Per Question: <DurationLabel duration={history.timePerQuestion}/>
+        </div>
+
+        <p className={s.date}>{date}</p>
+    </div>
+
+}
+
 
 export default function History() {
-    const [history, setHistory] = React.useState<HistoryList>([]);
     const globalContext = useContext(GlobalContext);
+    const historyQuery = useQuery(["history"], async () => {
+        const res = await postRequest("/general/getHistory", {
+            name: globalContext.userData.name
+        }) as {history: AnyHistory[]};
 
-    useEffect(() => {
-        const getHistory = async () => {
-            if (globalContext.userData?.name) {
-                const history = await postRequest("/general/getHistory", {
-                    name: globalContext.userData.name
-                }) as {history: HistoryList};
+        return res.history;
+    }, {
+        enabled: !!globalContext.userData?.name,
+    });
 
-                const f = []
-                for (let i = 0; i < 30; i++) {
-                    f.push(...history.history);
-                }
+    const history = historyQuery.data;
 
-                setHistory(f as HistoryList);
-            }
-        }
-        getHistory();
-    }, [globalContext.userData]);
-
-    if (history.length === 0)
+    if (historyQuery.isLoading || !history) {
         return <Loader/>
+    }
 
-    return <div className={s.history}>
-        {history.map((item, index) => {
-            if (item.mode === "quick-play")
-                return <QuickPlay history={item as QuickPlayHistory}/>
+    const quickPlays = history.filter((history) => history.mode === 'quick') as QuickPlayHistory[];
+    const multiPlays = history.filter((history) => history.mode === 'multi') as MultiplayerHistory[];
+    const singlePlays = history.filter((history) => history.mode === 'single') as SinglePlayerHistory[];
 
-            return null;
-        })}
+    return <div>
+
+        <div  className={s.modeContainer}>
+            <h3>Quick Play</h3>
+            <div className={s.history}>
+                {quickPlays.map((history) => <QuickPlay history={history}/>)}
+            </div>
+        </div>
+
+        <div  className={s.modeContainer}>
+            <h3>Multi Player</h3>
+            <div className={s.history}>
+                {multiPlays.map((history) => <MultiPlay history={history}/>)}
+            </div>
+        </div>
+
+
+        <div className={s.modeContainer}>
+            <h3>Single Player</h3>
+            <div className={s.history}>
+                {singlePlays.map((history) => <SinglePlay history={history}/>)}
+            </div>
+        </div>
+
+
+
     </div>
 }

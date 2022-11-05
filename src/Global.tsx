@@ -1,5 +1,5 @@
 import {createContext} from "react";
-import {Language, Solutions, UserData} from "./DataTypes";
+import {Solutions, UserData} from "./DataTypes";
 
 type GlobalContextType = {
     username: string;
