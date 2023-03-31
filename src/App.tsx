@@ -24,7 +24,6 @@ import Challenge from "./CommonComponents/DailyChallenge/Challenge";
 import {SinglePlayerConfig} from "./Play/SinglePlayer/SinglePlayerConfig";
 import ProfilePage from "./Profile/Profile";
 import SinglePlayerGame from "./Play/SinglePlayer/SinglePlayerGame";
-import Upload from "./Admin/Upload";
 
 
 const getDisplayName = (username: string): string => {
@@ -205,8 +204,6 @@ export default function App() {
 
                                 <Route path={"/contact-us"} element={<ContactUs/>}/>
                                 <Route path={"/privacy-policy"} element={<PrivacyPolicy/>}/>
-
-                                <Route path={"/upload-question"} element={<Upload/>}/>
 
                                 <Route path={"*"} element={<NotFound/>}/>
                             </Routes>
