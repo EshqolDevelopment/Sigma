@@ -143,13 +143,13 @@ export default function Question(props: Props) {
             "int": "Int",
             "float": "Double",
             "bool": "Boolean",
-            "list": "Array<Any>",
-            "list[str]": "Array<String>",
-            "list[int]": "Array<Int>",
-            "list[float]": "Array<Double>",
-            "list[bool]": "Array<Boolean>",
-            "list[object]": "Array<Any>",
-            "dict": "Map<String, Any>"
+            "list": "ArrayList<Any>",
+            "list[str]": "ArrayList<String>",
+            "list[int]": "ArrayList<Int>",
+            "list[float]": "ArrayList<Double>",
+            "list[bool]": "ArrayList<Boolean>",
+            "list[object]": "ArrayList<Any>",
+            "dict": "MutableMap<String, Any>"
         };
 
 
@@ -178,12 +178,12 @@ export default function Question(props: Props) {
             "int": "int",
             "float": "double",
             "bool": "boolean",
-            "list": "Object[]",
-            "list[str]": "String[]",
-            "list[int]": "int[]",
-            "list[float]": "double[]",
-            "list[bool]": "boolean[]",
-            "list[object]": "Object[]",
+            "list": "ArrayList<Object>",
+            "list[str]": "ArrayList<String>",
+            "list[int]": "ArrayList<Integer>",
+            "list[float]": "ArrayList<Double>",
+            "list[bool]": "ArrayList<Boolean>",
+            "list[object]": "ArrayList<Object>",
             "dict": "Map<String, Object>"
         };
 
