@@ -250,13 +250,15 @@
 
 .testCaseTitle {
     font-weight: bold;
-    width: 100px;
+    min-width: 100px;
 }
 
 .testCaseValue {
     box-sizing: border-box;
-    padding-left: 10px;
+    padding-inline: 10px;
     font-weight: bold;
-    width: 150px;
+    min-width: 150px;
+    width: 100%;
     border: 2px solid #0a1859;
+    word-break: break-all;
 }
