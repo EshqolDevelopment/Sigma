@@ -64,6 +64,7 @@ export type UserData = {
     displayName: string;
     likes: string[];
     uid: string;
+    admin: boolean;
 }
 
 export type Solutions = {

@@ -16,7 +16,8 @@ const LanguageToHelloCode = {
     python: "print('Hello World!')",
     javascript: "console.log('Hello World!')",
     kotlin: "fun main() {\n    println(\"Hello World!\")\n}",
-    java: "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World!\");\n    }\n}"
+    java: "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Hello World!\");\n    }\n}",
+    bash: "echo \"Hello World!\""
 };
 
 
@@ -29,7 +30,8 @@ export default function Compiler() {
         python: localStorage["python"] || LanguageToHelloCode.python,
         javascript: localStorage["javascript"] || LanguageToHelloCode.javascript,
         kotlin: localStorage["kotlin"] || LanguageToHelloCode.kotlin,
-        java: localStorage["java"] || LanguageToHelloCode.java
+        java: localStorage["java"] || LanguageToHelloCode.java,
+        bash: localStorage["bash"] || LanguageToHelloCode.bash
     });
 
     const globalContext = useContext(GlobalContext);
@@ -38,7 +40,8 @@ export default function Compiler() {
         python: Svg.Python(),
         javascript: Svg.Javascript(),
         kotlin: Svg.Kotlin(),
-        java: Svg.Java()
+        java: Svg.Java(),
+        bash: Svg.Bash()
     };
     const extensions = {
         python: "py",
@@ -46,6 +49,7 @@ export default function Compiler() {
         kotlin: "kt",
         java: "java",
         typescript: "ts",
+        bash: "sh"
     }
 
     const runCode = async () => {

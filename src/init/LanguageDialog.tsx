@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import {Language} from "../DataTypes";
+import {GlobalContext} from "../Global";
 
 
 type Props = {
@@ -18,13 +19,18 @@ const toDisplayName = {
     "javascript": "JavaScript",
     "java": "Java",
     "kotlin": "Kotlin",
+    "bash": "Bash"
 }
 
 
 export function LanguageDialog(props: Props) {
-
     const LanguageDialog = useRef<HTMLDialogElement>();
     const languages = props.languages;
+    const globalContext = useContext(GlobalContext);
+
+    if (!globalContext.userData?.admin) {
+        delete languages["bash"]
+    }
 
     useEffect(() => {
         if (props.show && !LanguageDialog.current.open) {

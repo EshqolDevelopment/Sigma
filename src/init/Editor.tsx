@@ -4,6 +4,7 @@ import 'brace/mode/python';
 import 'brace/mode/kotlin';
 import 'brace/mode/java';
 import 'brace/mode/javascript';
+import 'brace/mode/sh';
 import 'brace/theme/monokai';
 import 'brace/theme/github';
 import 'brace/theme/tomorrow';
@@ -29,9 +30,13 @@ type Props = {
 
 
 export default function Editor(props: Props) {
+    
+    const LanguageToMode = {
+        bash: "sh"
+    }
 
     return <AceEditor
-                mode={props.language || 'python'}
+                mode={LanguageToMode[props.language] || props.language || 'python'}
                 fontSize={props.fontSize || 16}
                 theme={props.theme || 'monokai'}
                 style={{width: '100%', height: '100%', borderRadius: `${props.borderRadius || 0}px`}}

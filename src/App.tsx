@@ -47,6 +47,7 @@ const formatDBUserData = (name: string, userData: any): UserData => {
         displayName: getDisplayName(name),
         likes: userData["likes"] || [],
         uid: getAuth().currentUser?.uid,
+        admin: userData["admin"] || false,
     };
 };
 
