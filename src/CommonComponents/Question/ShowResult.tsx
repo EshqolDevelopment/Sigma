@@ -16,7 +16,9 @@ type Props = {
 }
 
 function title(st: string) {
-    return st.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();});
+    return st.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase();
+    });
 }
 
 export default  function ShowResult(props: Props) {

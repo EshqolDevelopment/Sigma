@@ -94,15 +94,15 @@
   text-underline-offset: 6px;
 }
 
-.loadingError span {
+.loadingError .errorResult {
   text-align: center;
 }
 
-.loadingError div {
+.loadingError .spinner {
   @include loading-state(red);
 }
 
-.loadingError div:after {
+.loadingError .spinner:after {
   @include loading-sign;
   content: "x";
   color: red;
@@ -126,6 +126,9 @@
   font-size: 18px;
 }
 
+.testCaseContainer > div :nth-child(2) {
+  border: 2px solid dodgerblue;
+}
 
 @keyframes spinner-anim {
   0% {

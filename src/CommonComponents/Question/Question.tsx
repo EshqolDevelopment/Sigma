@@ -28,6 +28,31 @@ type Props = {
 let codeGlobal = null;
 let languageGlobal = null;
 
+export const formatInput = (questionParams: string[], input: string[]): JSX.Element[] => {
+    if (input.length === 0) return null;
+    const temp = [];
+
+    if (input.length !== questionParams.length) {
+        for (const i in input) {
+            const inp = input[i];
+            const name = "arg" + i;
+            temp.push([name, inp]);
+        }
+    } else {
+        for (const i in input) {
+            const inp = input[i];
+            const name = JSON.parse(questionParams[i])[0];
+            temp.push([name, inp]);
+        }
+    }
+
+    return temp.map(([name, inp]) => {
+        return <div key={name}>
+            <span><span style={{color: "orange", fontWeight: "bold"}}>{name}</span> = {inp}</span>
+        </div>;
+    });
+};
+
 export default function Question(props: Props) {
     const [question, setQuestion] = useState({
         description: "",
@@ -108,7 +133,7 @@ export default function Question(props: Props) {
     }, [props.practice]);
 
 
-    const pythonDefaultCode = (funcName, params: string, returnType: string) => {
+    const pythonDefaultCode = (funcName, params: string[], returnType: string) => {
         let code = "def " + funcName + "(";
         for (let i = 0; i < params.length; i++) {
             let param = params[i];
@@ -124,7 +149,7 @@ export default function Question(props: Props) {
     };
 
 
-    const javascriptDefaultCode = (funcName, params: string) => {
+    const javascriptDefaultCode = (funcName, params: string[]) => {
         let code = "function " + funcName + "(";
         for (let param of params) {
             param = JSON.parse(param);
@@ -136,7 +161,7 @@ export default function Question(props: Props) {
     };
 
 
-    const kotlinDefaultCode = (funcName, params: string, returnType: string) => {
+    const kotlinDefaultCode = (funcName, params: string[], returnType: string) => {
         const pythonToKotlinType = {
             "object": "Any",
             "str": "String",
@@ -171,7 +196,7 @@ export default function Question(props: Props) {
     })
 
 
-    const javaDefaultCode = (funcName, params: string, returnType: string) => {
+    const javaDefaultCode = (funcName, params: string[], returnType: string) => {
         const pythonToJavaType = {
             "object": "Object",
             "str": "String",
@@ -230,33 +255,6 @@ export default function Question(props: Props) {
         });
         setResult(response.result);
     }
-
-
-    const formatInput = (input: string[]): JSX.Element[] => {
-        if (input.length === 0) return null;
-        const temp = [];
-
-        if (input.length !== question.params.length) {
-            for (const i in input) {
-                const inp = input[i];
-                const name = "arg" + i;
-                temp.push([name, inp]);
-            }
-        } else {
-            for (const i in input) {
-                const inp = input[i];
-                const name = JSON.parse(question.params[i])[0];
-                temp.push([name, inp]);
-            }
-        }
-
-
-        return temp.map(([name, inp]) => {
-            return <div key={name}>
-                <span><span style={{color: "orange", fontWeight: "bold"}}>{name}</span> = {inp}</span>
-            </div>;
-        });
-    };
 
 
     const formatKotlinInput = (input: string): string => {
@@ -524,7 +522,7 @@ export default function Question(props: Props) {
                             <div>
                                 <span>Sample Input</span>
                                 <div>
-                                    <span className={styles.letterSpacing}>{formatInput(question.example.input) || "Not available"}</span>
+                                    <span className={styles.letterSpacing}>{formatInput(question.params, question.example.input) || "Not available"}</span>
                                 </div>
                             </div>
 
@@ -562,7 +560,7 @@ export default function Question(props: Props) {
                     close={() => setResult(null)}
                     result={result}
                     funcName={questionName(props.funcName)}
-                    formatInput={formatInput}
+                    formatInput={(inp) => formatInput(question.params, inp)}
                     statistics={statistics}
                     practice={props.practice}
                     language={language}

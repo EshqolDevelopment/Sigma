@@ -3,7 +3,7 @@ export type QuestionData = {
     description: string;
     example: { input: string[], output: string };
     level: Level;
-    params: string;
+    params: string[];
     return: string;
     subject: string;
     time: number;
