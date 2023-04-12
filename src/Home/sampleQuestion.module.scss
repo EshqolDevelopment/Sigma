@@ -127,7 +127,8 @@
 }
 
 .testCaseContainer > div :nth-child(2) {
-  border: 2px solid dodgerblue;
+  border: 2px solid white;
+  border-radius: 6px;
 }
 
 @keyframes spinner-anim {
